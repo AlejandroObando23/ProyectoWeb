@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+#enviar:hover {
+  font-size: 20px;
+}
+#restablcer:hover{
+	font-size: 20px;
+}
+#contenedor{
+	background-color: #979797;
+	width: 350px;
+	border: #000000 solid;
+	z-index: 0;
+
+	
+}
+#cuadrado{
+	position:absolute;
+	left: 520px;
+	align-content: center;
+	bottom: 100px;
+	background:#71CDEF;
+	z-index: -1;
+	height: 600px;
+	width: 950px;
+	margin: auto; 
+	text-align: center; 
+}
+
+input.error {
+  border: 2px solid red; /* Borde rojo en caso de error */
+  background-color: #fdd; /* Fondo rojo claro */
+}
+
+#imagenuno{
+	position: relative;
+	z-index: 1;
+	left: 1100px;
+	top: 210px;
+	 border-radius: 50%;
+}
+/* CSS Document */
+

@@ -1,11 +1,36 @@
+
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>login</title>
+<title>index</title>
+	<link href="../css/estilo1.css"rel="stylesheet" type="text/css">
 </head>
 
 <body>
+<img src="imagenone/imagenone.jpg" id="imagenuno">
+ 
+<div class="contenedor" id="contenedor" style="margin: auto; text-align: center; " >
+	<div class="cuadrado" id="cuadrado" ></div>
+	<form style="align-content: center" id="form1" name="form1" method="post" action="php/login.php">
+		<h1>Formulario  login</h1>
 	
+	 
+		
+		<p>Usuario &nbsp;&nbsp;&nbsp;
+		  <input type="text" id="user" name="user" required onChange="validar() "   placeholder="Ejemplo: JinOZ">
+		</p>
+		<p>Contraseña
+		  <input type="password" id="pasword" name="pasword" required onChange="validar()"  placeholder="Ejemplo: 324231412" >
+	  </p>
+		<p>
+		  <input type="submit" id="enviar">
+			<input type="reset" id="restablcer">
+	  </p>
+	</form>
+	
+	
+	 </div>
+	<script src="../javascript/scriptlogin.js"></script>
 </body>
 </html>
