@@ -1,54 +1,39 @@
-// JavaScript Document
-function validar() {
-    alert("Ingreso validado");
+function validarEntrada(texto, regex) {
+    return regex.test(texto);
 }
 
-document.getElementById("user").addEventListener("input", function() {
-    var valor = this.value;  
-
-    if (!esValorValido(valor)) {
+document.getElementById("user").addEventListener("input", function () {
+    if (!validarEntrada(this.value, /^[A-Za-z0-9]+$/)) {
         this.classList.add("error");
     } else {
         this.classList.remove("error");
     }
 });
 
-document.getElementById("pasword").addEventListener("input", function() {
-    var valor = this.value; 
-
-    if (!esNumeroValido(valor)) {
+document.getElementById("password").addEventListener("input", function () {
+    if (!validarEntrada(this.value, /^[A-Za-z0-9]{1,15}$/)) {
         this.classList.add("error");
     } else {
-		
         this.classList.remove("error");
     }
 });
 
-document.getElementById("form1").addEventListener("submit", function(){
-	var usuario= document.getElementById("user").value;
-	var contra=document.getElementById("pasword").value;
-	var letras = /^[A-Za-z]+$/;
-	var numeros= /^\d+$/;
-	    if (!letras.test(usuario)) {
-			  event.preventDefault();
-			alert("Ingrese solamente letras en el usuario");
-			
-			return;
-        
-    } else if(!numeros.test(contra)) {
-		event.preventDefault();
-		alert("Ingrese solamente numeros en la contraseña");
-		
-        
-		return;
-    }
-	
-	document.write("Hola mundo");
-});
+document.getElementById("form1").addEventListener("submit", function (event) {
+    var usuario = document.getElementById("user");
+    var contrasena = document.getElementById("password");
+    var errores = [];
 
-function esValorValido(valor) {
-    return /^[A-Za-z]+$/.test(valor);  // Verifica si el valor contiene solo números
-}
-function esNumeroValido(valor){
-	return /^\d+$/.test(valor); 
-}
+    if (!validarEntrada(usuario.value, /^[A-Za-z0-9]+$/)) {
+        errores.push(usuario);
+    }
+
+    if (!validarEntrada(contrasena.value, /^[A-Za-z0-9]{1,15}$/)) {
+        errores.push(contrasena);
+    }
+
+    if (errores.length > 0) {
+        event.preventDefault(); // Evita el envío del formulario
+        alert("Corrige los errores en los campos resaltados.");
+        errores[0].focus(); // Hace focus en el primer campo con error
+    }
+});

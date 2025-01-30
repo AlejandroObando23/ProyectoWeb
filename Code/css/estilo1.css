@@ -1,43 +1,38 @@
 @charset "utf-8";
 
-#enviar:hover {
-  font-size: 20px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-#restablcer:hover{
-	font-size: 20px;
-}
-#contenedor{
-	background-color: #979797;
-	width: 350px;
-	border: #000000 solid;
-	z-index: 0;
 
-	
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("imagenone/imagenone.jpg") no-repeat center center fixed;
+    background-size: cover;
 }
-#cuadrado{
-	position:absolute;
-	left: 520px;
-	align-content: center;
-	bottom: 100px;
-	background:#71CDEF;
-	z-index: -1;
-	height: 600px;
-	width: 950px;
-	margin: auto; 
-	text-align: center; 
+
+#contenedor {
+    background-color: rgba(151, 151, 151, 0.8); /* Fondo semi-transparente */
+    width: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+#cuadrado {
+    display: none; /* Se eliminó ya que no era necesario */
 }
 
 input.error {
-  border: 2px solid red; /* Borde rojo en caso de error */
-  background-color: #fdd; /* Fondo rojo claro */
+    border: 2px solid red; /* Borde rojo en caso de error */
+    background-color: #fdd; /* Fondo rojo claro */
 }
 
-#imagenuno{
-	position: relative;
-	z-index: 1;
-	left: 1100px;
-	top: 210px;
-	 border-radius: 50%;
+#enviar:hover, #restablecer:hover {
+    font-size: 20px;
 }
-/* CSS Document */
-
