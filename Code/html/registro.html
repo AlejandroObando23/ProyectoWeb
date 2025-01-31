@@ -12,15 +12,15 @@
         <form id="formRegistro" method="post" action="../php/registro.php">
             <p>
                 Nombre:
-                <input type="text" id="nombre" name="nombre" required placeholder="Ejemplo: Juan">
+                <input type="text" id="nombre" name="nombre" required minlength="3" placeholder="Ejemplo: Pedro">
             </p>
             <p>
                 Apellido:
-                <input type="text" id="apellido" name="apellido" required placeholder="Ejemplo: Pérez">
+                <input type="text" id="apellido" name="apellido" required minlength="3" placeholder="Ejemplo: Pérez">
             </p>
             <p>
                 Usuario:
-                <input type="text" id="usuario" name="usuario" required placeholder="Ejemplo: Juan123">
+                <input type="text" id="usuario" name="usuario" required minlength="3" placeholder="Ejemplo: Juan123">
             </p>
             <p>
                 Correo Electrónico:
@@ -39,6 +39,7 @@
                 <input type="reset" id="restablecer" value="Restablecer">
             </p>
         </form>
+        <div id="mensajeError" style="color: red;"></div>
     </div>
 <script src="../javascript/registro.js"></script>   
 </body>
