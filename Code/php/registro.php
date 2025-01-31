@@ -10,7 +10,7 @@ $conn = new mysqli($host, $usuario, $password_db, $base_datos);
 
 // Verificar la conexión
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    ide("Conexión fallida: " . $conn->connect_error);
 }
 
 // Obtener los datos del formulario

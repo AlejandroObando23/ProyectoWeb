@@ -10,13 +10,13 @@ document.getElementById("user").addEventListener("input", function () {
     }
 });
 
-document.getElementById("password").addEventListener("input", function () {
-    if (!validarEntrada(this.value, /^[A-Za-z0-9]{1,15}$/)) {
-        this.classList.add("error");
-    } else {
-        this.classList.remove("error");
-    }
-});
+    document.getElementById("password").addEventListener("input", function () {
+        if (!validarEntrada(this.value, /^[A-Za-z0-9]{1,15}$/)) {
+            this.classList.add("error");
+        } else {
+            this.classList.remove("error");
+        }
+    });
 
 document.getElementById("form1").addEventListener("submit", function (event) {
     var usuario = document.getElementById("user");
