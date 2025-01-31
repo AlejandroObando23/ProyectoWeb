@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
         $_SESSION['nombre'] = $registro['nombre']; // Guardar el nombre en la sesión
 
         echo "<script>alert('Inicio de sesión exitoso. Bienvenido, " . $registro['nombre'] . "!');</script>";
-        header("Location: ../inicio.php"); // Redirigir a la página de inicio
+        header("Location: ../html/Administrador/AdminInicio.html"); // Redirigir a la página de inicio
         exit();
     } else {
         // Contraseña incorrecta

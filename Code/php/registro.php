@@ -57,7 +57,7 @@ $stmt->bind_param("sssss", $nombre, $apellido, $usuario, $email, $passwordHash);
 
 // Ejecutar la consulta
 if ($stmt->execute()) {
-    echo "Registro exitoso. <a href='../html/login.html'>Iniciar sesión</a>";
+    echo "Registro exitoso <a href='../html/login.html'>Iniciar sesión</a>";
 } else {
     echo "Error al registrar: " . $stmt->error;
 }
