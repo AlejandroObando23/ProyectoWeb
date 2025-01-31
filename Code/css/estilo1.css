@@ -1,38 +1,122 @@
 @charset "utf-8";
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: url("imagenone/imagenone.jpg") no-repeat center center fixed;
+    background-image: url("../imagenes/fondo.jpg");
+    background-repeat: no-repeat;
     background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#contenedor {
-    background-color: rgba(151, 151, 151, 0.8); /* Fondo semi-transparente */
-    width: 350px;
-    padding: 20px;
+.contenedor{
+    width:auto;
+    height: auto;
+    display: flex;
+    margin: auto;
+  }
+
+.logo {
+    width: 25%;
+    margin: auto;
+    margin-left: 5%;
+    margin-top: 10%;
+    background-color: rgba(28, 14, 59, 0.792);
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    max-width: 500px;
+  }
+  
+  .login {
+    width: 25%;
+    height: auto;
+    margin: auto;
+    margin-right: 0;
+    margin-top: 5%;
+    background-color: white;
     text-align: center;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-#cuadrado {
-    display: none; /* Se eliminó ya que no era necesario */
-}
-
-input.error {
-    border: 2px solid red; /* Borde rojo en caso de error */
-    background-color: #fdd; /* Fondo rojo claro */
-}
-
-#enviar:hover, #restablecer:hover {
-    font-size: 20px;
-}
+    padding: 0.5%;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    max-width: 500px;
+    min-height: 400px;
+  }
+  
+  .inicioSesion {
+    width: 95%;
+    height: 5vh;
+    border-radius: 5px;
+    border: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    background-color: rgba(255, 255, 255, 0.601);
+    padding-left: 3%;
+  }
+  
+  .titleLogin {
+    font-weight: bold;
+    position: relative;
+    text-align: left;
+    left: 10%;
+    display: block;
+    margin-top: 8%;
+    margin-bottom: -2%;
+  }
+  
+  .inicioSesion:focus {
+    outline: none;
+    border: 1px solid #4c00ff;
+    box-shadow: 0 0 5px rgba(25, 0, 255, 0.5);
+  }
+  
+  .tooltip {
+    width: 80%;
+    height: 4vh;
+    display: inline-block;
+    text-align: left;
+    margin: auto;
+    margin-top: 0;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .tooltiptext {
+    width: 200px;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+  
+  .boton {
+    position: relative;
+    bottom: 0;
+    width: 80%;
+    height: 5vh;
+    border: 0;
+    background-color: rgb(145, 55, 255);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    color:aliceblue;
+    font-size: 150%;
+  }
+  
+  .boton:hover {
+    width: 81%;
+    background-color: rgb(106, 255, 243);
+    cursor: pointer;
+    color: black;
+  }
+  
+  input:invalid{
+    border: 1px solid red;
+  }
+  
+  input:valid {
+    border: 0;
+  }
