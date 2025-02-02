@@ -1,43 +1,63 @@
 @charset "utf-8";
-
-body {
-    background-image: url("../imagenes/fondo.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-family: Arial, Helvetica, sans-serif;
+:root {
+  --morado: #4a0a77;
+  --moradoOscuro: #310055;
+  --moradoGris: #c8b1e4;
+  --moradoBlanco: #dc97ff;
+  --fuente: 'Quicksand', sans-serif;
 }
 
-.contenedor{
-    width:auto;
-    height: auto;
-    display: flex;
-    margin: auto;
-  }
+body {
+  background-image: url("../imagenes/fondo.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: var(--fuente);
+  color: var(--moradoOscuro);
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+
+.contenedor {
+  width: 95%;
+  height: auto;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
 
 .logo {
-    width: 25%;
-    margin: auto;
-    margin-left: 5%;
-    margin-top: 10%;
-    background-color: rgba(28, 14, 59, 0.792);
+    width: 60%;
+    height: 100%;
+    flex:1;
+    align-items: center;
+    display: flex;
+    margin: 0 auto;
+    margin-left: 0;
+    background-color: var(--moradoOscuro);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-    max-width: 500px;
+    min-height: 500px;
+    max-width: 600px;
+    padding: 0.5%;
+  }
+
+  .logo img {
+    width:80%;
+    margin: auto;
   }
   
   .login {
     width: 25%;
-    height: auto;
-    margin: auto;
+    height: 100%;
+    margin: 0 auto;
     margin-right: 0;
-    margin-top: 5%;
     background-color: white;
     text-align: center;
     padding: 0.5%;
     border-radius: 3px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-    max-width: 500px;
-    min-height: 400px;
+    min-height: 500px;
   }
   
   .inicioSesion {
@@ -100,7 +120,7 @@ body {
     width: 80%;
     height: 5vh;
     border: 0;
-    background-color: rgb(145, 55, 255);
+    background-color: var(--morado);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
     color:aliceblue;
     font-size: 150%;
@@ -108,15 +128,8 @@ body {
   
   .boton:hover {
     width: 81%;
-    background-color: rgb(106, 255, 243);
+    background-color: var(--moradoBlanco);
     cursor: pointer;
     color: black;
   }
   
-  input:invalid{
-    border: 1px solid red;
-  }
-  
-  input:valid {
-    border: 0;
-  }

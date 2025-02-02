@@ -4,13 +4,18 @@
 <head>
     <meta charset="utf-8">
     <title>index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="../css/normalize.css" rel="stylesheet" type="text/css">
     <link href="../css/estilo1.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
     <div class="contenedor">
         <div class="login">
-            <h1>Log in</h1>
+            <h1>Iniciar Sesión</h1>
+            <i>¿Es tu primera vez? <a href="registro.html">Registrate</a></i>
             <form id="form1" name="form1" method="post" action="../php/login.php">
 
                 <p>
@@ -32,7 +37,7 @@
                 </div>
                 </p>
                 <br>
-                <i>No tienes cuenta? <a href="registro.html">Crear Cuenta</a></i>
+                <i><a href="registro.html">¿Olvidaste tu contraseña?</a></i>                
                 <br>
                 <p>
                     <input class="boton" type="submit" value="Enviar">
@@ -45,7 +50,7 @@
         </div>
 
         <div class="logo">
-            <img src="../imagenes/logo.png" width="300" id="imagenuno">
+            <img src="../imagenes/logo.png" id="imagenuno">
         </div>
     </div>
 
