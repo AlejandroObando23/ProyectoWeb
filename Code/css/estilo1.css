@@ -132,4 +132,8 @@ body {
     cursor: pointer;
     color: black;
   }
+
+  a {
+    color:blue;
+  }
   

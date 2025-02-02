@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>Registro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link href="../css/EstiloRegister.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -12,30 +15,32 @@
         <form id="formRegistro" method="post" action="../php/registro.php">
             <p>
                 Nombre:
-                <input type="text" id="nombre" name="nombre" required minlength="3" placeholder="Ejemplo: Pedro">
+                <input class="campos" type="text" id="nombre" name="nombre" required minlength="3" placeholder="Ejemplo: Pedro">
             </p>
             <p>
                 Apellido:
-                <input type="text" id="apellido" name="apellido" required minlength="3" placeholder="Ejemplo: Pérez">
+                <input class="campos" type="text" id="apellido" name="apellido" required minlength="3" placeholder="Ejemplo: Pérez">
             </p>
             <p>
                 Usuario:
-                <input type="text" id="usuario" name="usuario" required minlength="3" placeholder="Ejemplo: Juan123">
+                <input class="campos" type="text" id="usuario" name="usuario" required minlength="3" placeholder="Ejemplo: Juan123">
             </p>
             <p>
                 Correo Electrónico:
-                <input type="email" id="email" name="email" required placeholder="Ejemplo: usuario@email.com">
+                <input class="campos" type="email" id="email" name="email" required placeholder="Ejemplo: usuario@email.com">
             </p>
             <p>
                 Contraseña:
-                <input type="password" id="password" name="password" required maxlength="15" placeholder="Máximo 15 caracteres">
+                <input class="campos" type="password" id="password" name="password" required maxlength="15" placeholder="Máximo 15 caracteres">
             </p>
             <p>
                 Confirmar Contraseña:
-                <input type="password" id="confirmarPassword" name="confirmarPassword" required maxlength="15" placeholder="Repetir contraseña">
+                <input class="campos" type="password" id="confirmarPassword" name="confirmarPassword" required maxlength="15" placeholder="Repetir contraseña">
             </p>
             <p>
                 <input type="submit" id="enviar" value="Registrarse">
+                <br>
+                <br>
                 <input type="reset" id="restablecer" value="Restablecer">
             </p>
         </form>
