@@ -62,3 +62,7 @@ input[type="reset"]:hover {
     background-color: var(--moradoRosado);
     color: var(--moradoOscuro);
 }
+input.error {
+    border: 2px solid red; 
+    background-color: #fdd; 
+  }

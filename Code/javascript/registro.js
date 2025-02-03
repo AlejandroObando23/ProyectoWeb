@@ -79,4 +79,7 @@ document.getElementById('formRegistro').addEventListener('submit', function(even
         alert(mensajeError);
         event.preventDefault();
     }
+
+
+    
 });

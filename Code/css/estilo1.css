@@ -136,4 +136,9 @@ body {
   a {
     color:blue;
   }
+  input.error {
+    border: 2px solid red; 
+    background-color: #fdd; 
+  }
+  
   
