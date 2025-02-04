@@ -65,9 +65,9 @@ document.getElementById('formRegistro').addEventListener('submit', function(even
     }
 
     // Validación de al menos una mayúscula en la contraseña
-    let mayusculaRegex = /[A-Z]/;
-    if (!mayusculaRegex.test(password)) {
-        errores.push('La contraseña debe contener al menos una letra mayúscula.');
+    let contraseniaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!contraseniaRegex.test(password)) {
+        errores.push('La contraseña debe contener al menos: Mayúscula, Minúscula, Número y Caracter especial.');
         document.getElementById('password').classList.add("error");
     } else {
         document.getElementById('password').classList.remove("error");

@@ -23,6 +23,7 @@ body {
 }
 
 .contenedor {
+    margin: auto;
     background-color: var(--moradoBlanco);
     padding: 20px;
     border-radius: 10px;
@@ -49,12 +50,13 @@ h1 {
 input[type="submit"],
 input[type="reset"] {
     width: 100%;
-    height: 3.5vh;
+    height: 4vh;
     cursor: pointer;
     background-color: var(--morado);
     color: white;
     border: none;
     font-size: 120%;
+    box-shadow: 0 4px 8px var(--moradoOscuro);
 }
 
 input[type="submit"]:hover,
