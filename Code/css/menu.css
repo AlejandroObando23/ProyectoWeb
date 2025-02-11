@@ -4,5 +4,14 @@
 }
 
 .opcion:hover {
-    border-bottom: 2px solid rgb(28, 59, 85);
+    border-bottom: 1px solid rgb(28, 59, 85);
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; 
+}
+
+.active {
+    border-bottom: 1px solid rgb(28, 59, 85);
 }
