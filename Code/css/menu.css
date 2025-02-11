@@ -4,5 +4,5 @@
 }
 
 .opcion:hover {
-    background-color: #A2D2FF;
+    border-bottom: 2px solid rgb(28, 59, 85);
 }
