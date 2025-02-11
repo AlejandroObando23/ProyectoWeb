@@ -1,39 +1,43 @@
-function validarEntrada(texto, regex) {
-    return regex.test(texto);
-}
+document.addEventListener("DOMContentLoaded", function () {
+    const passwordField = document.getElementById("password");
+    const togglePasswordBtn = document.getElementById("togglePassword");
+    const form = document.getElementById("formLogin");
+    const userField = document.getElementById("user");
+    const mensajeError = document.getElementById("mensajeError");
 
-document.getElementById("user").addEventListener("input", function () {
-    if (!validarEntrada(this.value, /^[A-Za-z0-9]+$/)) {
-        this.classList.add("error");
-    } else {
-        this.classList.remove("error");
-    }
-});
-
-    document.getElementById("password").addEventListener("input", function () {
-        if (!validarEntrada(this.value, /^[A-Za-z0-9]{1,15}$/)) {
-            this.classList.add("error");
+    // Mostrar/ocultar contraseña
+    togglePasswordBtn.addEventListener("click", function () {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            togglePasswordBtn.innerHTML = "🙈"; // Ojos cerrados
         } else {
-            this.classList.remove("error");
+            passwordField.type = "password";
+            togglePasswordBtn.innerHTML = "👁️"; // Ojos abiertos
         }
     });
 
-document.getElementById("form1").addEventListener("submit", function (event) {
-    var usuario = document.getElementById("user");
-    var contrasena = document.getElementById("password");
-    var errores = [];
+    // Validación antes del envío del formulario
+    form.addEventListener("submit", function (event) {
+        mensajeError.classList.add("d-none");
+        mensajeError.innerHTML = "";
 
-    if (!validarEntrada(usuario.value, /^[A-Za-z0-9]+$/)) {
-        errores.push(usuario);
-    }
+        let errores = [];
 
-    if (!validarEntrada(contrasena.value, /^[A-Za-z0-9]{1,15}$/)) {
-        errores.push(contrasena);
-    }
+        // Validar usuario: solo letras y números
+        if (!/^[A-Za-z0-9]+$/.test(userField.value)) {
+            errores.push("El usuario solo puede contener letras y números.");
+        }
 
-    if (errores.length > 0) {
-        event.preventDefault(); // Evita el envío del formulario
-        alert("Corrige los errores en los campos resaltados.");
-        errores[0].focus(); // Hace focus en el primer campo con error
-    }
+        // Validar contraseña: mínimo 6 caracteres, 1 mayúscula, 1 minúscula, 1 número
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(passwordField.value)) {
+            errores.push("La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.");
+        }
+
+        // Si hay errores, mostrar mensaje y cancelar envío
+        if (errores.length > 0) {
+            mensajeError.classList.remove("d-none");
+            mensajeError.innerHTML = errores.join("<br>");
+            event.preventDefault();
+        }
+    });
 });
