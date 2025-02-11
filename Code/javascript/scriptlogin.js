@@ -1,11 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+<<<<<<< HEAD
     const togglePasswordBtn = document.getElementById("togglePassword");
     const passwordField = document.getElementById("password");
     const toggleIcon = document.getElementById("toggleIcon");
+=======
+    const passwordField = document.getElementById("password");
+    const togglePasswordBtn = document.getElementById("togglePassword");
+>>>>>>> de026df9fa837ff296fbda4181be3aa7930c112f
     const form = document.getElementById("formLogin");
     const userField = document.getElementById("user");
     const mensajeError = document.getElementById("mensajeError");
 
+<<<<<<< HEAD
     // Alternar la visibilidad de la contraseña
     togglePasswordBtn.addEventListener("click", function () {
         const tipo = passwordField.type === "password" ? "text" : "password";
@@ -16,6 +22,16 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleIcon.classList.replace("bi-eye", "bi-eye-slash");
         } else {
             toggleIcon.classList.replace("bi-eye-slash", "bi-eye");
+=======
+    // Mostrar/ocultar contraseña
+    togglePasswordBtn.addEventListener("click", function () {
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            togglePasswordBtn.innerHTML = "🙈"; // Ojos cerrados
+        } else {
+            passwordField.type = "password";
+            togglePasswordBtn.innerHTML = "👁️"; // Ojos abiertos
+>>>>>>> de026df9fa837ff296fbda4181be3aa7930c112f
         }
     });
 
