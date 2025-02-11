@@ -1,0 +1,17 @@
+body {
+    background-image: url("../imagenes/fondo_servicios.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.titulo {
+    font-family: "Quicksand",sans-serif;
+}
+
+.codigo {
+    width: 150px; 
+    height: 150px;
+    background-image: url("../imagenes/codigoQR.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}

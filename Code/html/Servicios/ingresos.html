@@ -12,12 +12,13 @@
     <link rel="icon" type="image/x-icon" href="../../imagenes/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link href="../../css/menu.css" rel="stylesheet" type="text/css">
+    <link href="../../css/ingreso.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <header class="navbar bg-whitenavbar-expand-lg">
+    <header class="navbar bg-whitenavbar-expand-lg bg-light">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <div class="d-flex align-items-center">
@@ -46,7 +47,8 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item opcion fw-bold"><a class="nav-link" href="#"><i class="bi bi-house"></i>
                             Inicio</a></li>
-                    <li class="nav-item opcion fw-bold"><a class="nav-link active" href="#"><i class="bi bi-cash-coin"></i>
+                    <li class="nav-item opcion fw-bold"><a class="nav-link active" href="#"><i
+                                class="bi bi-cash-coin"></i>
                             Ingresos</a></li>
                     <li class="nav-item opcion fw-bold"><a class="nav-link" href="#"><i class="bi bi-credit-card"></i>
                             Gastos</a></li>
@@ -58,9 +60,12 @@
                             <i class="bi bi-people-fill"></i> Usuarios
                         </a>
                         <ul class="dropdown-menu menu" aria-labelledby="usuariosDropdown">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-lines-fill"></i> Lista de usuarios</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill-add"></i> Agregar usuario</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-check-fill"></i> Administrar permisos</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-lines-fill"></i> Lista de
+                                    usuarios</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-fill-add"></i> Agregar
+                                    usuario</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-check-fill"></i> Administrar
+                                    permisos</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -69,35 +74,69 @@
     </div>
 
     <div class="container mt-4">
-        <h1 class="fw-light text-center">Ingresos</h1>
+        <h1 class="text-center titulo">Ingresos</h1>
         <form>
-            <fieldset class="border p-2">
-                <legend class="w-auto fs-4">Agregar Ingreso</legend>
-                <div class="row">
-                    <div class="col-md-2 d-grid mx-4">
-                        <label>Tipo de ingreso</label>
-                        <select>
+            <fieldset class="border p-2 shadow agregar bg-light">
+                <h3 class="titulo">Nuevo Ingreso</h3>
+                <hr>
+                <div class="row px-4">
+                    <div class="col-12 col-md-3 d-grid px-md-2">
+                        <label>Tipo de ingreso*</label>
+                        <select class="form-control form-select mb-3">
                             <option>Seleccione un tipo</option>
                         </select>
-                        <label>Método de pago</label>
-                        <select>
+                        <label>Método de pago*</label>
+                        <select class="form-control form-select mb-3">
                             <option>Seleccione un método</option>
                         </select>
                     </div>
-                    <div class="col-md-2 d-grid mx-4">
-                        <label>Monto $</label>
-                        <input type="number" class="form-control">
-                        <label>Fecha de Ingreso</label>
-                        <input type="date" class="form-control">
-                    </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-5 d-grid px-md-2">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <label>Monto $*</label>
+                                <input type="number" class="form-control mb-3">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label>Fecha de Ingreso*</label>
+                                <input type="date" class="form-control mb-3">
+                            </div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Descripción*</label>
+                                <input type="text" class="form-control mb-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <label class="text-center">Código QR</label>
+                        <div class="mx-auto bg-black d-flex justify-content-center align-items-center codigo">
+                            
+                        </div>
                     </div>
                 </div>
+                <hr>
+                <button>Enviar</button>
+                <button>Restablecer</button>
             </fieldset>
         </form>
 
     </div>
+
+    <div class="container mt-4">
+        <form>
+            <fieldset class="border p-2 shadow agregar bg-light">
+                <h3 class="titulo">Ingresos</h3>
+                <hr>
+
+                <hr>
+            </fieldset>
+        </form>
+
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
