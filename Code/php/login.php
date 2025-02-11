@@ -49,17 +49,10 @@ if ($result->num_rows > 0) {
                 header("Location: ../html/Administrador/AdminInicio.html");
                 break;
             case 'Egreso':
-<<<<<<< HEAD
                 header("Location: ../html/Servicios/gastos.html");
                 break;
             case 'Ingreso':
                 header("Location: ../html/Servicios/ingresos.html");
-=======
-                header("Location: ../html/Egreso/gastos.html");
-                break;
-            case 'Ingreso':
-                header("Location: ../html/Ingreso/ingresos.html");
->>>>>>> de026df9fa837ff296fbda4181be3aa7930c112f
                 break;
             default:
                 echo "<script>alert('Rol no reconocido. Contacte al administrador.');</script>";
