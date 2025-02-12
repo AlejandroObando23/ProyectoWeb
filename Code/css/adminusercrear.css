@@ -1,0 +1,18 @@
+#contenedor{
+    border: 4px inset #ccc;
+    background-color:rgb(233, 227, 217);
+
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.3);
+    text-align: center;
+
+    width: 380px;
+    height: 300px;
+}
+.textof{
+    font-weight: bold;
+    font-size: 20px;
+}
+.botons:hover{
+    background-color: green;
+
+}

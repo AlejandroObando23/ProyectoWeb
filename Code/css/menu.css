@@ -15,4 +15,9 @@
 .active {
     border-bottom: 1px solid rgb(28, 59, 85);
 }
+body {
+    background-image: url("../imagenes/fondo_servicios.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
