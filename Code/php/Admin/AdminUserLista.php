@@ -54,9 +54,9 @@ $result = $conn->query($sql);
         </button>
         <div class="collapse navbar-collapse" id="menuNav">
             <ul class="navbar-nav mx-auto">
-                <li class="nav-item fw-bold"><a class="nav-link" href="#"><i class="bi bi-house"></i> Inicio</a></li>
-                <li class="nav-item fw-bold"><a class="nav-link" href="#"><i class="bi bi-cash-coin"></i> Ingresos</a></li>
-                <li class="nav-item fw-bold"><a class="nav-link" href="#"><i class="bi bi-credit-card"></i> Gastos</a></li>
+                <li class="nav-item fw-bold"><a class="nav-link" href="AdminInicio.php"><i class="bi bi-house"></i> Inicio</a></li>
+                <li class="nav-item fw-bold"><a class="nav-link" href="../../html/Servicios/ingresos.html"><i class="bi bi-cash-coin"></i> Ingresos</a></li>
+                <li class="nav-item fw-bold"><a class="nav-link" href="../../html/Servicios/gastos.html"><i class="bi bi-credit-card"></i> Gastos</a></li>
                 <li class="nav-item fw-bold"><a class="nav-link" href="#"><i class="bi bi-info-square"></i> Reportes</a></li>
                 <li class="nav-item dropdown fw-bold">
                     <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
