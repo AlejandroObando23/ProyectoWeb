@@ -1,95 +1,112 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const togglePasswordBtn = document.getElementById("togglePassword");
-    const passwordField = document.getElementById("password");
-    const toggleIcon = document.getElementById("toggleIcon");
-    const form = document.getElementById("formUsuario"); 
-    const cedulaField = document.getElementById("cedula");
-    const nombreField = document.getElementById("nombre");
-    const apellidoField = document.getElementById("apellido");
-    const correoField = document.getElementById("correo");
+    const form = document.getElementById("formUsuario");
+    const campos = ["cedula", "nombre", "apellido", "correo", "password"];
     const mensajeError = document.getElementById("mensajeError");
+    const botonEnviar = document.getElementById("btnEnviar");
 
-    // Alternar la visibilidad de la contraseña
-    togglePasswordBtn.addEventListener("click", function () {
-        const tipo = passwordField.type === "password" ? "text" : "password";
-        passwordField.type = tipo;
-
-        // Cambiar el icono del botón
-        if (passwordField.type === "password") {
-            toggleIcon.classList.replace("bi-eye", "bi-eye-slash");
-        } else {
-            toggleIcon.classList.replace("bi-eye-slash", "bi-eye");
-        }
+    // Validar cada campo al perder el foco
+    campos.forEach((campoId) => {
+        const campo = document.getElementById(campoId);
+        campo.addEventListener("blur", function () {
+            validarCampoSecuencial(campoId);
+            actualizarEstadoBoton();
+        });
     });
 
-    // Validación en tiempo real para resaltar los campos no válidos
-    form.addEventListener("input", function () {
-        // Limpiar los campos de error (en caso de que se corrijan)
-        limpiarErrores();
-    });
-
-    // Validación antes del envío del formulario
+    // Validación al enviar el formulario
     form.addEventListener("submit", function (event) {
         mensajeError.classList.add("d-none");
         mensajeError.innerHTML = "";
 
-        let errores = [];
+        let esValido = true;
+        campos.forEach((campoId) => {
+            if (!validarCampoSecuencial(campoId)) esValido = false;
+        });
 
-        // Validar cédula: solo números
-        if (!/^\d+$/.test(cedulaField.value)) {
-            errores.push("La cédula solo puede contener números.");
-            cedulaField.classList.add("invalid-field");
-        } else {
-            cedulaField.classList.remove("invalid-field");
-        }
-
-        // Validar nombre: no debe tener números ni espacios
-        if (!/^[A-Za-z]+$/.test(nombreField.value)) {
-            errores.push("El nombre no debe contener números ni espacios.");
-            nombreField.classList.add("invalid-field");
-        } else {
-            nombreField.classList.remove("invalid-field");
-        }
-
-        // Validar apellido: no debe tener números ni espacios
-        if (!/^[A-Za-z]+$/.test(apellidoField.value)) {
-            errores.push("El apellido no debe contener números ni espacios.");
-            apellidoField.classList.add("invalid-field");
-        } else {
-            apellidoField.classList.remove("invalid-field");
-        }
-
-        // Validar correo: formato correcto
-        const correoRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!correoRegex.test(correoField.value)) {
-            errores.push("Por favor, ingresa un correo electrónico válido.");
-            correoField.classList.add("invalid-field");
-        } else {
-            correoField.classList.remove("invalid-field");
-        }
-
-        // Validar contraseña: mínimo 6 caracteres, 1 mayúscula, 1 minúscula, 1 número
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(passwordField.value)) {
-            errores.push("La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.");
-            passwordField.classList.add("invalid-field");
-        } else {
-            passwordField.classList.remove("invalid-field");
-        }
-
-        // Si hay errores, mostrar mensaje y cancelar envío
-        if (errores.length > 0) {
+        if (!esValido) {
+            event.preventDefault(); // Evitar el envío si hay errores
             mensajeError.classList.remove("d-none");
-            mensajeError.innerHTML = errores.join("<br>");
-            event.preventDefault();
+            mensajeError.innerHTML = "Por favor, corrige los campos marcados antes de continuar.";
         }
     });
 
-    // Función para limpiar los errores de los campos
-    function limpiarErrores() {
-        // Limpiar todos los campos con clase invalid-field
-        const fields = [cedulaField, nombreField, apellidoField, correoField, passwordField];
-        fields.forEach(field => {
-            field.classList.remove("invalid-field");
+    function validarCampoSecuencial(campoId) {
+        const input = document.getElementById(campoId);
+        let esValido = false;
+
+        switch (campoId) {
+            case "cedula":
+                esValido = validarCedula(input);
+                break;
+            case "nombre":
+                esValido = validarNombre(input);
+                break;
+            case "apellido":
+                esValido = validarApellido(input);
+                break;
+            case "correo":
+                esValido = validarCorreo(input);
+                break;
+            case "password":
+                esValido = validarPassword(input);
+                break;
+        }
+
+        return esValido;
+    }
+
+    function validarCedula(campo) {
+        const regex = /^\d{10}$/;
+        return aplicarValidacion(campo, regex, "La cédula debe tener 10 dígitos y solo números.");
+    }
+
+    function validarNombre(campo) {
+        const regex = /^[A-Za-z]+$/;
+        return aplicarValidacion(campo, regex, "El nombre no debe contener números ni espacios.");
+    }
+
+    function validarApellido(campo) {
+        const regex = /^[A-Za-z]+$/;
+        return aplicarValidacion(campo, regex, "El apellido no debe contener números ni espacios.");
+    }
+
+    function validarCorreo(campo) {
+        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return aplicarValidacion(campo, regex, "Por favor, ingresa un correo electrónico válido.");
+    }
+
+    function validarPassword(campo) {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+        return aplicarValidacion(campo, regex, "La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.");
+    }
+
+    function aplicarValidacion(campo, regex, mensaje) {
+        if (!regex.test(campo.value)) {
+            marcarInvalido(campo, mensaje);
+            return false;
+        }
+        marcarValido(campo);
+        return true;
+    }
+
+    function marcarInvalido(campo, mensaje) {
+        campo.classList.add("invalid-field");
+        campo.setCustomValidity(mensaje); // Forzar el mensaje de error
+        mensajeError.classList.remove("d-none");
+        mensajeError.innerHTML = mensaje;
+        campo.focus(); // Mantener el foco en el campo hasta que sea válido
+    }
+
+    function marcarValido(campo) {
+        campo.classList.remove("invalid-field");
+        campo.setCustomValidity("");
+    }
+
+    function actualizarEstadoBoton() {
+        let hayErrores = campos.some((campoId) => {
+            const campo = document.getElementById(campoId);
+            return !campo.checkValidity();
         });
+        botonEnviar.disabled = hayErrores;
     }
 });

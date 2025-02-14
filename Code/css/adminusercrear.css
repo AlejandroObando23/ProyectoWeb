@@ -47,5 +47,8 @@ button:hover {
     font-size: 14px;
 }
 .invalid-field {
-    border: 2px solid red;
+    border: 2px solid red !important; /* Resaltar con borde rojo */
+    outline: none;
+    background-color: #ffe6e6; /* Fondo rojo claro para mayor visibilidad */
 }
+
