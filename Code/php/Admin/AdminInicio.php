@@ -1,3 +1,15 @@
+<?php
+// Inicia la sesión
+session_start();
+
+// Verifica si el usuario está autenticado y tiene el rol de admin
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
+    // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
+    header('Location: /ruta_a_redirigir/acceso_denegado.php');
+    exit();
+}
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -26,7 +38,7 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
             </div>
 
             <div class="ms-auto d-flex align-items-center text-center">
-                <span id="nombreUsuario" class="me-2 d-none d-md-flex">Nombre Apellido</span>
+                <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['usuario']; ?></span>
                 <i class="fs-4" id="user-icon">
                     <img src="../../imagenes/iconoUser.png" alt="user" width="50">
                 </i>
@@ -44,7 +56,7 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 
       <div class="collapse navbar-collapse" id="menuNav">
           <ul class="navbar-nav mx-auto">
-              <li class="nav-item opcion fw-bold"><a class="nav-link" href="#"><i class="bi bi-house"></i>
+              <li class="nav-item opcion fw-bold"><a class="nav-link" href="AdminInicio.php"><i class="bi bi-house"></i>
                       Inicio</a></li>
               <li class="nav-item opcion fw-bold"><a class="nav-link active" href="#"><i
                           class="bi bi-cash-coin"></i>
@@ -71,6 +83,5 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
       </div>
   </div>
 </div>
-<h1 style="text-align: center;">Asignar Actividades</h1>
 </body>
 </html>

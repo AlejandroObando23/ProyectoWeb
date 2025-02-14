@@ -28,16 +28,16 @@
                 <h1 class="fw-bold text-center">Bienvenido</h1>
 
                 <!-- LOGIN -->
-                <form action="../php/login.php" method="POST" id="formLogin">
+                <form action="../php/Conexion_register_login/login.php" method="POST" id="formLogin">
                     <div class="mb-4 mensaje">
                         <label for="usuario" class="form-label">Usuario</label>
-                        <input type="text" id="user" class="form-control shadow" placeholder="Ingresa tu nombre de usuario" name="user" required>
+                        <input type="text" id="user"   maxlength="10"  class="form-control shadow" placeholder="Ingresa tu nombre de usuario" name="Cedula" required>
                         <span class="mensajeTexto">Ej: miusuario91</span>
                     </div>
                     <div class="mb-4 mensaje">
                         <label for="clave" class="form-label">Contraseña</label>
                         <div class="input-group">
-                            <input type="password" class="form-control shadow" id="password" placeholder="Ingresa tu contraseña" name="password" required>
+                            <input type="password" class="form-control shadow" id="password" placeholder="Ingresa tu contraseña" name="Password" required>
                             <button type="button" id="togglePassword" class="btn btn-outline-secondary">
                                 <i id="toggleIcon" class="bi bi-eye-slash"></i> <!-- Icono de ojo tachado -->
                             </button>
