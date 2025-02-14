@@ -4,16 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const mensajeError = document.getElementById("mensajeError");
     const botonEnviar = document.getElementById("btnEnviar");
 
-    // Validar cada campo al perder el foco
     campos.forEach((campoId) => {
         const campo = document.getElementById(campoId);
+
+        // Cuando el campo recibe foco, resaltar el campo
+        campo.addEventListener("focus", function () {
+            resaltarCampo(campoId);
+        });
+
+        // Cuando el campo pierde el foco, validarlo
         campo.addEventListener("blur", function () {
             validarCampoSecuencial(campoId);
             actualizarEstadoBoton();
         });
     });
 
-    // Validación al enviar el formulario
     form.addEventListener("submit", function (event) {
         mensajeError.classList.add("d-none");
         mensajeError.innerHTML = "";
@@ -24,82 +29,93 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (!esValido) {
-            event.preventDefault(); // Evitar el envío si hay errores
+            event.preventDefault();
             mensajeError.classList.remove("d-none");
             mensajeError.innerHTML = "Por favor, corrige los campos marcados antes de continuar.";
         }
     });
 
+    function resaltarCampo(campoId) {
+        // Agregar clase para resaltar el campo con foco
+        const contenedor = document.getElementById(campoId).closest('.campo-contenedor');
+        contenedor.classList.add("focused-field");  // Añadir una clase CSS para el enfoque
+    }
+
     function validarCampoSecuencial(campoId) {
         const input = document.getElementById(campoId);
-        let esValido = false;
+        const contenedor = input.closest('.campo-contenedor');
 
+        let esValido = false;
         switch (campoId) {
             case "cedula":
-                esValido = validarCedula(input);
+                esValido = validarCedula(input, contenedor);
                 break;
             case "nombre":
-                esValido = validarNombre(input);
+                esValido = validarNombre(input, contenedor);
                 break;
             case "apellido":
-                esValido = validarApellido(input);
+                esValido = validarApellido(input, contenedor);
                 break;
             case "correo":
-                esValido = validarCorreo(input);
+                esValido = validarCorreo(input, contenedor);
                 break;
             case "password":
-                esValido = validarPassword(input);
+                esValido = validarPassword(input, contenedor);
                 break;
         }
-
         return esValido;
     }
 
-    function validarCedula(campo) {
+    function validarCedula(campo, contenedor) {
         const regex = /^\d{10}$/;
-        return aplicarValidacion(campo, regex, "La cédula debe tener 10 dígitos y solo números.");
+        return aplicarValidacion(campo, regex, "La cédula debe tener 10 dígitos y solo números.", contenedor);
     }
 
-    function validarNombre(campo) {
+    function validarNombre(campo, contenedor) {
         const regex = /^[A-Za-z]+$/;
-        return aplicarValidacion(campo, regex, "El nombre no debe contener números ni espacios.");
+        return aplicarValidacion(campo, regex, "El nombre no debe contener números ni espacios.", contenedor);
     }
 
-    function validarApellido(campo) {
+    function validarApellido(campo, contenedor) {
         const regex = /^[A-Za-z]+$/;
-        return aplicarValidacion(campo, regex, "El apellido no debe contener números ni espacios.");
+        return aplicarValidacion(campo, regex, "El apellido no debe contener números ni espacios.", contenedor);
     }
 
-    function validarCorreo(campo) {
+    function validarCorreo(campo, contenedor) {
         const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        return aplicarValidacion(campo, regex, "Por favor, ingresa un correo electrónico válido.");
+        return aplicarValidacion(campo, regex, "Por favor, ingresa un correo electrónico válido.", contenedor);
     }
 
-    function validarPassword(campo) {
+    function validarPassword(campo, contenedor) {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-        return aplicarValidacion(campo, regex, "La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.");
+        return aplicarValidacion(campo, regex, "La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.", contenedor);
     }
 
-    function aplicarValidacion(campo, regex, mensaje) {
+    function aplicarValidacion(campo, regex, mensaje, contenedor) {
         if (!regex.test(campo.value)) {
-            marcarInvalido(campo, mensaje);
+            marcarInvalido(contenedor, mensaje);
             return false;
         }
-        marcarValido(campo);
+        marcarValido(contenedor);
         return true;
     }
 
-    function marcarInvalido(campo, mensaje) {
-        campo.classList.add("invalid-field");
-        campo.setCustomValidity(mensaje); // Forzar el mensaje de error
+    function marcarInvalido(contenedor, mensaje) {
+        // Resaltar campo en rojo y mostrar el mensaje de error
+        contenedor.classList.add("invalid-field");
         mensajeError.classList.remove("d-none");
         mensajeError.innerHTML = mensaje;
-        campo.focus(); // Mantener el foco en el campo hasta que sea válido
+        
+        // Enfocar el campo para que el usuario vea el error y lo corrija
+        const input = contenedor.querySelector('input, select, textarea');
+        if (input) {
+            input.focus();
+        }
     }
 
-    function marcarValido(campo) {
-        campo.classList.remove("invalid-field");
-        campo.setCustomValidity("");
+    function marcarValido(contenedor) {
+        // Eliminar la clase invalid-field cuando el campo es corregido
+        contenedor.classList.remove("invalid-field");
     }
 
     function actualizarEstadoBoton() {

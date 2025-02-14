@@ -59,32 +59,32 @@
 
 <div class="container d-flex justify-content-center align-items-center">
     <form id="formUsuario" method="POST" action="../../php/registrar_usuario.php" class="p-4 bg-light rounded shadow">
-        <div class="mb-3">
+        <div class="campo-contenedor mb-3">
             <label for="cedula" class="form-label">Cédula:</label>
             <input type="text" name="cedula" id="cedula" class="form-control" required placeholder="1721623369" maxlength="10">
         </div>
 
-        <div class="mb-3">
+        <div class="campo-contenedor mb-3">
             <label for="nombre" class="form-label">Nombre:</label>
             <input type="text" name="nombre" id="nombre" class="form-control" required placeholder="Alejandro">
         </div>
 
-        <div class="mb-3">
+        <div class="campo-contenedor mb-3">
             <label for="apellido" class="form-label">Apellido:</label>
             <input type="text" name="apellido" id="apellido" class="form-control" required placeholder="Gómez">
         </div>
 
-        <div class="mb-3">
+        <div class="campo-contenedor mb-3">
             <label for="correo" class="form-label">Correo:</label>
             <input type="email" name="correo" id="correo" class="form-control" required placeholder="correo@dominio.com">
         </div>
 
-        <div class="mb-3">
+        <div class="campo-contenedor mb-3">
             <label for="password" class="form-label">Contraseña:</label>
             <input type="password" name="password" id="password" class="form-control" required placeholder="Contraseña123">
         </div>
 
-        <div class="mb-3">
+        <div class="campo-contenedor mb-3">
             <label for="rol" class="form-label">Rol:</label>
             <select name="rol" id="rol" class="form-select" required>
                 <option value="" disabled selected>Selecciona un rol</option>
@@ -94,7 +94,7 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Registrar Usuario</button>
+        <button type="submit" id="btnEnviar" class="btn btn-primary w-100">Registrar Usuario</button>
         <div id="mensajeError" class="text-danger d-none mt-2"></div>
     </form>
 </div>

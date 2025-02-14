@@ -46,9 +46,18 @@ button:hover {
     margin-top: 10px;
     font-size: 14px;
 }
+/* Resaltar campos con borde rojo y fondo ligeramente rosado */
 .invalid-field {
-    border: 2px solid red !important; /* Resaltar con borde rojo */
-    outline: none;
-    background-color: #ffe6e6; /* Fondo rojo claro para mayor visibilidad */
+    border: 2px solid red;  /* Borde rojo */
+    background-color: #f8d7da;  /* Fondo ligeramente rosado */
 }
+
+/* Mensajes de error */
+.invalid-feedback {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
 

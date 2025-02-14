@@ -1,8 +1,19 @@
 <?php
-include("conexion.php");
+$servername = "localhost";
+$username = "admin"; 
+$password = "admin"; 
+$database = "ECONOMIAF"; 
 
-// Consultar usuarios
-$sql = "SELECT Cedula, Nombre, Apellido, Correo FROM usuarios";
+// Crear conexión
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+// Obtener los usuarios
+$sql = "SELECT Cedula, Nombre, Apellido, Correo FROM usuarios"; // Asegúrate de ajustar esta consulta según tu base de datos
 $result = $conn->query($sql);
 ?>
 
@@ -77,7 +88,7 @@ $result = $conn->query($sql);
                 </tr>
             </thead>
             <tbody>
-                <?php if ($result->num_rows > 0): ?>
+                <?php if ($result && $result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
                             <td><?= htmlspecialchars($row["Cedula"]) ?></td>
@@ -103,4 +114,8 @@ $result = $conn->query($sql);
 </body>
 </html>
 
-<?php $conn->close(); ?>
+<?php 
+if ($conn) {
+    $conn->close(); 
+}
+?>
