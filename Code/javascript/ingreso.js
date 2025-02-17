@@ -63,3 +63,38 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+document.getElementById("cedula").addEventListener("input", function() {
+    var valor = this.value;  
+
+    if (!esNumeroValido(valor)) {
+        this.classList.add("error");
+    } else {
+        this.classList.remove("error");
+    }
+});
+
+document.getElementById("nombre").addEventListener("input", function() {
+    var valor = this.value;  
+
+    if (!esValorValido(valor)) {
+        this.classList.add("error");
+    } else {
+        this.classList.remove("error");
+    }
+});
+
+document.getElementById("apellido").addEventListener("input", function() {
+    var valor = this.value;  
+
+    if (!esValorValido(valor)) {
+        this.classList.add("error");
+    } else {
+        this.classList.remove("error");
+    }
+});
+function esNumeroValido(valor) {
+    return /^\d+$/.test(valor);  // Verifica si el valor contiene solo números
+}
+function esValorValido(valor) {
+    return /^[A-Za-z]+$/.test(valor);  // Verifica si el valor contiene solo números
+}
