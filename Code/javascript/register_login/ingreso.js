@@ -1,128 +1,121 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("formUsuario");
-    const campos = ["cedula", "nombre", "apellido", "correo", "password"];
+const formulario = document.getElementById('formUsuario');
+const inputs = document.querySelectorAll("#formUsuario input");
+const togglePasswordBtn = document.getElementById("togglePassword");
+const passwordField = document.getElementById("password");
+const toggleIcon = document.getElementById("toggleIcon");
+
+// Alternar la visibilidad de la contraseña
+togglePasswordBtn.addEventListener("click", function () {
+    const tipo = passwordField.type === "password" ? "text" : "password";
+    passwordField.type = tipo;
+
+    // Cambiar el icono del botón
+    if (passwordField.type === "password") {
+        toggleIcon.classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+        toggleIcon.classList.replace("bi-eye-slash", "bi-eye");
+    }
+});
+
+const expresiones = {
+    username: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    apellido: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    password: /^.{4,12}$/, // 4 a 12 caracteres.
+    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, // formato nombre@server.com
+    cedula: /^\d{10}$/ // 10 numeros.
+};
+const campos = {
+    nombre: false,
+    apellido: false,
+    cedula: false,
+    password: false,
+    email: false
+};
+
+const validarFormulario = (e) => {
+    const input = e.target;
+    const nombreCampo = input.name;
+
+    switch (nombreCampo) {
+        case "nombre":
+            validarCampo(expresiones.nombre, input, nombreCampo);
+            break;
+        case "apellido":
+            validarCampo(expresiones.apellido, input, nombreCampo);
+            break;
+        case "cedula":
+            validarCampo(expresiones.cedula, input, nombreCampo);
+            break;
+        case "password":
+            validarCampo(expresiones.password, input, nombreCampo);
+            break;
+        case "password2":
+            validarPassword2();
+        break;
+        case "email":
+            validarCampo(expresiones.email, input, nombreCampo);
+            break;
+    }
+};
+
+const validarCampo = (expresion, input, campo) => {
+    const contenedor = input.closest('.campo-contenedor');
+    const mensajeError = contenedor.querySelector('.formulario__input-error');
+    if (expresion.test(input.value)) {
+        contenedor.classList.remove('formulario__grupo-incorrecto');
+        contenedor.classList.add('formulario__grupo-correcto');
+        mensajeError.classList.remove('formulario__input-error-activo');
+        campos[campo] = true;
+    } else {
+        contenedor.classList.add('formulario__grupo-incorrecto');
+        contenedor.classList.remove('formulario__grupo-correcto');
+        mensajeError.classList.add('formulario__input-error-activo');
+        campos[campo] = false;
+    }
+};
+const validarPassword2 = () => {
+	const inputPassword1 = document.getElementById('password');
+	const inputPassword2 = document.getElementById('password2');
+	if(inputPassword1.value !== inputPassword2.value){ //si no es el valor de password1
+		document.getElementById(`grupo__password2`).classList.add(`formulario__grupo-incorrecto`);
+		document.getElementById(`grupo__password2`).classList.remove(`formulario__grupo-correcto`);
+		document.querySelector(`#grupo__password2 .formulario__input-error`).classList.add(`formulario__input-error-activo`);
+		campos['password'] = false;
+	}else{
+		document.getElementById(`grupo__password2`).classList.remove(`formulario__grupo-incorrecto`);
+		document.getElementById(`grupo__password2`).classList.add(`formulario__grupo-correcto`);
+		document.querySelector(`#grupo__password2 .formulario__input-error`).classList.remove(`formulario__input-error-activo`);
+		campos['password'] = true;
+	}
+}
+inputs.forEach(input => {
+    input.addEventListener('keyup', validarFormulario);
+    input.addEventListener('blur', validarFormulario);
+});
+
+formulario.addEventListener('submit', (e) => {
+    e.preventDefault();
     const mensajeError = document.getElementById("mensajeError");
-    const botonEnviar = document.getElementById("btnEnviar");
+    mensajeError.classList.add("d-none");
+    mensajeError.innerHTML = "";
 
-    campos.forEach((campoId) => {
-        const campo = document.getElementById(campoId);
-
-        // Cuando el campo recibe foco, resaltar el campo
-        campo.addEventListener("focus", function () {
-            resaltarCampo(campoId);
-        });
-
-        // Cuando el campo pierde el foco, validarlo
-        campo.addEventListener("blur", function () {
-            validarCampoSecuencial(campoId);
-            actualizarEstadoBoton();
-        });
+    let esValido = true;
+    Object.keys(campos).forEach(campo => {
+        if (!campos[campo]) esValido = false;
     });
 
-    form.addEventListener("submit", function (event) {
-        mensajeError.classList.add("d-none");
-        mensajeError.innerHTML = "";
-
-        let esValido = true;
-        campos.forEach((campoId) => {
-            if (!validarCampoSecuencial(campoId)) esValido = false;
+    if (esValido) {
+        formulario.reset();
+        document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
+        setTimeout(() => {
+            document.getElementById('formulario__mensaje-exito').classList.remove('formulario__mensaje-exito-activo');
+        }, 5000);
+        document.querySelectorAll('.formulario__grupo-correcto').forEach(icono => {
+            icono.classList.remove('formulario__grupo-correcto');
         });
-
-        if (!esValido) {
-            event.preventDefault();
-            mensajeError.classList.remove("d-none");
-            mensajeError.innerHTML = "Por favor, corrige los campos marcados antes de continuar.";
-        }
-    });
-
-    function resaltarCampo(campoId) {
-        // Agregar clase para resaltar el campo con foco
-        const contenedor = document.getElementById(campoId).closest('.campo-contenedor');
-        contenedor.classList.add("focused-field");  // Añadir una clase CSS para el enfoque
-    }
-
-    function validarCampoSecuencial(campoId) {
-        const input = document.getElementById(campoId);
-        const contenedor = input.closest('.campo-contenedor');
-
-        let esValido = false;
-        switch (campoId) {
-            case "cedula":
-                esValido = validarCedula(input, contenedor);
-                break;
-            case "nombre":
-                esValido = validarNombre(input, contenedor);
-                break;
-            case "apellido":
-                esValido = validarApellido(input, contenedor);
-                break;
-            case "correo":
-                esValido = validarCorreo(input, contenedor);
-                break;
-            case "password":
-                esValido = validarPassword(input, contenedor);
-                break;
-        }
-        return esValido;
-    }
-
-    function validarCedula(campo, contenedor) {
-        const regex = /^\d{10}$/;
-        return aplicarValidacion(campo, regex, "La cédula debe tener 10 dígitos y solo números.", contenedor);
-    }
-
-    function validarNombre(campo, contenedor) {
-        const regex = /^[A-Za-z]+$/;
-        return aplicarValidacion(campo, regex, "El nombre no debe contener números ni espacios.", contenedor);
-    }
-
-    function validarApellido(campo, contenedor) {
-        const regex = /^[A-Za-z]+$/;
-        return aplicarValidacion(campo, regex, "El apellido no debe contener números ni espacios.", contenedor);
-    }
-
-    function validarCorreo(campo, contenedor) {
-        const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        return aplicarValidacion(campo, regex, "Por favor, ingresa un correo electrónico válido.", contenedor);
-    }
-
-    function validarPassword(campo, contenedor) {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-        return aplicarValidacion(campo, regex, "La contraseña debe tener al menos 6 caracteres, una mayúscula, una minúscula y un número.", contenedor);
-    }
-
-    function aplicarValidacion(campo, regex, mensaje, contenedor) {
-        if (!regex.test(campo.value)) {
-            marcarInvalido(contenedor, mensaje);
-            return false;
-        }
-        marcarValido(contenedor);
-        return true;
-    }
-
-    function marcarInvalido(contenedor, mensaje) {
-        // Resaltar campo en rojo y mostrar el mensaje de error
-        contenedor.classList.add("invalid-field");
-        mensajeError.classList.remove("d-none");
-        mensajeError.innerHTML = mensaje;
-        
-        // Enfocar el campo para que el usuario vea el error y lo corrija
-        const input = contenedor.querySelector('input, select, textarea');
-        if (input) {
-            input.focus();
-        }
-    }
-
-    function marcarValido(contenedor) {
-        // Eliminar la clase invalid-field cuando el campo es corregido
-        contenedor.classList.remove("invalid-field");
-    }
-
-    function actualizarEstadoBoton() {
-        let hayErrores = campos.some((campoId) => {
-            const campo = document.getElementById(campoId);
-            return !campo.checkValidity();
-        });
-        botonEnviar.disabled = hayErrores;
+    } else {
+        mensajeError.classList.remove('d-none');
+        mensajeError.innerHTML = "Por favor, corrige los campos marcados antes de continuar.";
     }
 });
