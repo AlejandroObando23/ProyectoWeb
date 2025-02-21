@@ -3,6 +3,22 @@ require_once "conexion.php"; // Incluir la conexión
 
 session_start(); // Iniciar sesión
 
+// Verificar si el usuario ya está logueado
+if (isset($_SESSION['usuario'])) {
+    // Redirigir al inicio según el rol del usuario
+    switch ($_SESSION['rol']) {
+        case 'admin':
+            header("Location: Admin/AdminInicio.php");
+            exit();
+        case 'egreso':
+            header("Location: ../../html/Servicios/gastos.html");
+            exit();
+        case 'ingreso':
+            header("Location: ../../html/Servicios/ingresos.html");
+            exit();
+    }
+}
+
 $mensaje = ''; // Variable para el mensaje de error
 
 // Verificar si el formulario ha sido enviado
@@ -31,11 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             $registro = $result->fetch_assoc(); // Obtener los datos del usuario
 
+            // Depurar los datos de la base de datos
+            var_dump($registro); // Verifica los datos recuperados
+
             // Verificar la contraseña de manera segura
             if (password_verify($password, $registro['Password'])) { 
                 $_SESSION['usuario'] = $registro['Cedula'];
                 $_SESSION['nombre'] = $registro['Nombre'];
                 $_SESSION['rol'] = $registro['Rol'];
+
+                // Depurar las variables de sesión
+                var_dump($_SESSION); // Verifica el contenido de la sesión
 
                 // Verificar si el usuario tiene un rol asignado
                 if (empty($registro['Rol'])) {
@@ -58,11 +80,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             } else {
-                // Si la contraseña no es correcta, no especificamos qué es incorrecto
+                // Si la contraseña no es correcta
                 $mensaje = 'Usuario o contraseña incorrectos.';
             }
         } else {
-            // Si el usuario no se encuentra, también mostramos el mismo mensaje genérico
+            // Si el usuario no se encuentra
             $mensaje = 'Usuario o contraseña incorrectos.';
         }
 
@@ -127,6 +149,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../javascript/scriptlogin.js"></script>
+    <script src="../javascript/register_login/scriptlogin.js"></script>
 </body>
 </html>

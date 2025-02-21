@@ -21,7 +21,7 @@ const expresiones = {
     username: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     apellido: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-    password: /^.{4,12}$/, // 4 a 12 caracteres.
+    password: /^.{8,}$/, // Al menos 8 caracteres.
     email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/, // formato nombre@server.com
     cedula: /^\d{10}$/ // 10 numeros.
 };
@@ -106,6 +106,8 @@ formulario.addEventListener('submit', (e) => {
     });
 
     if (esValido) {
+        // Aquí envías el formulario y lo registras en la base de datos
+        formulario.submit();  // Esto permite que el formulario se envíe al servidor
         formulario.reset();
         document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
         setTimeout(() => {
@@ -119,3 +121,5 @@ formulario.addEventListener('submit', (e) => {
         mensajeError.innerHTML = "Por favor, corrige los campos marcados antes de continuar.";
     }
 });
+    
+

@@ -1,21 +1,22 @@
 <?php
-$servername = "localhost";
-$username = "admin"; 
-$password = "admin"; 
-$database = "ECONOMIAF"; 
+// Inicia la sesión
+session_start();
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $database);
+// Incluir el archivo de conexión a la base de datos
+include('../conexion.php');
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+// Verifica si el usuario está autenticado y tiene el rol de admin
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
+    // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
+    header('Location: ../../html/acceso_denegado.html');
+    exit();
 }
 
 // Obtener los usuarios
 $sql = "SELECT Cedula, Nombre, Apellido, Correo FROM usuarios"; // Asegúrate de ajustar esta consulta según tu base de datos
 $result = $conn->query($sql);
 ?>
+
 
 <!doctype html>
 <html lang="es">
@@ -24,8 +25,11 @@ $result = $conn->query($sql);
     <title>Administrador</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../../imagenes/logo.png">
-    <link href="../../css/menu.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="../../css/menu.css" rel="stylesheet">
+    <link href="../../css/adminusercrear.css" rel="stylesheet">
+    <link href="../../css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -47,32 +51,31 @@ $result = $conn->query($sql);
     </div>
 </header>
 
-<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow menu">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="menuNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item fw-bold"><a class="nav-link" href="AdminInicio.php"><i class="bi bi-house"></i> Inicio</a></li>
-                <li class="nav-item fw-bold"><a class="nav-link" href="../../html/Servicios/ingresos.html"><i class="bi bi-cash-coin"></i> Ingresos</a></li>
-                <li class="nav-item fw-bold"><a class="nav-link" href="../../html/Servicios/gastos.html"><i class="bi bi-credit-card"></i> Gastos</a></li>
-                <li class="nav-item fw-bold"><a class="nav-link" href="#"><i class="bi bi-info-square"></i> Reportes</a></li>
-                <li class="nav-item dropdown fw-bold">
-                    <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
-                       data-bs-toggle="dropdown">
-                        <i class="bi bi-people-fill active"></i> Usuarios
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item active" href="AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de usuarios</a></li>
-                        <li><a class="dropdown-item" href="../html/Administrador/AdminUserCrear.html"><i class="bi bi-person-fill-add"></i> Agregar usuario</a></li>
-                        <li><a class="dropdown-item" href="AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar permisos</a></li>
-                    </ul>
-                </li>
-            </ul>
+<div class="navbar navbar-expand-lg navbar-light sticky-top shadow menu">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item fw-bold"><a class="nav-link" href="../../php/Admin/AdminInicio.php"><i class="bi bi-house"></i> Inicio</a></li>
+                    <li class="nav-item fw-bold"><a class="nav-link " href="../Servicios/ingresos.html"><i class="bi bi-cash-coin"></i> Ingresos</a></li>
+                    <li class="nav-item fw-bold"><a class="nav-link" href="../Servicios/gastos.html"><i class="bi bi-credit-card"></i> Gastos</a></li>
+                    <li class="nav-item fw-bold"><a class="nav-link" href="#"><i class="bi bi-info-square"></i> Reportes</a></li>
+                    <li class="nav-item dropdown fw-bold">
+                        <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-people-fill active"></i> Usuarios
+                        </a>
+                        <ul class="dropdown-menu menu">
+                            <li><a class="dropdown-item " href="AdminUserLista.php"><i class="bi bi-person-lines-fill active"></i> Lista de usuarios</a></li>
+                            <li><a class="dropdown-item " href="AdminUserCrear.php"><i class="bi bi-person-fill-add"></i> Agregar usuario</a></li>
+                            <li><a class="dropdown-item" href="AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar permisos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</nav>
 
 <div class="container mt-4">
     <h1 class="text-center">Lista de Usuarios</h1>

@@ -5,9 +5,10 @@ session_start();
 // Verifica si el usuario está autenticado y tiene el rol de admin
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
     // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
-    header('Location: /ruta_a_redirigir/acceso_denegado.php');
+    header('Location: ../../html/acceso_denegado.html');
     exit();
 }
+
 ?>
 
 <!doctype html>
@@ -39,6 +40,8 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 
             <div class="ms-auto d-flex align-items-center text-center">
                 <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['usuario']; ?></span>
+                <!-- Mostrar el rol directamente desde la sesión -->
+                <span id="rolUsuario" class="me-2 d-none d-md-flex">(<?php echo ucfirst($_SESSION['rol']); ?>)</span>
                 <i class="fs-4" id="user-icon">
                     <img src="../../imagenes/iconoUser.png" alt="user" width="50">
                 </i>
@@ -73,7 +76,7 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
                   <ul class="dropdown-menu menu" aria-labelledby="usuariosDropdown">
                       <li><a class="dropdown-item" href="AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
                               usuarios</a></li>
-                      <li><a class="dropdown-item" href="../../html/Administrador/AdminUserCrear.html"><i class="bi bi-person-fill-add"></i> Agregar
+                      <li><a class="dropdown-item" href="AdminUserCrear.php"><i class="bi bi-person-fill-add"></i> Agregar
                               usuario</a></li>
                       <li><a class="dropdown-item" href="../../html/Administrador/AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar
                               permisos</a></li>
