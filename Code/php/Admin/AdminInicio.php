@@ -56,9 +56,9 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 
       <div class="collapse navbar-collapse" id="menuNav">
           <ul class="navbar-nav mx-auto">
-              <li class="nav-item opcion fw-bold"><a class="nav-link" href="AdminInicio.php"><i class="bi bi-house"></i>
+              <li class="nav-item opcion fw-bold"><a class="nav-link active" href="AdminInicio.php"><i class="bi bi-house"></i>
                       Inicio</a></li>
-              <li class="nav-item opcion fw-bold"><a class="nav-link active" href="../../html/Servicios/ingresos.html"><i
+              <li class="nav-item opcion fw-bold"><a class="nav-link " href="../../html/Servicios/ingresos.html"><i
                           class="bi bi-cash-coin"></i>
                       Ingresos</a></li>
               <li class="nav-item opcion fw-bold"><a class="nav-link" href="../../html/Servicios/gastos.html"><i class="bi bi-credit-card"></i>

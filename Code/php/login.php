@@ -1,64 +1,77 @@
 <?php
-require_once "conexion.php";
+require_once "conexion.php"; // Incluir la conexión
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start(); // Iniciar sesión
 
-$mensaje = ""; // Variable para almacenar el mensaje de error
+$mensaje = ''; // Variable para el mensaje de error
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $usuario = trim($_POST['Cedula']);
-    $password = trim($_POST['Password']);
+// Verificar si el formulario ha sido enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los datos enviados desde el formulario
+    $usuario = $_POST['Cedula'];
+    $password = $_POST['Password'];
 
-    if (!empty($usuario) && !empty($password)) {
-        $sql = "SELECT * FROM usuarios WHERE cedula = ?";
+    // Verificar que los datos no estén vacíos
+    if (empty($usuario) || empty($password)) {
+        $mensaje = 'Debe ingresar usuario y contraseña.';
+    } else {
+        // Consultar si el usuario existe en la base de datos
+        $sql = "SELECT * FROM usuarios WHERE Cedula = ?";
         $stmt = $conn->prepare($sql);
 
-        if ($stmt) {
-            $stmt->bind_param("s", $usuario);
-            $stmt->execute();
-            $result = $stmt->get_result();
+        if (!$stmt) {
+            die("Error en la preparación de la consulta: " . $conn->error);
+        }
 
-            if ($result->num_rows > 0) {
-                $registro = $result->fetch_assoc();
+        $stmt->bind_param("s", $usuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-                if (isset($registro['Contraseña']) && password_verify($password, $registro['Contraseña'])) {
+        // Comprobar si el usuario fue encontrado
+        if ($result->num_rows > 0) {
+            $registro = $result->fetch_assoc(); // Obtener los datos del usuario
 
-                    $_SESSION['usuario'] = htmlspecialchars($registro['cedula'], ENT_QUOTES, 'UTF-8');
-                    $_SESSION['nombre'] = htmlspecialchars($registro['Nombre'], ENT_QUOTES, 'UTF-8');
-                    $_SESSION['rol'] = htmlspecialchars($registro['Rol'], ENT_QUOTES, 'UTF-8');
+            // Verificar la contraseña de manera segura
+            if (password_verify($password, $registro['Password'])) { 
+                $_SESSION['usuario'] = $registro['Cedula'];
+                $_SESSION['nombre'] = $registro['Nombre'];
+                $_SESSION['rol'] = $registro['Rol'];
 
-                    if (empty($registro['Rol'])) {
-                        $mensaje = "No tiene un rol asignado. Contacte al administrador.";
-                    } else {
-                        switch ($registro['Rol']) {
-                            case 'Administrador':
-                                header("Location: ../html/Administrador/AdminInicio.html");
-                                exit();
-                            case 'Egreso':
-                                header("Location: ../html/Servicios/gastos.html");
-                                exit();
-                            case 'Ingreso':
-                                header("Location: ../html/Servicios/ingresos.html");
-                                exit();
-                        }
-                    }
+                // Verificar si el usuario tiene un rol asignado
+                if (empty($registro['Rol'])) {
+                    $mensaje = 'No tiene un rol asignado. Pida al administrador que le asigne uno.';
                 } else {
-                    $mensaje = "Usuario o contraseña incorrecta.";
+                    // Redirigir según el rol
+                    switch ($registro['Rol']) {
+                        case 'admin':
+                            header("Location: Admin/AdminInicio.php");
+                            exit();
+                        case 'egreso':
+                            header("Location: ../../html/Servicios/gastos.html");
+                            exit();
+                        case 'ingreso':
+                            header("Location: ../../html/Servicios/ingresos.html");
+                            exit();
+                        default:
+                            $mensaje = 'Rol no reconocido. Contacte al administrador.';
+                            break;
+                    }
                 }
             } else {
-                $mensaje = "Usuario o contraseña incorrecta.";
+                // Si la contraseña no es correcta, no especificamos qué es incorrecto
+                $mensaje = 'Usuario o contraseña incorrectos.';
             }
-            $stmt->close();
+        } else {
+            // Si el usuario no se encuentra, también mostramos el mismo mensaje genérico
+            $mensaje = 'Usuario o contraseña incorrectos.';
         }
-    } else {
-        $mensaje = "Por favor, complete todos los campos.";
+
+        // Cerrar la conexión
+        $stmt->close();
+        $conn->close();
     }
-    $conn->close();
 }
 ?>
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -88,10 +101,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php endif; ?>
 
                <!-- LOGIN -->
-               <form action="../php/Conexion_register_login/login.php" method="POST" id="formLogin">
+               <form action="" method="POST" id="formLogin">
                     <div class="mb-4 mensaje">
                         <label for="usuario" class="form-label">Usuario</label>
-                        <input type="text" id="user"   maxlength="10"  class="form-control shadow" placeholder="Ingresa tu nombre de usuario" name="Cedula" required>
+                        <input type="text" id="user" maxlength="10" class="form-control shadow" placeholder="Ingresa tu nombre de usuario" name="Cedula" required>
                         <span class="mensajeTexto">Ej: miusuario91</span>
                     </div>
                     <div class="mb-4 mensaje">
@@ -105,11 +118,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span class="mensajeTexto">Ingresa tu contraseña dada por el administrador</span>
                     </div>
                     
-                    
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary iniciar shadow">Iniciar Sesión</button>
                     </div>
-                    <p id="mensajeError" class="text-danger mt-3 d-none"></p>
                 </form>
             </div>
         </div>

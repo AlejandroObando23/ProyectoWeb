@@ -61,7 +61,7 @@ $result = $conn->query($sql);
                 <li class="nav-item dropdown fw-bold">
                     <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
                        data-bs-toggle="dropdown">
-                        <i class="bi bi-people-fill"></i> Usuarios
+                        <i class="bi bi-people-fill active"></i> Usuarios
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item active" href="AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de usuarios</a></li>
