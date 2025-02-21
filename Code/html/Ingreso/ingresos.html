@@ -45,20 +45,35 @@
 
             <div class="collapse navbar-collapse" id="menuNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item opcion fw-bold"><a class="nav-link" href="../../php/Ingreso/IngresoInicio.php"><i class="bi bi-house"></i>
+                    <li class="nav-item opcion fw-bold"><a class="nav-link" href="../../php/Admin/AdminInicio.php"><i class="bi bi-house"></i>
                             Inicio</a></li>
                     <li class="nav-item opcion fw-bold"><a class="nav-link active" href="ingresos.html"><i
                                 class="bi bi-cash-coin"></i>
                             Ingresos</a></li>
+                    <li class="nav-item opcion fw-bold"><a class="nav-link" href="gastos.html"><i class="bi bi-credit-card"></i>
+                            Gastos</a></li>
                     <li class="nav-item opcion fw-bold"><a class="nav-link" href="#"><i class="bi bi-info-square"></i>
                             Reportes</a></li>
+                    <li class="nav-item dropdown opcion fw-bold">
+                        <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-people-fill"></i> Usuarios
+                        </a>
+                        <ul class="dropdown-menu menu" aria-labelledby="usuariosDropdown">
+                            <li><a class="dropdown-item" href="../../php/Admin/AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
+                                    usuarios</a></li>
+                            <li><a class="dropdown-item" href="../Administrador/AdminUserCrear.html"><i class="bi bi-person-fill-add"></i> Agregar
+                                    usuario</a></li>
+                            <li><a class="dropdown-item" href="../Administrador/AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar
+                                    permisos</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div class="container mt-4">
-        <h1 class="text-center titulo">Ingresos</h1>
+    <dialog id="modalAgregar" class="container mt-4 border-0 rounded">
         <form>
             <fieldset class="border p-2 shadow agregar bg-light">
                 <h3 class="titulo">Nuevo Ingreso</h3>
@@ -107,29 +122,108 @@
                     </div>
                 </div>
                 <hr>
-                <button class="btn botonE">Enviar</button>
-                <button class="btn botonR">Restablecer</button>
+                <button class="btn botonE">Guardar</button>
+                <button class="btn botonR">Cancelar</button>
             </fieldset>
         </form>
 
-    </div>
+    </dialog>
 
     <div class="container mt-4">
-        <form>
-            <fieldset class="border p-2 shadow agregar bg-light">
-                <h3 class="titulo">Ingresos</h3>
+            <fieldset class="border p-2 shadow agregar bg-light table-responsive rounded">
+                <div class="d-flex">
+                    <div class="col"><h3 class="titulo">Ingresos</h3></div>
+                    <div class="col text-end"><button id="agregar" class="btn bg-info-subtle" onclick="abrirAgregarIngreso()"><i class="bi bi-plus-circle"></i> Agregar Ingreso</button></div>                
+                </div>
                 <hr>
-
+                <div class="row">
+                    <div class="col">
+                        <label>Buscar por tipo</label>
+                        <select class="form-control mb-3 form-select">
+                            <option>Seleccione una opcion</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Fecha específica</label>
+                        <input type="date" class="form-control mb-3">
+                    </div>
+                    <div class="col"></div>
+                    <div class="col"></div>
+                </div>
+                <hr>
+                <table class="table text-center table-striped rounded">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Monto</th>
+                        <th scope="col">Método</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Registrado por</th>
+                        <th scope="col">Código QR</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="align-middle">
+                        <th scope="row">1</th>
+                        <td>2025-02-21</td>
+                        <td>Servicios Básicos</td>
+                        <td>$ 100</td>
+                        <td>Efectivo</td>
+                        <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
+                        <td>Mateo Medranda</td>
+                        <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
+                        <td>
+                            <div class="d-grid">
+                                <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
+                                <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
+                            </div>
+                        </td>
+                      </tr>
+                      <tr class="align-middle">
+                        <th scope="row">1</th>
+                        <td>2025-02-21</td>
+                        <td>Servicios Básicos</td>
+                        <td>$ 100</td>
+                        <td>Efectivo</td>
+                        <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
+                        <td>Mateo Medranda</td>
+                        <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
+                        <td>
+                            <div class="d-grid">
+                                <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
+                                <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
+                            </div>
+                        </td>
+                      </tr>
+                      <tr class="align-middle">
+                        <th scope="row">1</th>
+                        <td>2025-02-21</td>
+                        <td>Servicios Básicos</td>
+                        <td>$ 100</td>
+                        <td>Efectivo</td>
+                        <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
+                        <td>Mateo Medranda</td>
+                        <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
+                        <td>
+                            <div class="d-grid">
+                                <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
+                                <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 <hr>
             </fieldset>
-        </form>
-
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="../../javascript/Servicios/ingresos.js"></script>
 </body>
 
 </html>

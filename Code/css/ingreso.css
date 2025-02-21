@@ -16,6 +16,14 @@ body {
     background-size: cover;
 }
 
+.qr{
+    width: 100px; 
+    height: 100px;
+    background-image: url("../imagenes/codigoQR.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .botonE:hover {
     background-color: rgb(135, 211, 169);
 }
