@@ -3,9 +3,9 @@
 session_start();
 
 // Verifica si el usuario está autenticado y tiene el rol de admin
-if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'ingreso') {
     // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
-    header('Location: ../../html/Administrador/acceso_denegado.html');
+    header('Location: ../../html/Ingreso/acceso_denegado.html');
     exit();
 }
 
@@ -59,28 +59,14 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
 
       <div class="collapse navbar-collapse" id="menuNav">
           <ul class="navbar-nav mx-auto">
-              <li class="nav-item opcion fw-bold"><a class="nav-link active" href="AdminInicio.php"><i class="bi bi-house"></i>
+              <li class="nav-item opcion fw-bold"><a class="nav-link active" href="IngresoInicio.php"><i class="bi bi-house"></i>
                       Inicio</a></li>
-              <li class="nav-item opcion fw-bold"><a class="nav-link " href="../../html/Servicios/ingresos.html"><i
+              <li class="nav-item opcion fw-bold"><a class="nav-link " href="../../html/Ingreso/ingresos.html"><i
                           class="bi bi-cash-coin"></i>
                       Ingresos</a></li>
-              <li class="nav-item opcion fw-bold"><a class="nav-link" href="../../html/Servicios/gastos.html"><i class="bi bi-credit-card"></i>
-                      Gastos</a></li>
               <li class="nav-item opcion fw-bold"><a class="nav-link" href="#"><i class="bi bi-info-square"></i>
                       Reportes</a></li>
-              <li class="nav-item dropdown opcion fw-bold">
-                  <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
-                      data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-people-fill"></i> Usuarios
-                  </a>
-                  <ul class="dropdown-menu menu" aria-labelledby="usuariosDropdown">
-                      <li><a class="dropdown-item" href="AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
-                              usuarios</a></li>
-                      <li><a class="dropdown-item" href="AdminUserCrear.php"><i class="bi bi-person-fill-add"></i> Agregar
-                              usuario</a></li>
-                      <li><a class="dropdown-item" href="../../html/Administrador/AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar
-                              permisos</a></li>
-                  </ul>
+
               </li>
           </ul>
       </div>

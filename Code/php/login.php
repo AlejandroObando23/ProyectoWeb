@@ -11,10 +11,10 @@ if (isset($_SESSION['usuario'])) {
             header("Location: Admin/AdminInicio.php");
             exit();
         case 'egreso':
-            header("Location: ../../html/Servicios/gastos.html");
+            header("Location: Gasto/GastoInicio.php");
             exit();
         case 'ingreso':
-            header("Location: ../../html/Servicios/ingresos.html");
+            header("Location: Ingreso/ingresoInicio.php");
             exit();
     }
 }
@@ -69,13 +69,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             header("Location: Admin/AdminInicio.php");
                             exit();
                         case 'egreso':
-                            header("Location: ../../html/Servicios/gastos.html");
+                            header("Location: Gasto/GastoInicio.php");
                             exit();
                         case 'ingreso':
-                            header("Location: ../../html/Servicios/ingresos.html");
+                            header("Location: Ingreso/ingresoInicio.php");
                             exit();
                         default:
-                            $mensaje = 'Rol no reconocido. Contacte al administrador.';
+                            $mensaje = 'No dispone de rol o hubo un error contacte con el administrador
+                            .';
                             break;
                     }
                 }
