@@ -1,12 +1,17 @@
-let botonAgregar = document.getElementById("agregar");
-let modalAgregar = document.getElementById("modalAgregar");
+let botonAgregar;
+let modalAgregar;
 let listaIngresos = [];
 let listaTiposIngreso = [];
-const tablaIngresos = document.getElementById("tablaIngresos").getElementsByTagName('tbody')[0];
+let tablaIngresos;
 
 
 //Cargar todos los datos de los ingresos en una lista
-fetch("Ingreso/ingresosLista.php")
+function inicializarScriptIngresos(){
+    botonAgregar = document.getElementById("agregar");
+    modalAgregar = document.getElementById("modalAgregar");
+    tablaIngresos = document.getElementById("tablaIngresos").getElementsByTagName('tbody')[0];
+
+    fetch("Ingreso/ingresosLista.php")
     .then(response => response.json())
     .then(data => {
         console.log("Datos recibidos:", data);
@@ -18,6 +23,7 @@ fetch("Ingreso/ingresosLista.php")
         }
     })
     .catch(error => console.error("Error en la solicitud fetch:", error));
+}
 
 //Cargar todos los datos de los tipos de ingresos en una lista
 function cargarTipos(){
