@@ -20,6 +20,7 @@ function cargarPagina(pagina, n) {
                 switch(n){
                     case 0: 
                         document.getElementById("inicio").classList.add('active');
+                        document.title = "Inicio | MIECONOMIA";
                         break;
                     case 1: 
                         document.getElementById("ingresos").classList.add('active');

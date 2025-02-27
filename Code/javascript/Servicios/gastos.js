@@ -37,14 +37,12 @@ function guardarDatosEgreso(event){
     
 }
     
-   
-
-
 
 //Cargar todos los datos de los tipos de ingresos en una lista
 function gastoscript(){
     let modalAgregargasto = document.getElementById("modalAgregargasto");
-     
+    console.log(document.title);
+    document.title = "Gastos | MIECONOMIA";
     
 }
 
