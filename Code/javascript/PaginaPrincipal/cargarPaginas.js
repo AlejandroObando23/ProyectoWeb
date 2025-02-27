@@ -18,14 +18,20 @@ function cargarPagina(pagina, n) {
                 // Volver a mostrar el contenido con opacidad 1
                 contenido.style.opacity = 1;
                 switch(n){
-                    case 0: document.getElementById("inicio").classList.add('active');break;
+                    case 0: 
+                        document.getElementById("inicio").classList.add('active');
+                        break;
                     case 1: 
                         document.getElementById("ingresos").classList.add('active');
                         inicializarScriptIngresos();
                         break;
-                    case 2: document.getElementById("gastos").classList.add('active'); 
-                    gastoscript();break;
-                    case 3: document.getElementById("reportes").classList.add('active'); break;
+                    case 2: 
+                        document.getElementById("gastos").classList.add('active'); 
+                        gastoscript();
+                        break;
+                    case 3: 
+                        document.getElementById("reportes").classList.add('active'); 
+                        break;
                 }
             })
             .catch(error => console.error("Error al cargar la página:", error));
