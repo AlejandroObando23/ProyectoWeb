@@ -1,152 +1,151 @@
-<!doctype html>
-<html>
+<dialog id="modalAgregargasto" class="container mt-4 border-0 rounded">
+    <form id="registrarIngreso">
+        <fieldset class="border p-2 shadow agregar bg-light">
+            <h3 class="titulo">Nuevo Gasto</h3>
+            <hr>
+            <div class="row px-4">
+                <div class="col-12 col-md-3 d-grid px-md-2">
+                    <div class="row">
+                        <label class="mb-0">Tipo de Gasto*</label>
+                        <select name="tipoIngreso" id="selectTipo" class="form-control form-select mb-4 shadow">
+                        </select>
+                    </div>
 
-<head>
-    <meta charset="utf-8">
-    <title>Ingresos | MIECONOMIA</title>
+                    <div class="row">
+                        <label>Método de pago*</label>
+                        <select name="metodoIngreso" class="form-control form-select mb-4 shadow">
+                            <option value="">Selecciona un método</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Transferencia">Transferencia</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Paypal">Paypal</option>
+                            <option value="DeUna">DeUna</option>
+                        </select>
+                    </div>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="icon" type="image/x-icon" href="../../imagenes/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="../../css/menu.css" rel="stylesheet" type="text/css">
-    <link href="../../css/ingreso.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-    <header class="navbar bg-whitenavbar-expand-lg bg-light">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <h1 class="fs-3 my-2">MIECONOMIA</h1>
-                    <img class="mx-3 d-none d-md-flex" src="../../imagenes/logo.png" alt="Logo" width="50">
                 </div>
+                <div class="col-12 col-md-6 col-lg-5 d-grid px-md-2">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label>Monto $*</label>
+                            <input name="montoIngreso" type="number" step="0.01" min="1" class="form-control mb-3 shadow">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label>Fecha de Gasto*</label>
+                            <input name="fechaIngreso" type="date" class="form-control mb-3 shadow">
+                        </div>
+                    </div>
 
-                <div class="ms-auto d-flex align-items-center text-center">
-                    <span id="nombreUsuario" class="me-2 d-none d-md-flex">Nombre Apellido</span>
-                    <i class="fs-4" id="user-icon">
-                        <img src="../../imagenes/iconoUser.png" alt="user" width="50">
-                    </i>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Descripción*</label>
+                            <input name="descripcionIngreso" type="text" class="form-control mb-3 shadow">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-4 text-center">
+                    <label class="text-center">Código QR</label>
+                    <div class="mx-auto bg-black d-flex justify-content-center align-items-center codigo">
+
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+            <hr>
+            <button type="submit" onclick="guardarDatos(event)" class="btn">Guardar</button>
+            <button type="button" class="btn " onclick="cerrarAgregarGasto()">Cancelar</button>
+        </fieldset>
+    </form>
 
-    <div class="navbar navbar-expand-lg navbar-light sticky-top shadow menu">
-        <div class="container-fluid">
+</dialog>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="menuNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item opcion fw-bold"><a class="nav-link" href="../../php/Ingreso/IngresoInicio.php"><i class="bi bi-house"></i>
-                    <li class="nav-item opcion fw-bold"><a class="nav-link" href="../../php/Admin/AdminInicio.php"><i class="bi bi-house"></i>
-                            Inicio</a></li>
-                    <li class="nav-item opcion fw-bold"><a class="nav-link active" href="ingresos.html"><i
-                                class="bi bi-cash-coin"></i>
-                            Ingresos</a></li>
-                    <li class="nav-item opcion fw-bold"><a class="nav-link" href="gastos.html"><i class="bi bi-credit-card"></i>
-                            Gastos</a></li>
-                    <li class="nav-item opcion fw-bold"><a class="nav-link" href="#"><i class="bi bi-info-square"></i>
-                            Reportes</a></li>
-                    <li class="nav-item dropdown opcion fw-bold">
-                        <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-people-fill"></i> Usuarios
-                        </a>
-                        <ul class="dropdown-menu menu" aria-labelledby="usuariosDropdown">
-                            <li><a class="dropdown-item" href="../../php/Admin/AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
-                                    usuarios</a></li>
-                            <li><a class="dropdown-item" href="../Administrador/AdminUserCrear.html"><i class="bi bi-person-fill-add"></i> Agregar
-                                    usuario</a></li>
-                            <li><a class="dropdown-item" href="../Administrador/AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar
-                                    permisos</a></li>
-                        </ul>
-                    </li>
-                </ul>
+<div class="container mt-4">
+        <fieldset class="border p-2 shadow agregar bg-light table-responsive rounded">
+            <div class="d-flex">
+                <div class="col"><h3 class="titulo">Gasto</h3></div>
+                <div class="col text-end"><button id="agregar" class="btn bg-info-subtle" onclick="abrirAgregarGasto()"><i class="bi bi-plus-circle"></i> Agregar Gasto</button></div>                
             </div>
-        </div>
-    </div>
-
-    <div class="container mt-4">
-        <h1 class="text-center titulo">Gastos</h1>
-        <form>
-            <fieldset class="border p-2 shadow agregar bg-light">
-                <h3 class="titulo">Nuevo Gasto</h3>
-                <hr>
-                <div class="row px-4">
-                    <div class="col-12 col-md-3 d-grid px-md-2">
-                        <div class="row">
-                            <label class="mb-0">Tipo de Gasto*</label>
-                            <select class="form-control form-select mb-4">
-                                <option>Seleccione un tipo</option>
-                            </select>
-                        </div>
-
-                        <div class="row">
-                            <label>Método de pago*</label>
-                            <select class="form-control form-select mb-4">
-                                <option>Seleccione un método</option>
-                            </select>
-                        </div>
-
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-5 d-grid px-md-2">
-                        <div class="row">
-                            <div class="col-12 col-md-6">
-                                <label>Monto $*</label>
-                                <input type="number" class="form-control mb-3">
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <label>Fecha de Gasto*</label>
-                                <input type="date" class="form-control mb-3">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Descripción*</label>
-                                <input type="text" class="form-control mb-3">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-lg-4 text-center">
-                        <label class="text-center">Código QR</label>
-                        <div class="mx-auto bg-black d-flex justify-content-center align-items-center codigo">
-
-                        </div>
-                    </div>
+            <hr>
+            <div class="row">
+                <div class="col">
+                    <label>Buscar por tipo</label>
+                    <select class="form-control mb-3 form-select">
+                        <option>Seleccione una opcion</option>
+                    </select>
                 </div>
-                <hr>
-                <button class="btn botonE">Enviar</button>
-                <button class="btn botonR">Restablecer</button>
-            </fieldset>
-        </form>
-
-    </div>
-
-    <div class="container mt-4">
-        <form>
-            <fieldset class="border p-2 shadow agregar bg-light">
-                <h3 class="titulo">Gastos</h3>
-                <hr>
-
-                <hr>
-            </fieldset>
-        </form>
-
-    </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+                <div class="col">
+                    <label>Fecha específica</label>
+                    <input type="date" class="form-control mb-3">
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+            <hr>
+            <table id="tablaIngresos" class="table text-center table-striped rounded">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Método</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Registrado por</th>
+                    <th scope="col">Código QR</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="align-middle">
+                    <th scope="row">1</th>
+                    <td>2025-02-21</td>
+                    <td>Servicios Básicos</td>
+                    <td>$ 100</td>
+                    <td>Efectivo</td>
+                    <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
+                    <td>Mateo Medranda</td>
+                    <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
+                    <td>
+                        <div class="d-grid">
+                            <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
+                            <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr class="align-middle">
+                    <th scope="row">1</th>
+                    <td>2025-02-21</td>
+                    <td>Servicios Básicos</td>
+                    <td>$ 100</td>
+                    <td>Efectivo</td>
+                    <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
+                    <td>Mateo Medranda</td>
+                    <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
+                    <td>
+                        <div class="d-grid">
+                            <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
+                            <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr class="align-middle">
+                    <th scope="row">1</th>
+                    <td>2025-02-21</td>
+                    <td>Servicios Básicos</td>
+                    <td>$ 100</td>
+                    <td>Efectivo</td>
+                    <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
+                    <td>Mateo Medranda</td>
+                    <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
+                    <td>
+                        <div class="d-grid">
+                            <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
+                            <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            <hr>
+        </fieldset>
+    <script src="../javascript/Servicios/gastos.js"> </script>
+</div>

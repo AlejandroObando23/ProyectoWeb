@@ -18,12 +18,14 @@ function cargarPagina(pagina, n) {
                 // Volver a mostrar el contenido con opacidad 1
                 contenido.style.opacity = 1;
                 switch(n){
-                    case 0: document.getElementById("inicio").classList.add('active'); break;
+                    case 0: document.getElementById("inicio").classList.add('active'); 
+                    inicializarScriptIngresos();break;
                     case 1: 
                         document.getElementById("ingresos").classList.add('active');
                         inicializarScriptIngresos();
                         break;
-                    case 2: document.getElementById("gastos").classList.add('active'); break;
+                    case 2: document.getElementById("gastos").classList.add('active'); 
+                    gastoscript();break;
                     case 3: document.getElementById("reportes").classList.add('active'); break;
                 }
             })
@@ -31,4 +33,4 @@ function cargarPagina(pagina, n) {
     }, 300); // Este tiempo debe coincidir con la duración de la transición CSS
 }
 
-window.onload = () => cargarPagina('../html/Inicio/inicio.html', 0);
+window.onload = () => cargarPagina('../html/Administrador/AdminInicio.html', 0);

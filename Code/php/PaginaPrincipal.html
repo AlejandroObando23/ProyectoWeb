@@ -50,12 +50,12 @@
 
             <div class="collapse navbar-collapse" id="menuNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item opcion fw-bold"><a id="inicio" class="nav-link active" href="../php/Ingreso/IngresoInicio.php"><i class="bi bi-house"></i>
+                    <li class="nav-item opcion fw-bold"><a id="inicio" class="nav-link active" href="#"   onclick="cargarPagina('../html/Administrador/AdminInicio.html',0)"><i class="bi bi-house"></i>
                             Inicio</a></li>
                     <li class="nav-item opcion fw-bold"><a id="ingresos" class="nav-link" href="#" onclick="cargarPagina('../html/Ingreso/ingresos.html',1)"><i
                                 class="bi bi-cash-coin"></i>
                             Ingresos</a></li>
-                    <li class="nav-item opcion fw-bold"><a id="gastos" class="nav-link" href="gastos.html"><i class="bi bi-credit-card"></i>
+                    <li class="nav-item opcion fw-bold"><a id="gastos" class="nav-link" href="#" onclick="cargarPagina('../html/Gasto/gastos.html',2)"><i class="bi bi-credit-card"></i>
                             Gastos</a></li>
                     <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href=""><i class="bi bi-info-square"></i>
                             Reportes</a></li>
@@ -91,6 +91,7 @@
         crossorigin="anonymous"></script>
     <script src="../javascript/PaginaPrincipal/cargarPaginas.js"></script>
     <script src="../javascript/Servicios/ingresos.js"></script>
+    <script src="../javascript/Servicios/gastos.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </body>
