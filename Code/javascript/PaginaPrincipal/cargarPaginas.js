@@ -18,8 +18,7 @@ function cargarPagina(pagina, n) {
                 // Volver a mostrar el contenido con opacidad 1
                 contenido.style.opacity = 1;
                 switch(n){
-                    case 0: document.getElementById("inicio").classList.add('active'); 
-                    inicializarScriptIngresos();break;
+                    case 0: document.getElementById("inicio").classList.add('active');break;
                     case 1: 
                         document.getElementById("ingresos").classList.add('active');
                         inicializarScriptIngresos();
