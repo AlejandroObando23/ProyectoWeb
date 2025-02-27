@@ -100,6 +100,7 @@ function abrirAgregarIngreso() {
 
 function cerrarAgregarIngreso(){
     modalAgregar.close();
+    
 }
 
 function guardarDatos(event) {

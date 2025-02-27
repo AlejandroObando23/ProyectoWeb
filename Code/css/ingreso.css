@@ -31,3 +31,51 @@ body {
 .botonR:hover {
     background-color: rgb(211, 135, 135);
 }
+
+#modalAgregar {
+    position: fixed;
+    top: 120px; 
+    left: 50%;
+    transform: translateX(-50%) translateY(-30px); 
+    opacity: 0;
+    animation: bajar 0.5s ease-out forwards;
+}
+
+#modalAgregar::backdrop {
+    background-color: rgba(0, 0, 0, 0.55);
+    animation: oscurecer 0.5s ease-out forwards;
+}
+
+@keyframes bajar {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-50px); 
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0); 
+    }
+}
+
+@keyframes subir {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-50px); 
+    }
+}
+
+@keyframes oscurecer {
+    from {
+        background-color: rgba(0, 0, 0, 0); /* Fondo transparente al principio */
+    }
+    to {
+        background-color: rgba(0, 0, 0, 0.55); /* Fondo oscuro al final */
+    }
+}
+
+
+
