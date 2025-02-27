@@ -1,5 +1,5 @@
     <dialog id="modalAgregar" class="container mt-4 border-0 rounded">
-        <form>
+        <form id="registrarIngreso">
             <fieldset class="border p-2 shadow agregar bg-light">
                 <h3 class="titulo">Nuevo Ingreso</h3>
                 <hr>
@@ -7,15 +7,19 @@
                     <div class="col-12 col-md-3 d-grid px-md-2">
                         <div class="row">
                             <label class="mb-0">Tipo de ingreso*</label>
-                            <select class="form-control form-select mb-4 shadow">
-                                <option>Seleccione un tipo</option>
+                            <select name="tipoIngreso" id="selectTipo" class="form-control form-select mb-4 shadow">
                             </select>
                         </div>
 
                         <div class="row">
                             <label>Método de pago*</label>
-                            <select class="form-control form-select mb-4 shadow">
-                                <option>Seleccione un método</option>
+                            <select name="metodoIngreso" class="form-control form-select mb-4 shadow">
+                                <option value="">Selecciona un método</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia">Transferencia</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Paypal">Paypal</option>
+                                <option value="DeUna">DeUna</option>
                             </select>
                         </div>
 
@@ -24,18 +28,18 @@
                         <div class="row">
                             <div class="col-12 col-md-6">
                                 <label>Monto $*</label>
-                                <input type="number" class="form-control mb-3 shadow">
+                                <input name="montoIngreso" type="number" step="0.01" min="1" class="form-control mb-3 shadow">
                             </div>
                             <div class="col-12 col-md-6">
                                 <label>Fecha de Ingreso*</label>
-                                <input type="date" class="form-control mb-3 shadow">
+                                <input name="fechaIngreso" type="date" class="form-control mb-3 shadow">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
                                 <label>Descripción*</label>
-                                <input type="text" class="form-control mb-3 shadow">
+                                <input name="descripcionIngreso" type="text" class="form-control mb-3 shadow">
                             </div>
                         </div>
                     </div>
@@ -47,8 +51,8 @@
                     </div>
                 </div>
                 <hr>
-                <button class="btn botonE">Guardar</button>
-                <button class="btn botonR">Cancelar</button>
+                <button type="submit" onclick="guardarDatos(event)" class="btn">Guardar</button>
+                <button class="btn " onclick="cerrarAgregarIngreso()">Cancelar</button>
             </fieldset>
         </form>
 
