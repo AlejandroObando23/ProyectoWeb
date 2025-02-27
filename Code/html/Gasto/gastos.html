@@ -13,7 +13,7 @@
 
                     <div class="row">
                         <label>Método de pago*</label>
-                        <select name="metodoIngreso" class="form-control form-select mb-4 shadow">
+                        <select name="metodoGasto" class="form-control form-select mb-4 shadow">
                             <option value="">Selecciona un método</option>
                             <option value="Efectivo">Efectivo</option>
                             <option value="Transferencia">Transferencia</option>
@@ -28,18 +28,18 @@
                     <div class="row">
                         <div class="col-12 col-md-6">
                             <label>Monto $*</label>
-                            <input name="montoIngreso" type="number" step="0.01" min="1" class="form-control mb-3 shadow">
+                            <input name="montoGasto" type="number" step="0.01" min="1" class="form-control mb-3 shadow">
                         </div>
                         <div class="col-12 col-md-6">
                             <label>Fecha de Gasto*</label>
-                            <input name="fechaIngreso" type="date" class="form-control mb-3 shadow">
+                            <input name="fechaGasto" type="date" class="form-control mb-3 shadow">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12">
                             <label>Descripción*</label>
-                            <input name="descripcionIngreso" type="text" class="form-control mb-3 shadow">
+                            <input name="descripcionGasto" type="text" class="form-control mb-3 shadow">
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <hr>
-            <button type="submit" onclick="guardarDatos(event)" class="btn">Guardar</button>
+            <button type="button" class="btn" onclick="guardarDatosEgreso(event)" >Guardar</button>
             <button type="button" class="btn " onclick="cerrarAgregarGasto()">Cancelar</button>
         </fieldset>
     </form>
