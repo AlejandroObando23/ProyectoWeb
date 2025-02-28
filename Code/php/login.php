@@ -6,17 +6,8 @@ session_start(); // Iniciar sesión
 // Verificar si el usuario ya está logueado
 if (isset($_SESSION['usuario'])) {
     // Redirigir al inicio según el rol del usuario
-    switch ($_SESSION['rol']) {
-        case 'admin':
-            header("Location: Admin/AdminInicio.php");
-            exit();
-        case 'egreso':
-            header("Location: Gasto/GastoInicio.php");
-            exit();
-        case 'ingreso':
-            header("Location: Ingreso/ingresoInicio.php");
-            exit();
-    }
+    header("Location: PaginaPrincipal.php");
+    exit();
 }
 
 $mensaje = ''; // Variable para el mensaje de error
@@ -54,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (password_verify($password, $registro['Password'])) { 
                 $_SESSION['usuario'] = $registro['Cedula'];
                 $_SESSION['nombre'] = $registro['Nombre'];
+                $_SESSION['apellido'] = $registro['Apellido'];
                 $_SESSION['rol'] = $registro['Rol'];
 
                 // Depurar las variables de sesión
@@ -64,21 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $mensaje = 'No tiene un rol asignado. Pida al administrador que le asigne uno.';
                 } else {
                     // Redirigir según el rol
-                    switch ($registro['Rol']) {
-                        case 'admin':
-                            header("Location: Admin/AdminInicio.php");
-                            exit();
-                        case 'egreso':
-                            header("Location: Gasto/GastoInicio.php");
-                            exit();
-                        case 'ingreso':
-                            header("Location: Ingreso/ingresoInicio.php");
-                            exit();
-                        default:
-                            $mensaje = 'No dispone de rol o hubo un error contacte con el administrador
-                            .';
-                            break;
-                    }
+                    header("Location: PaginaPrincipal.php");
+                    exit();
                 }
             } else {
                 // Si la contraseña no es correcta

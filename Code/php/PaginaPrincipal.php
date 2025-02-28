@@ -1,3 +1,16 @@
+<?php
+// Inicia la sesión
+session_start();
+
+// Verifica si el usuario está autenticado y tiene el rol de admin
+if (!isset($_SESSION['usuario'])) {
+    // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
+    header('Location: login.php');
+    exit();
+}
+
+?>
+
 <!doctype html>
 <html>
 
@@ -30,10 +43,24 @@
                 </div>
 
                 <div class="ms-auto d-flex align-items-center text-center">
-                    <span id="nombreUsuario" class="me-2 d-none d-md-flex">Nombre Apellido</span>
-                    <i class="fs-4" id="user-icon">
-                        <img src="../imagenes/iconoUser.png" alt="user" width="50">
-                    </i>
+                    <a class="d-flex align-items-center text-center text-black text-decoration-none nav-link" id="PerfilDropdown" role="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPerfil" aria-expanded="false">
+                        <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?></span>
+                        <span id="rolUsuario" class="me-2 d-none d-md-flex">(<?php echo ucfirst($_SESSION['rol']); ?>)</span>
+                        <i class="fs-4" id="user-icon">
+                            <img src="../imagenes/iconoUser.png" alt="user" width="50">
+                        </i>
+                    </a>
+                </div>
+
+        <!-- Offcanvas: Menú de Usuario -->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasPerfil" aria-labelledby="offcanvasPerfilLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasPerfilLabel"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?></h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <a href="logout.php" class="btn bg-danger shadow"><b class="text-light">Cerrar Sesión</b></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,12 +77,15 @@
             <div class="collapse navbar-collapse" id="menuNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item opcion fw-bold"><a id="inicio" class="nav-link active" href="#"   onclick="cargarPagina('../html/Administrador/AdminInicio.html',0)"><i class="bi bi-house"></i>
-                            Inicio</a></li>
-                    <li class="nav-item opcion fw-bold"><a id="ingresos" class="nav-link" href="#" onclick="cargarPagina('../html/Ingreso/ingresos.html',1)"><i
+                        Inicio</a></li>
+                    
+                    <li class="nav-item opcion fw-bold" <?php if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'ingreso') echo 'style="display: none;"'; ?>><a id="ingresos" class="nav-link" href="#" onclick="cargarPagina('../html/Ingreso/ingresos.html',1)"><i
                                 class="bi bi-cash-coin"></i>
                             Ingresos</a></li>
-                    <li class="nav-item opcion fw-bold"><a id="gastos" class="nav-link" href="#" onclick="cargarPagina('../html/Gasto/gastos.html',2)"><i class="bi bi-credit-card"></i>
+
+                    <li class="nav-item opcion fw-bold" <?php if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'egreso') echo 'style="display: none;"'; ?>><a id="gastos" class="nav-link" href="#" onclick="cargarPagina('../html/Gasto/gastos.html',2)"><i class="bi bi-credit-card"></i>
                             Gastos</a></li>
+
                     <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href=""><i class="bi bi-info-square"></i>
                             Reportes</a></li>
                     <li class="nav-item dropdown opcion fw-bold">
