@@ -94,9 +94,9 @@ if (!isset($_SESSION['usuario'])) {
                             <i class="bi bi-people-fill"></i> Usuarios
                         </a>
                         <ul class="dropdown-menu menu" aria-labelledby="usuariosDropdown">
-                            <li><a class="dropdown-item" href="../../php/Admin/AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
+                            <li><a class="dropdown-item" href="../php/Admin/AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
                                     usuarios</a></li>
-                            <li><a class="dropdown-item" href="../Administrador/AdminUserCrear.html"><i class="bi bi-person-fill-add"></i> Agregar
+                            <li><a class="dropdown-item" href="../php/Admin/AdminUserCrear.php"><i class="bi bi-person-fill-add"></i> Agregar
                                     usuario</a></li>
                             <li><a class="dropdown-item" href="../Administrador/AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar
                                     permisos</a></li>
