@@ -39,6 +39,7 @@ async function cargarTipos(){
         } else {
             listaTiposIngreso = data;
             cargarTiposFormulario();
+            cerrarAgregarIngreso();
         }
     })
     .catch(error => console.error("Error en la solicitud fetch:", error));
@@ -105,8 +106,9 @@ function abrirAgregarIngreso() {
 }
 
 function cerrarAgregarIngreso(){
+    let form = document.getElementById("registrarIngreso");
+    form.reset();
     modalAgregar.close();
-    
 }
 
 //Permite llamar al archivo php que realiza el ingreso de los datos en MYSQL
@@ -126,6 +128,7 @@ function guardarDatos(event) {
     .then(data => {
         if (data.success) {
             console.log("Ingreso guardado:", data);
+            inicializarScriptIngresos();
         } else {
             console.error("Error al guardar el ingreso:", data.error);
         }
