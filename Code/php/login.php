@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Verificar la contraseña de manera segura
             if (password_verify($password, $registro['Password'])) { 
+                $_SESSION['id'] = $registro['Id'];
                 $_SESSION['usuario'] = $registro['Cedula'];
                 $_SESSION['nombre'] = $registro['Nombre'];
                 $_SESSION['apellido'] = $registro['Apellido'];

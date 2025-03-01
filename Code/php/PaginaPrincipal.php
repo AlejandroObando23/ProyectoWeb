@@ -120,8 +120,6 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/ingresos.js"></script>
     <script src="../javascript/Servicios/gastos.js"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </body>
 
 </html>

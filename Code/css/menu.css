@@ -17,7 +17,7 @@
 }
 body {
     background-image: url("../imagenes/fondo_servicios.jpg");
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-size: cover;
 }
 

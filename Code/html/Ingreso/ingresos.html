@@ -90,79 +90,26 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Tipo</th>
+                        <th scope="col">Descripción</th>
                         <th scope="col">Monto</th>
+                        <th scope="col">Tipo</th>
                         <th scope="col">Método</th>
                         <th scope="col">Estado</th>
                         <th scope="col">Registrado por</th>
+                        <th scope="col">Fecha Registro</th>
                         <th scope="col">Código QR</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="align-middle">
-                        <th scope="row">1</th>
-                        <td>2025-02-21</td>
-                        <td>Servicios Básicos</td>
-                        <td>$ 100</td>
-                        <td>Efectivo</td>
-                        <td>
-                            <p class="bg-success-subtle text-center m-0 p-0">Completado</p>
-                        </td>
-                        <td>Mateo Medranda</td>
-                        <td>
-                            <div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div>
-                        </td>
-                        <td>
-                            <div class="d-grid">
-                                <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                                <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <th scope="row">1</th>
-                        <td>2025-02-21</td>
-                        <td>Servicios Básicos</td>
-                        <td>$ 100</td>
-                        <td>Efectivo</td>
-                        <td>
-                            <p class="bg-success-subtle text-center m-0 p-0">Completado</p>
-                        </td>
-                        <td>Mateo Medranda</td>
-                        <td>
-                            <div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div>
-                        </td>
-                        <td>
-                            <div class="d-grid">
-                                <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                                <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="align-middle">
-                        <th scope="row">1</th>
-                        <td>2025-02-21</td>
-                        <td>Servicios Básicos</td>
-                        <td>$ 100</td>
-                        <td>Efectivo</td>
-                        <td>
-                            <p class="bg-success-subtle text-center m-0 p-0">Completado</p>
-                        </td>
-                        <td>Mateo Medranda</td>
-                        <td>
-                            <div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div>
-                        </td>
-                        <td>
-                            <div class="d-grid">
-                                <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                                <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                            </div>
-                        </td>
-                    </tr>
+                    <!-- Aquí se cargaran los registros -->
                 </tbody>
             </table>
         </div>
         <hr>
     </fieldset>
+    <div id="codigoQr" class="imagenQr" onclick="cerrarQR()">
+        <span class="cerrarImagen" onclick="cerrarQR()">✖</span>
+        <img id="cargarQr" src="" alt="Imagen">
+    </div>
 </div>

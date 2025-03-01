@@ -74,9 +74,10 @@ function cargarIngresos() {
 
         nuevaFila.insertCell(0).innerText = ingreso.Id;
         nuevaFila.insertCell(1).innerText = ingreso.Fecha;
-        nuevaFila.insertCell(2).innerText = ingreso.tipo;
+        nuevaFila.insertCell(2).innerText = ingreso.Descripcion;
         nuevaFila.insertCell(3).innerText = "$ " + ingreso.Monto;
-        nuevaFila.insertCell(4).innerText = ingreso.Metodo;
+        nuevaFila.insertCell(4).innerText = ingreso.tipo;
+        nuevaFila.insertCell(5).innerText = ingreso.Metodo;
 
         if(ingreso.Estado == "Completado"){
             estado = '<p class="bg-success-subtle text-center m-0 p-0">Completado</p>';
@@ -84,12 +85,17 @@ function cargarIngresos() {
             estado = '<p class="bg-danger-subtle text-center m-0 p-0">Anulado</p>';
         }
 
-        nuevaFila.insertCell(5).innerHTML = estado;
+        nuevaFila.insertCell(6).innerHTML = estado;
 
-        nuevaFila.insertCell(6).innerHTML = ""+ ingreso.Nombre + " " + ingreso.Apellido;
+        nuevaFila.insertCell(7).innerHTML = ""+ ingreso.Nombre + " " + ingreso.Apellido;
+        nuevaFila.insertCell(8).innerHTML = ingreso.FechaRegistro;
 
-        nuevaFila.insertCell(7).innerHTML = '<div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div>';
-        nuevaFila.insertCell(8).innerHTML = editar;
+        let url = ""+ingreso.CodigoQR;
+
+        console.log(url);
+
+        nuevaFila.insertCell(9).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
+        nuevaFila.insertCell(10).innerHTML = editar;
     });
 }
 
@@ -103,28 +109,35 @@ function cerrarAgregarIngreso(){
     
 }
 
+//Permite llamar al archivo php que realiza el ingreso de los datos en MYSQL
 function guardarDatos(event) {
-    event.preventDefault(); // Evitar que se recargue la página
+    event.preventDefault(); 
 
     let form = document.getElementById("registrarIngreso");
 
-    // Crear un objeto FormData a partir del formulario
     const formData = new FormData(form);
     console.log("Datos enviados:", Array.from(formData.entries()));
 
-    // Enviar los datos al archivo PHP
     fetch("Ingreso/registrarIngreso.php", {
         method: "POST",
         body: formData
     })
-    .then(response => response.json()) // Suponiendo que el PHP devolverá un JSON
+    .then(response => response.json()) 
     .then(data => {
-        // Manejar la respuesta del servidor
         if (data.success) {
-            console.log("Ingreso guardado:", data); // O puedes actualizar la UI
+            console.log("Ingreso guardado:", data);
         } else {
             console.error("Error al guardar el ingreso:", data.error);
         }
     })
     .catch(error => console.error("Error en la solicitud:", error));
+}
+
+function mostrarQR(imagen) {
+    document.getElementById("codigoQr").style.display = "flex";
+    document.getElementById("cargarQr").src=imagen;
+}
+
+function cerrarQR() {
+    document.getElementById("codigoQr").style.display = "none";
 }
