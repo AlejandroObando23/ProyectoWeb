@@ -23,6 +23,7 @@ function cargarPagina(pagina, n) {
                     case 0: 
                         activarId = "inicio";
                         document.title = "Inicio | MIECONOMIA";
+                        inicializarScriptDashboard();
                         break;
                     case 1: 
                         activarId = "ingresos";

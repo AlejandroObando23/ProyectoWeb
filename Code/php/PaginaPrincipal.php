@@ -48,7 +48,6 @@ if (!isset($_SESSION['usuario'])) {
                 <a class="d-flex align-items-center text-center text-black text-decoration-none nav-link dropdown-toggle" 
                  id="PerfilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?></span>
-                    <span id="rolUsuario" class="me-2 d-none d-md-flex">(<?php echo ucfirst($_SESSION['rol']); ?>)</span>
                     <img src="../imagenes/iconoUser.png" alt="user" width="50">
                 </a>
     
@@ -73,7 +72,7 @@ if (!isset($_SESSION['usuario'])) {
 
             <div class="collapse navbar-collapse" id="menuNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item opcion fw-bold"><a id="inicio" class="nav-link active" href="#"   onclick="cargarPagina('../html/Administrador/AdminInicio.html',0)"><i class="bi bi-house"></i>
+                    <li class="nav-item opcion fw-bold"><a id="inicio" class="nav-link active" href="#"   onclick="cargarPagina('../html/Administrador/AdminInicio.html',0)"><i class="bi bi-speedometer2"></i>
                         Inicio</a></li>
                     
                     <li class="nav-item opcion fw-bold" <?php if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'ingreso') echo 'style="display: none;"'; ?>><a id="ingresos" class="nav-link" href="#" onclick="cargarPagina('../html/Ingreso/ingresos.html',1)"><i
@@ -115,11 +114,14 @@ if (!isset($_SESSION['usuario'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="../javascript/PaginaPrincipal/cargarPaginas.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="../javascript/PaginaPrincipal/cargarPaginas.js"></script>
+    <script src="../javascript/Servicios/dashboard.js"></script>
     <script src="../javascript/Servicios/ingresos.js"></script>
     <script src="../javascript/Servicios/gastos.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </body>
 
 </html>
