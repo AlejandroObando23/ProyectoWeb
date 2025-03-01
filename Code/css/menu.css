@@ -7,7 +7,7 @@
     border-bottom: 1px solid rgb(28, 59, 85);
 }
 
-.dropdown:hover .dropdown-menu {
+.menuNav:hover .subNav-menu {
     display: block;
     margin-top: 0; 
 }
@@ -23,4 +23,8 @@ body {
 
 #contenido {
     transition: opacity 0.3s ease;
+}
+
+.confUsuario {
+    z-index: 9999;
 }

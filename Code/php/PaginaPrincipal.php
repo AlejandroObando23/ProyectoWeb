@@ -28,6 +28,7 @@ if (!isset($_SESSION['usuario'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/ingreso.css" rel="stylesheet" type="text/css">
     <link href="../css/menu.css" rel="stylesheet" type="text/css">
+    <link href="../css/adminInicio.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -42,28 +43,24 @@ if (!isset($_SESSION['usuario'])) {
                     <img class="mx-3 d-none d-md-flex" src="../imagenes/logo.png" alt="Logo" width="50">
                 </div>
 
-                <div class="ms-auto d-flex align-items-center text-center">
-                    <a class="d-flex align-items-center text-center text-black text-decoration-none nav-link" id="PerfilDropdown" role="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPerfil" aria-expanded="false">
-                        <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?></span>
-                        <span id="rolUsuario" class="me-2 d-none d-md-flex">(<?php echo ucfirst($_SESSION['rol']); ?>)</span>
-                        <i class="fs-4" id="user-icon">
-                            <img src="../imagenes/iconoUser.png" alt="user" width="50">
-                        </i>
-                    </a>
-                </div>
-
-        <!-- Offcanvas: Menú de Usuario -->
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasPerfil" aria-labelledby="offcanvasPerfilLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasPerfilLabel"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?></h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <a href="logout.php" class="btn bg-danger shadow"><b class="text-light">Cerrar Sesión</b></a>
-                    </div>
-                </div>
-            </div>
+                <!-- Usuario - Dropdown -->
+            <div class="dropdown ms-auto d-flex align-items-center text-center">
+                <a class="d-flex align-items-center text-center text-black text-decoration-none nav-link dropdown-toggle" 
+                 id="PerfilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?></span>
+                    <span id="rolUsuario" class="me-2 d-none d-md-flex">(<?php echo ucfirst($_SESSION['rol']); ?>)</span>
+                    <img src="../imagenes/iconoUser.png" alt="user" width="50">
+                </a>
+    
+                <!-- Menú desplegable -->
+                <ul class="dropdown-menu dropdown-menu-end confUsuario" aria-labelledby="PerfilDropdown">
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="logout.php">Cerrar Sesión</a></li>
+                </ul>
         </div>
+
     </header>
 
     <!-- Barra de navegación Los botones seran restringidos según el rol del usuario -->
@@ -88,12 +85,12 @@ if (!isset($_SESSION['usuario'])) {
 
                     <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href=""><i class="bi bi-info-square"></i>
                             Reportes</a></li>
-                    <li class="nav-item dropdown opcion fw-bold">
+                    <li class="nav-item dropdown opcion fw-bold menuNav">
                         <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-people-fill"></i> Usuarios
                         </a>
-                        <ul class="dropdown-menu menu" aria-labelledby="usuariosDropdown">
+                        <ul class="dropdown-menu menu subNav-menu" aria-labelledby="usuariosDropdown">
                             <li><a class="dropdown-item" href="../php/Admin/AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
                                     usuarios</a></li>
                             <li><a class="dropdown-item" href="../php/Admin/AdminUserCrear.php"><i class="bi bi-person-fill-add"></i> Agregar
