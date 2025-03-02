@@ -98,6 +98,7 @@ function cargarIngresos() {
         nuevaFila.insertCell(9).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
         nuevaFila.insertCell(10).innerHTML = editar;
     });
+    renderTable();
 }
 
 //Para abrir y cerrar el dialog que permite agregar un nuevo ingreso
@@ -143,4 +144,54 @@ function mostrarQR(imagen) {
 
 function cerrarQR() {
     document.getElementById("codigoQr").style.display = "none";
+}
+
+//para la paginación
+let itemsPerPage = 5;
+let currentPage = 1;
+
+function renderTable() {
+    const tableBody = document.getElementById("table-body");
+    const rows = tableBody.getElementsByTagName("tr");
+    let start = (currentPage - 1) * itemsPerPage;
+    let end = start + itemsPerPage;
+    
+    for (let i = 0; i < rows.length; i++) {
+        rows[i].style.display = (i >= start && i < end) ? "" : "none";
+    }
+    
+    renderPagination();
+}
+
+function renderPagination() {
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+    let totalPages = Math.ceil(listaIngresos.length / itemsPerPage);
+    
+    pagination.innerHTML += `<li class='page-item ${currentPage === 1 ? "disabled" : ""}'>
+                                <a class='page-link' href='#' onclick='changePage(${currentPage - 1})'>Anterior</a>
+                            </li>`;
+    
+    for (let i = 1; i <= totalPages; i++) {
+        pagination.innerHTML += `<li class='page-item ${currentPage === i ? "active" : ""}'>
+                                    <a class='page-link' href='#' onclick='changePage(${i})'>${i}</a>
+                                </li>`;
+    }
+    
+    pagination.innerHTML += `<li class='page-item ${currentPage === totalPages ? "disabled" : ""}'>
+                                <a class='page-link' href='#' onclick='changePage(${currentPage + 1})'>Siguiente</a>
+                            </li>`;
+}
+
+function changePage(page) {
+    const totalPages = Math.ceil(listaIngresos.length / itemsPerPage);
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    renderTable();
+}
+
+function updateItemsPerPage() {
+    itemsPerPage = parseInt(document.getElementById("itemsPerPage").value);
+    currentPage = 1;
+    renderTable();
 }

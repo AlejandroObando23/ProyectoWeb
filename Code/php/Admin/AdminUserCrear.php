@@ -138,66 +138,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h1 class="text-center mt-4">Crear Nuevo Usuario</h1>
 
-    <div class="container d-flex justify-content-center align-items-center">
-        <form id="formUsuario" action="" method="POST" class="p-4 bg-light rounded shadow">
-            <div class="campo-contenedor mb-3" id="grupo__cedula">
-                <label for="cedula" class="form-label">Cédula:</label>
-                <input type="text" name="cedula" id="cedula" class="form-control" required placeholder="1721623369" maxlength="10">
-                <p class="formulario__input-error text-danger">La cédula debe contener solo números.</p>
-            </div>
+    <div class="container mt-4">
 
-            <div class="campo-contenedor mb-3" id="grupo__nombre">
-                <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" required placeholder="Alejandro">
-                <p class="formulario__input-error text-danger">El nombre debe contener solo letras y espacios.</p>
-            </div>
-
-            <div class="campo-contenedor mb-3" id="grupo__apellido">
-                <label for="apellido" class="form-label">Apellido:</label>
-                <input type="text" name="apellido" id="apellido" class="form-control" required placeholder="Gómez">
-                <p class="formulario__input-error text-danger">El apellido debe contener solo letras y espacios.</p>
-            </div>
-
-            <div class="campo-contenedor mb-3" id="grupo__correo">
-                <label for="email" class="form-label">Correo:</label>
-                <input type="email" name="email" id="email" class="form-control" required placeholder="correo@dominio.com">
-                <p class="formulario__input-error text-danger">El correo debe ser válido (ejemplo@sitio.com).</p>
-            </div>
-
-            <div class="campo-contenedor mb-4" id="grupo__password">
-                    <label for="password" class="form-label">Contraseña:</label>
-                    <div class="formulario__grupo-input input-group">
-                    <input type="password" name="password" id="password" class="form-control" required placeholder="Contraseña123">
-                    <button type="button" id="togglePassword" class="btn btn-outline-secondary">
-                        <i id="toggleIcon" class="bi bi-eye-slash"></i> <!-- Icono de ojo tachado -->
-                    </button>
-                    </div>
-                    <p class="formulario__input-error text-danger">La contraseña debe tener al menos 8 caracteres.</p>
+        <form id="formUsuario" method="POST" action="../../php/registrar_usuario.php"
+            class="p-4 bg-light rounded shadow">
+            <div class="row d-flex">
+                <div class="campo-contenedor col-md-3 mb-3" id="grupo__cedula">
+                    <label for="cedula" class="form-label">Cédula:</label>
+                    <input type="text" name="cedula" id="cedula" class="form-control shadow" required placeholder="1721623369"
+                        maxlength="10">
+                    <p class="formulario__input-error text-danger">La cédula debe contener solo números.</p>
                 </div>
-                
-                <div class="campo-contenedor mb-4" id="grupo__password2">
+
+                <div class="campo-contenedor col-md-3 mb-3" id="grupo__nombre">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control shadow" required placeholder="Alejandro">
+                    <p class="formulario__input-error text-danger">El nombre debe contener solo letras y espacios.</p>
+                </div>
+
+                <div class="campo-contenedor col-md-3 mb-3" id="grupo__apellido">
+                    <label for="apellido" class="form-label">Apellido:</label>
+                    <input type="text" name="apellido" id="apellido" class="form-control shadow" required placeholder="Gómez">
+                    <p class="formulario__input-error text-danger">El apellido debe contener solo letras y espacios.</p>
+                </div>
+
+                <div class="campo-contenedor col-md-3 mb-3" id="grupo__correo">
+                    <label for="email" class="form-label">Correo:</label>
+                    <input type="email" name="email" id="email" class="form-control shadow" required
+                        placeholder="correo@dominio.com">
+                    <p class="formulario__input-error text-danger">El correo debe ser válido (ejemplo@sitio.com).</p>
+                </div>
+
+                <div class="campo-contenedor col-md-3 mb-4" id="grupo__password">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" class="form-control shadow" required
+                            placeholder="Contraseña123">
+                        <button type="button" id="togglePassword" class="btn btn-outline-secondary">
+                            <i id="toggleIcon" class="bi bi-eye-slash"></i> <!-- Icono de ojo tachado -->
+                        </button>
+                        <p class="formulario__input-error text-danger">La contraseña debe tener al menos 8 caracteres.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="campo-contenedor col-md-3 mb-4" id="grupo__password2">
                     <label for="password2" class="form-label">Repita Contraseña:</label>
-                    <div class="formulario__grupo-input ">
-                        <input type="password"  name="password2" id="password2" placeholder="Repite la contraseña" required>
+                    <div class="formulario__grupo-input input-group">
+                        <input type="password" name="password2" id="password2" class="form-control shadow" placeholder="Repite la contraseña"
+                            required>
                     </div>
                     <p class="formulario__input-error text-danger">La contraseña no coincide</p>
                 </div>
-    
-            <div class="campo-contenedor mb-3">
-                <label for="rol" class="form-label">Rol:</label>
-                <select name="rol" id="rol" class="form-select" required>
-                    <option value="" disabled selected>Selecciona un rol</option>
-                    <option value="admin">Administrador</option>
-                    <option value="ingreso">Ingreso</option>
-                    <option value="egreso">Egreso</option>
-                </select>
-            </div>
-             <div>
-            <button type="submit" id="btnEnviar" class="btn btn-primary w-100">Registrar Usuario</button>
-            <div id="mensajeError" class="text-danger d-none mt-2"></div>
-            <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Usuario agregado exitosamente!</p>
+
+                <!-- El campo rol no tiene validación -->
+                <div class="campo-contenedor col-md-3 mb-3">
+                    <label for="rol" class="form-label">Rol:</label>
+                    <select name="rol" id="rol" class="form-select shadow" required>
+                        <option value="" disabled selected>Selecciona un rol</option>
+                        <option value="admin">Administrador</option>
+                        <option value="ingreso">Ingreso</option>
+                        <option value="egreso">Egreso</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="btnEnviar" class="btn btn-primary w-100">Registrar Usuario</button>
+                <div id="mensajeError" class="text-danger d-none mt-2"></div>
+                <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
             </div>
         </form>
+
     </div>
 
     <script src="../../javascript/register_login/ingreso.js"></script>

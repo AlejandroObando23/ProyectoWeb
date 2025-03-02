@@ -84,6 +84,7 @@
             <div class="col"></div>
         </div>
         <hr>
+        
         <div class="table-responsive">
             <table id="tablaIngresos" class="table text-center table-striped rounded">
                 <thead>
@@ -101,10 +102,24 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-body">
                     <!-- Aquí se cargaran los registros -->
                 </tbody>
             </table>
+            <div class="d-flex">
+                <nav>
+                    <ul class="pagination shadow" id="pagination"></ul>
+                </nav>
+                <div class="mb-3 col-1 mx-3">
+                    <select id="itemsPerPage" class="form-select shadow" onchange="updateItemsPerPage()">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+            </div>
+            
         </div>
         <hr>
     </fieldset>
