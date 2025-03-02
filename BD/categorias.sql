@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 27-02-2025 a las 03:01:39
+-- Tiempo de generación: 02-03-2025 a las 01:56:29
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -39,7 +39,7 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`Id`, `Nombre`, `CodigoQR`) VALUES
-(1, 'Salario', '../codigoQR/codigo1.png');
+(1, 'Salario', '../codigosQR/QRsalario.png');
 
 --
 -- Índices para tablas volcadas

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 27-02-2025 a las 03:01:34
+-- Tiempo de generación: 02-03-2025 a las 01:56:19
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -31,6 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `ingresos` (
   `Id` int(11) NOT NULL,
   `Fecha` date NOT NULL,
+  `FechaRegistro` datetime NOT NULL,
   `IdTipo` int(11) NOT NULL,
   `Monto` float(8,2) NOT NULL,
   `Metodo` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
@@ -43,9 +44,13 @@ CREATE TABLE `ingresos` (
 -- Volcado de datos para la tabla `ingresos`
 --
 
-INSERT INTO `ingresos` (`Id`, `Fecha`, `IdTipo`, `Monto`, `Metodo`, `Estado`, `idUsuario`, `Descripcion`) VALUES
-(1, '2025-02-20', 1, 20.00, 'Efectivo', 'Anulado', 8, 'No hay en este momento nada'),
-(3, '2025-02-08', 1, 22.00, 'Transferencia', 'Completado', 8, 'sadsadasdsad');
+INSERT INTO `ingresos` (`Id`, `Fecha`, `FechaRegistro`, `IdTipo`, `Monto`, `Metodo`, `Estado`, `idUsuario`, `Descripcion`) VALUES
+(1, '2025-02-20', '0000-00-00 00:00:00', 1, 20.00, 'Efectivo', 'Anulado', 8, 'No hay en este momento nada'),
+(3, '2025-02-08', '0000-00-00 00:00:00', 1, 22.00, 'Transferencia', 'Completado', 8, 'sadsadasdsad'),
+(4, '2025-02-16', '0000-00-00 00:00:00', 1, 40.50, 'Cheque', 'Completado', 8, 'Pago por inmuebles'),
+(18, '2025-03-12', '2025-03-01 17:28:37', 1, 2222.00, 'Transferencia', 'Completado', 38, 'sadsadasdsd'),
+(19, '2025-03-16', '2025-03-01 18:18:24', 1, 150.00, 'Cheque', 'Completado', 38, 'Recibí por mi mamá'),
+(20, '2025-03-06', '2025-03-01 20:43:35', 1, 24.00, 'Efectivo', 'Completado', 38, 'Pago por inmuebles');
 
 --
 -- Índices para tablas volcadas
@@ -67,7 +72,7 @@ ALTER TABLE `ingresos`
 -- AUTO_INCREMENT de la tabla `ingresos`
 --
 ALTER TABLE `ingresos`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Restricciones para tablas volcadas
