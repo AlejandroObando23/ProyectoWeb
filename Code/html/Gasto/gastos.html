@@ -80,71 +80,51 @@
                 <div class="col"></div>
             </div>
             <hr>
-            <table id="tablaIngresos" class="table text-center table-striped rounded">
+
+            <div class="table-responsive">
+            <table id="tablaEgresos" class="table text-center table-striped rounded">
                 <thead>
                   <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Fecha</th>
-                    <th scope="col">Tipo</th>
+                    <th scope="col">Desceipcion</th>
                     <th scope="col">Monto</th>
+                    <th scope="col">Tipo</th>
+                    
                     <th scope="col">Método</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Registrado por</th>
+                    <th scope="col">Fecha Registro</th>
                     <th scope="col">Código QR</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr class="align-middle">
-                    <th scope="row">1</th>
-                    <td>2025-02-21</td>
-                    <td>Servicios Básicos</td>
-                    <td>$ 100</td>
-                    <td>Efectivo</td>
-                    <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
-                    <td>Mateo Medranda</td>
-                    <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
-                    <td>
-                        <div class="d-grid">
-                            <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                            <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                        </div>
-                    </td>
-                  </tr>
-                  <tr class="align-middle">
-                    <th scope="row">1</th>
-                    <td>2025-02-21</td>
-                    <td>Servicios Básicos</td>
-                    <td>$ 100</td>
-                    <td>Efectivo</td>
-                    <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
-                    <td>Mateo Medranda</td>
-                    <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
-                    <td>
-                        <div class="d-grid">
-                            <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                            <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                        </div>
-                    </td>
-                  </tr>
-                  <tr class="align-middle">
-                    <th scope="row">1</th>
-                    <td>2025-02-21</td>
-                    <td>Servicios Básicos</td>
-                    <td>$ 100</td>
-                    <td>Efectivo</td>
-                    <td><p class="bg-success-subtle text-center m-0 p-0">Completado</p></td>
-                    <td>Mateo Medranda</td>
-                    <td><div class="mx-auto bg-black d-flex justify-content-center align-items-center qr"></div></td>
-                    <td>
-                        <div class="d-grid">
-                            <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                            <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                        </div>
-                    </td>
-                  </tr>
-                </tbody>
+                <tbody id="table-body">
+                  
+                </tbody >
               </table>
             <hr>
+            <div class="d-flex">
+                <nav>
+                    <ul class="pagination shadow" id="pagination"></ul>
+                </nav>
+                <div class="mb-3 col-1 mx-3">
+                    <select id="itemsPerPage" class="form-select shadow" onchange="updateItemsPerPage()">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+            </div>
+            
+        </div>
+
+
+
         </fieldset>
+        <div id="codigoQr" class="imagenQr" onclick="cerrarQR()">
+            <span class="cerrarImagen" onclick="cerrarQR()">✖</span>
+            <img id="cargarQr" src="" alt="Imagen">
+        </div>
 </div>
