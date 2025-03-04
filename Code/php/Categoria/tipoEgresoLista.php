@@ -1,6 +1,6 @@
 <?php
     include("../conexion.php");
-    $consulta = "SELECT * FROM categorias WHERE tipo = 'ingreso';";
+    $consulta = "SELECT * FROM categorias WHERE tipo = 'egreso';";
     $resultado = mysqli_query($conn,$consulta);
 
     if($resultado){

@@ -60,6 +60,8 @@ function cargarTiposFormulario() {
 }
 
 
+
+
 function cargarIngresos() {
     tablaIngresos.innerHTML = ""; 
 

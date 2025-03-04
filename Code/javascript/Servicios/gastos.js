@@ -1,5 +1,5 @@
 
-let form;
+
 
 
 let listaEgresos = [];
@@ -17,8 +17,8 @@ function cerrarAgregarGasto(){
 function guardarDatosEgreso(event){
     // Evitar que se recargue la página
     event.preventDefault();
-    let form = document.getElementById("registrarIngreso");
-    const formData = new FormData(form);
+    let formgasto = document.getElementById("registrarEgreso");
+    const formData = new FormData(formgasto);
     console.log("Datos enviados:", Array.from(formData.entries()));
 
     // Enviar los datos al archivo PHP
@@ -31,7 +31,7 @@ function guardarDatosEgreso(event){
         // Manejar la respuesta del servidor
         if (data.success) {
             console.log("Ingreso guardado:", data); // O puedes actualizar la UI
-            
+            gastoscript();
         } else {
             console.error("Error al guardar el ingreso:", data.error);
         
@@ -77,7 +77,7 @@ function gastoscript(){
 }
 
 async function cargarTiposEgresos(){
-    return fetch(`Categoria/tipoIngresoLista.php`)
+    return fetch(`Categoria/tipoEgresoLista.php`)
     .then(response => response.json())
     .then(data => {
         console.log("Datos recibidos:", data);
@@ -86,7 +86,7 @@ async function cargarTiposEgresos(){
             console.error("Error en la respuesta del servidor:", data.error);
             
         } else {
-            listaEgresos = data;
+            listaTiposEgresos = data;
            
             cargarTiposFormularioEgreso();
             cerrarAgregarGasto();
@@ -97,10 +97,10 @@ async function cargarTiposEgresos(){
 
 function cargarTiposFormularioEgreso() {
     
-    let select = document.getElementById("selectTipo");
+    let select = document.getElementById("selectTipoEgreso");
     let opciones = '<option value="">Seleccione un tipo</option>';
 
-    listaTiposIngreso.forEach(tipo => {
+    listaTiposEgresos.forEach(tipo => {
         opciones += `<option value="${tipo.Id}">${tipo.Nombre}</option>`;
     });
 

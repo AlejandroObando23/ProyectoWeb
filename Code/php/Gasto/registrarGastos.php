@@ -1,25 +1,25 @@
 <?php
 include("../conexion.php");
-
+session_start(); 
 $response = ["success" => false];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+    $tipo = $_POST["tipoEgreso"];
     $monto = $_POST["montoGasto"];
     $fecha = $_POST["fechaGasto"];
     $metodo = $_POST["metodoGasto"];
     $descripcion = $_POST["descripcionGasto"];
-    $idUsuario = 8;
+    $idUsuario = $_SESSION['id'];
 
-    $stmt = $conn->prepare("INSERT INTO egresos (Fecha, Monto, Metodo, idUsuario, Descripcion) VALUES ( ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $fecha, $monto, $metodo, $idUsuario, $descripcion);
+    $stmt = $conn->prepare("INSERT INTO egresos (Fecha, IdTipo,  Monto, Metodo, idUsuario, Descripcion) VALUES ( ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $fecha, $tipo , $monto, $metodo, $idUsuario, $descripcion);
 
     if ($stmt->execute()) {
         $response["success"] = true;
         // Puedes agregar más información a la respuesta si lo necesitas
     } else {
         
-        $response["error"] = "No se pudo guardar el ingreso.";
+        $response["error"] = "No se pudo guardar el egreso.";
     }
 
     $stmt->close();

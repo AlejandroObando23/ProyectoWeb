@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 02-03-2025 a las 01:56:29
+-- Tiempo de generación: 04-03-2025 a las 14:25:03
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -30,16 +30,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categorias` (
   `Id` int(11) NOT NULL,
-  `Nombre` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
-  `CodigoQR` varchar(250) COLLATE utf8_spanish_ci NOT NULL
+  `Nombre` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `CodigoQR` varchar(250) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `tipo` varchar(64) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `categorias`
 --
 
-INSERT INTO `categorias` (`Id`, `Nombre`, `CodigoQR`) VALUES
-(1, 'Salario', '../codigosQR/QRsalario.png');
+INSERT INTO `categorias` (`Id`, `Nombre`, `CodigoQR`, `tipo`) VALUES
+(1, 'Salario', '../codigosQR/QRsalario.png', 'ingreso'),
+(2, 'Serivicio_basico', '../codigosQR/QRServicioBasico.png', 'egreso'),
+(3, 'Extra', '../codigosQR/QRsalario.png', 'ingreso'),
+(4, 'Alimento', '../codigosQR/QRsalario.png', 'egreso');
 
 --
 -- Índices para tablas volcadas
@@ -59,7 +63,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
