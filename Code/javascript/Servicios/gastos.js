@@ -54,7 +54,7 @@ function gastoscript(){
     fetch("Gasto/gastosLista.php")
     .then(response => response.json())
     .then(data => {
-        console.log("Datos recibidos:", data);
+        console.log("Datos recibidoss:", data);
         if (data.error) {
             
             console.error("Error en la respuesta del servidor:", data.error);
@@ -64,10 +64,6 @@ function gastoscript(){
             cargarEgresos();
             cargarTiposEgresos();
             
-            
-            
-           
-
         }
     })
     

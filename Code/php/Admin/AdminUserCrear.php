@@ -1,20 +1,15 @@
 <?php
-include '../conexion.php';
-// Inicia la sesión
+
 session_start();
 
-// Verifica si el usuario está autenticado y tiene el rol de admin
+// Incluir el archivo de conexión a la base de datos
+include('../conexion.php');
+
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
     // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
     header('Location: ../../html/Administrador/acceso_denegado.html');
     exit();
 }
-
-// Obtener los datos del usuario para mostrar el nombre, apellido y rol
-$usuario = isset($_SESSION['cedula']) ? $_SESSION['cedula'] : 'Usuario no encontrado';
-$nombre = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Nombre no disponible';
-$apellido = isset($_SESSION['apellido']) ? $_SESSION['apellido'] : 'Apellido no disponible';
-$rol = isset($_SESSION['rol']) ? $_SESSION['rol'] : 'Rol no disponible';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Captura los datos del formulario
@@ -75,67 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 ?>
-
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <title>Administrador - Crear Usuario</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="../../imagenes/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="../../css/menu.css" rel="stylesheet">
-    <link href="../../css/adminusercrear.css" rel="stylesheet">
-    <link href="../../css/normalize.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <header class="navbar bg-light navbar-expand-lg">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center">
-                    <h1 class="fs-3 my-2">MIECONOMIA</h1>
-                    <img class="mx-3 d-none d-md-flex" src="../../imagenes/logo.png" alt="Logo" width="50">
-                </div>
-                <div class="ms-auto d-flex align-items-center text-center">
-                <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['usuario']; ?></span>
-                <!-- Mostrar el rol directamente desde la sesión -->
-                <span id="rolUsuario" class="me-2 d-none d-md-flex">(<?php echo ucfirst($_SESSION['rol']); ?>)</span>
-                <i class="fs-4" id="user-icon">
-                    <img src="../../imagenes/iconoUser.png" alt="user" width="50">
-                </i>
-            </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="navbar navbar-expand-lg navbar-light sticky-top shadow menu">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="menuNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item fw-bold"><a class="nav-link" href="../../php/Admin/AdminInicio.php"><i class="bi bi-house"></i> Inicio</a></li>
-                    <li class="nav-item fw-bold"><a class="nav-link " href="../Servicios/ingresos.html"><i class="bi bi-cash-coin"></i> Ingresos</a></li>
-                    <li class="nav-item fw-bold"><a class="nav-link" href="../Servicios/gastos.html"><i class="bi bi-credit-card"></i> Gastos</a></li>
-                    <li class="nav-item fw-bold"><a class="nav-link" href="#"><i class="bi bi-info-square"></i> Reportes</a></li>
-                    <li class="nav-item dropdown fw-bold">
-                        <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-people-fill active"></i> Usuarios
-                        </a>
-                        <ul class="dropdown-menu menu">
-                            <li><a class="dropdown-item" href="AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de usuarios</a></li>
-                            <li><a class="dropdown-item " href="AdminUserCrear.php"><i class="bi bi-person-fill-add active"></i> Agregar usuario</a></li>
-                            <li><a class="dropdown-item" href="AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar permisos</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
     <h1 class="text-center mt-4">Crear Nuevo Usuario</h1>
 
     <div class="container mt-4">
@@ -210,7 +144,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
 
-    <script src="../../javascript/register_login/ingreso.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

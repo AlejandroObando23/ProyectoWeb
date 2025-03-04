@@ -29,6 +29,7 @@ if (!isset($_SESSION['usuario'])) {
     <link href="../css/ingreso.css" rel="stylesheet" type="text/css">
     <link href="../css/menu.css" rel="stylesheet" type="text/css">
     <link href="../css/adminInicio.css" rel="stylesheet" type="text/css">
+    <link href="../css/adminusercrear.css" rel="stylesheet">
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
@@ -58,13 +59,13 @@ if (!isset($_SESSION['usuario'])) {
                 <a class="d-flex align-items-center text-center text-black text-decoration-none nav-link dropdown-toggle" 
                  id="PerfilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span id="nombreUsuario" class="me-2 d-none d-md-flex"><?php echo $_SESSION['nombre']." ".$_SESSION['apellido']; ?></span>
+                    <span id="rolUsuario" class="me-2 d-none d-md-flex">(<?php echo ucfirst($_SESSION['rol']); ?>)</span>
                     <img src="../imagenes/iconoUser.png" alt="user" width="50">
                 </a>
     
                 <!-- Menú desplegable -->
                 <ul class="dropdown-menu dropdown-menu-end confUsuario" aria-labelledby="PerfilDropdown">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#" >Mi Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="logout.php">Cerrar Sesión</a></li>
                 </ul>
@@ -100,9 +101,9 @@ if (!isset($_SESSION['usuario'])) {
                             <i class="bi bi-people-fill"></i> Usuarios
                         </a>
                         <ul class="dropdown-menu menu subNav-menu" aria-labelledby="usuariosDropdown">
-                            <li><a class="dropdown-item" href="../php/Admin/AdminUserLista.php"><i class="bi bi-person-lines-fill"></i> Lista de
+                            <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserLista.php',5)"><i class="bi bi-person-lines-fill"></i> Lista de
                                     usuarios</a></li>
-                            <li><a class="dropdown-item" href="../php/Admin/AdminUserCrear.php"><i class="bi bi-person-fill-add"></i> Agregar
+                            <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserCrear.php',4)"><i class="bi bi-person-fill-add"></i> Agregar
                                     usuario</a></li>
                             <li><a class="dropdown-item" href="../Administrador/AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar
                                     permisos</a></li>
@@ -129,6 +130,7 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/dashboard.js"></script>
     <script src="../javascript/Servicios/ingresos.js"></script>
     <script src="../javascript/Servicios/gastos.js"></script>
+    <script src="../javascript/register_login/ingreso.js"></script>
 
 </body>
 

@@ -36,6 +36,9 @@ function cargarPagina(pagina, n) {
                     case 3: 
                         activarId = "reportes";
                         break;
+                    case 4:
+                        
+                        break;
                 }
 
                 if (activarId) {
