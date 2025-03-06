@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container mt-4">
 
-        <form id="formUsuario" method="POST" action="../../php/registrar_usuario.php"
+        <form id="formUsuario" method="POST" action="registrar_usuario.php"
             class="p-4 bg-light rounded shadow">
             <div class="row d-flex">
                 <div class="campo-contenedor col-md-3 mb-3" id="grupo__cedula">

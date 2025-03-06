@@ -30,6 +30,7 @@ if (!isset($_SESSION['usuario'])) {
     <link href="../css/menu.css" rel="stylesheet" type="text/css">
     <link href="../css/adminInicio.css" rel="stylesheet" type="text/css">
     <link href="../css/adminusercrear.css" rel="stylesheet">
+    <link href="../css/dashboard.css" rel="stylesheet">
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
@@ -65,7 +66,7 @@ if (!isset($_SESSION['usuario'])) {
     
                 <!-- Menú desplegable -->
                 <ul class="dropdown-menu dropdown-menu-end confUsuario" aria-labelledby="PerfilDropdown">
-                    <li><a class="dropdown-item" href="#" >Mi Perfil</a></li>
+                    <li><a class="dropdown-item" href="#" ><i class="bi bi-person-fill"></i>Mi Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="logout.php">Cerrar Sesión</a></li>
                 </ul>

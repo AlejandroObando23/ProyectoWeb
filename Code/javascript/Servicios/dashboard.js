@@ -3,9 +3,38 @@ let meses;
 let ingresos;
 
 function inicializarScriptDashboard() {
+    fetch("Ingreso/ingresosTotalesMensuales.php")
+    .then(response => response.json())
+    .then(data => {
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            animarNumero('ingresoTotal', data.IngresoTotal);
+            animarNumero('ingresoMensual', data.IngresoEsteMes);
+            dibujarGrafica();
+        }
+    })
+    .catch(error => console.error("Error en la solicitud fetch:", error));
+}
+
+function animarNumero(id, numeroFinal) {
+    let numero = 0;
+    const intervalo = setInterval(() => {
+        document.getElementById(id).innerText = numero.toFixed(2);  
+        
+        if (numero >= numeroFinal) {
+            clearInterval(intervalo);
+        } else {
+            numero += numeroFinal / 100;  
+        }
+    }, 20);  
+}
+
+function dibujarGrafica(){
     ctx = document.getElementById("grafica");
     meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    ingresos = [20, 40, 120, 30, 25, 19, 0, 0, 0, 0, 0, 0];
+    ingresos = [20, 40, 40, 30, 25, 19, 0, 0, 0, 0, 0, 0];
 
     const myChart = new Chart(ctx, {
         type: 'bar',  // Aquí debe ser una cadena de texto 'bar'
