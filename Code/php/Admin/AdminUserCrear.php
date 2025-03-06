@@ -2,80 +2,18 @@
 
 session_start();
 
-// Incluir el archivo de conexión a la base de datos
-include('../conexion.php');
-
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
     // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
     header('Location: ../../html/Administrador/acceso_denegado.html');
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Captura los datos del formulario
-    $cedula = $_POST["cedula"];
-    $nombre = $_POST["nombre"];
-    $apellido = $_POST["apellido"];
-    $correo = $_POST["email"];
-    $password = $_POST["password"];
-    $rol = $_POST["rol"];
-
-    // Validar que la contraseña y su confirmación coincidan
-    if ($_POST["password"] !== $_POST["password2"]) {
-        echo "<script>alert('Las contraseñas no coinciden');</script>";
-        exit();
-    }
-
-    // Verifica si la cédula ya existe en la base de datos
-    $stmt_check_cedula = $conn->prepare("SELECT * FROM usuarios WHERE Cedula = ?");
-    $stmt_check_cedula->bind_param("s", $cedula);
-    $stmt_check_cedula->execute();
-    $result_check_cedula = $stmt_check_cedula->get_result();
-
-    // Verifica si el correo ya existe en la base de datos
-    $stmt_check_correo = $conn->prepare("SELECT * FROM usuarios WHERE Correo = ?");
-    $stmt_check_correo->bind_param("s", $correo);
-    $stmt_check_correo->execute();
-    $result_check_correo = $stmt_check_correo->get_result();
-
-    // Mensajes según el resultado
-    if ($result_check_cedula->num_rows > 0 && $result_check_correo->num_rows > 0) {
-        echo "<script>alert('Tanto la cédula como el correo ya están registrados.');</script>";
-    } elseif ($result_check_cedula->num_rows > 0) {
-        echo "<script>alert('La cédula ya está registrada.');</script>";
-    } elseif ($result_check_correo->num_rows > 0) {
-        echo "<script>alert('El correo ya está registrado.');</script>";
-    } else {
-        // Encriptar la contraseña
-        $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-
-        // Insertar en la base de datos
-        $stmt = $conn->prepare("INSERT INTO usuarios (Cedula, Nombre, Apellido, Correo, Password, Rol) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $cedula, $nombre, $apellido, $correo, $passwordHash, $rol);
-
-        if ($stmt->execute()) {
-            echo "<script>alert('Usuario registrado exitosamente.');</script>";
-        } else {
-            echo "<script>alert('Error al registrar el usuario.');</script>";
-        }
-
-        $stmt->close();
-    }
-
-    // Redirigir después de mostrar el mensaje
-    echo "<script>setTimeout(function() { window.location.href = 'AdminUserCrear.php'; }, 500);</script>";
-
-    // Cierra las declaraciones y la conexión
-    $conn->close();
-    exit();
-}
 ?>
     <h1 class="text-center mt-4">Crear Nuevo Usuario</h1>
 
     <div class="container mt-4">
 
-        <form id="formUsuario" method="POST" action="registrar_usuario.php"
-            class="p-4 bg-light rounded shadow">
+        <form id="formUsuario" class="p-4 bg-light rounded shadow">
             <div class="row d-flex">
                 <div class="campo-contenedor col-md-3 mb-3" id="grupo__cedula">
                     <label for="cedula" class="form-label">Cédula:</label>
@@ -136,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div>
 
-                <button type="submit" id="btnEnviar" class="btn btn-primary w-100">Registrar Usuario</button>
+                <button type="submit" id="btnEnviar" class="btn btn-primary" onclick="guardarUsuario(event)">Registrar Usuario</button>
                 <div id="mensajeError" class="text-danger d-none mt-2"></div>
                 <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
             </div>

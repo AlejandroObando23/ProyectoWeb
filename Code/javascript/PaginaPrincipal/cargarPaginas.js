@@ -37,7 +37,8 @@ function cargarPagina(pagina, n) {
                         activarId = "reportes";
                         break;
                     case 4:
-                        
+                        inicializarValidacion();
+                        document.title = "Agregar Usuario | MIECONOMIA";
                         break;
                     case 5:
                         break;

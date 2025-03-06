@@ -131,6 +131,7 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/dashboard.js"></script>
     <script src="../javascript/Servicios/ingresos.js"></script>
     <script src="../javascript/Servicios/gastos.js"></script>
+    <script src="../javascript/register_login/ingreso_usuario.js"></script>
     <script src="../javascript/register_login/ingreso.js"></script>
 
 </body>

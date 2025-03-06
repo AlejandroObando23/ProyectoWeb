@@ -1,14 +1,15 @@
 <?php
-include("conexion.php");
+include("../conexion.php");
+
+$response = ["success" => false];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cedula = $_POST["cedula"];
     $nombre = $_POST["nombre"];
     $apellido = $_POST["apellido"];
-    $correo = $_POST["correo"];
+    $correo = $_POST["email"];
     $password = $_POST["password"];
     $rol = $_POST["rol"]; // Se añade la captura del rol
-
 
     // Encriptar la contraseña
     $passwordHash = password_hash($password, PASSWORD_BCRYPT);
@@ -18,15 +19,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssssss", $cedula, $nombre, $apellido, $correo, $passwordHash, $rol);
 
     if ($stmt->execute()) {
-        // Redirección según el rol
-        $redirectPage = "../../html/login.html"; // Por defecto
-        
-        echo "<script>alert('Usuario registrado correctamente'); window.location.href='$redirectPage';</script>";
+        $response["success"] = true;
     } else {
-        echo "<script>alert('Error al registrar usuario'); window.history.back();</script>";
+        // En lugar de die(), almacenamos el error y continuamos
+        $response["error"] = "Error en la consulta: " . $stmt->error;
     }
 
     $stmt->close();
     $conn->close();
 }
+
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>
