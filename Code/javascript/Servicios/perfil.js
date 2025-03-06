@@ -1,27 +1,21 @@
+function inicializarScriptPerfil() {
+    const Nombre = document.getElementById("nombreP");
+    const Apellido = document.getElementById("apellidoP");
+    const Correo = document.getElementById("correoP");
+    const Cedula = document.getElementById("cedulaP");
 
-
-function inicializarScriptIngresos(){
-    Nombre = document.getElementById("agregar");
-    Apellido = document.getElementById("agregar");
-    Correo = document.getElementById("agregar");
-    Cedula = document.getElementById("agregar");
-    Contraseña = document.getElementById("agregar");
-
-    modalAgregar = document.getElementById("modalAgregar");
-    tablaIngresos = document.getElementById("tablaIngresos").getElementsByTagName('tbody')[0];
-    console.log(document.title);
-    document.title = "Ingresos | MIECONOMIA";
-
-    fetch("Ingreso/ingresosLista.php")
+    fetch("Perfil/cargarPerfil.php")
     .then(response => response.json())
     .then(data => {
         console.log("Datos recibidos:", data);
         if (data.error) {
             console.error("Error en la respuesta del servidor:", data.error);
         } else {
-            listaIngresos = data;
-            cargarIngresos();
-            cargarTipos();
+            Nombre.value = data.data.Nombre;
+            Apellido.value = data.data.Apellido;
+            Correo.value = data.data.Correo;
+            Cedula.value = data.data.Cedula;
+
         }
     })
     .catch(error => console.error("Error en la solicitud fetch:", error));

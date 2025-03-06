@@ -43,6 +43,8 @@ function cargarPagina(pagina, n) {
                     case 5:
                         break;
                     case 6:
+                        inicializarScriptPerfil();
+                        document.title = "Mi Perfil | MIECONOMIA";
                         break;
                 }
 

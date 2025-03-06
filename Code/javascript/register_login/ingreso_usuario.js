@@ -5,12 +5,10 @@ function inicializarValidacion() {
     const passwordField = document.getElementById("password");
     const toggleIcon = document.getElementById("toggleIcon");
 
-    // Alternar la visibilidad de la contraseña
     togglePasswordBtn.addEventListener("click", function () {
         const tipo = passwordField.type === "password" ? "text" : "password";
         passwordField.type = tipo;
 
-        // Cambiar el icono del botón
         toggleIcon.classList.toggle("bi-eye");
         toggleIcon.classList.toggle("bi-eye-slash");
     });
@@ -85,10 +83,9 @@ function inicializarValidacion() {
         }
     };
 
-    // Escucha los cambios en los inputs
     inputs.forEach(input => {
-        input.addEventListener('input', validarFormulario); // Detecta cambios en tiempo real
-        input.addEventListener('blur', validarFormulario);  // Detecta cuando el campo pierde foco
+        input.addEventListener('input', validarFormulario); 
+        input.addEventListener('blur', validarFormulario);  
     });
 
     formulario.addEventListener('submit', (e) => {

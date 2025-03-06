@@ -21,8 +21,16 @@ function inicializarScriptDashboard() {
 function animarNumero(id, numeroFinal) {
     let numero = 0;
     const intervalo = setInterval(() => {
-        document.getElementById(id).innerText = numero.toFixed(2);  
-        
+        const element = document.getElementById(id);  // Buscar el elemento
+
+        // Verificar si el elemento aún existe
+        if (!element) {
+            clearInterval(intervalo); // Si el elemento no existe, se detiene el intervalo
+            return;
+        }
+
+        element.innerText = numero.toFixed(2);  
+
         if (numero >= numeroFinal) {
             clearInterval(intervalo);
         } else {
