@@ -115,3 +115,51 @@ body {
     cursor: pointer;
 }
 
+.tooltip-descripcion {
+    position: relative;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Si el texto es largo, pone "..." */
+    max-width: 130px; /* Ajusta el ancho máximo de la celda */
+    display: inline-block;
+}
+
+.tooltip-descripcion:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: normal;
+    max-width: 300px; /* Ajusta el tamaño del tooltip */
+    top: 100%; /* Asegura que se muestre debajo */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999; /* Mayor prioridad sobre otros elementos */
+    opacity: 1;
+    visibility: visible;
+}
+
+.tooltip-descripcion:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-bottom-color: rgba(0, 0, 0, 0.9); /* Flecha del tooltip */
+    z-index: 9999;
+}
+
+/* Estilo para los iconos que actúan como botones */
+.icono-boton {
+    cursor: pointer; /* Cambia el cursor a pointer */
+    transition: opacity 0.3s ease; /* Transición suave para el cambio de opacidad */
+}
+
+/* Efecto cuando el mouse pasa por encima del icono */
+.icono-boton:hover {
+    opacity: 0.7; /* Hace que el icono se vea más claro al pasar por encima */
+}

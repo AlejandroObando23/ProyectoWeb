@@ -70,23 +70,36 @@ function cargarIngresos() {
         let nuevaFila = tablaIngresos.insertRow();
         nuevaFila.classList.add("align-middle");
         let estado = "";
-        let editar = `<div class="d-grid">
-                     <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                    <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                    </div>`;
+
+        let editar ="";
 
         nuevaFila.insertCell(0).innerText = ingreso.Id;
         nuevaFila.insertCell(1).innerText = ingreso.Fecha;
-        nuevaFila.insertCell(2).innerText = ingreso.Descripcion;
+        nuevaFila.insertCell(2).innerHTML = `
+        <span class="d-inline-block text-truncate" style="max-width: 150px;" 
+            data-bs-toggle="tooltip" data-bs-placement="top" title="${ingreso.Descripcion}">
+            ${ingreso.Descripcion}
+        </span>`;
+    
         nuevaFila.insertCell(3).innerText = "$ " + ingreso.Monto;
         nuevaFila.insertCell(4).innerText = ingreso.tipo;
         nuevaFila.insertCell(5).innerText = ingreso.Metodo;
 
+
         if(ingreso.Estado == "Completado"){
             estado = '<p class="bg-success-subtle text-center m-0 p-0">Completado</p>';
+            editar = `<div class="d-flex">
+                        <i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-1 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 2)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-1 icono-boton"></i>
+                      </div>`;
         }else if(ingreso.Estado == "Anulado"){
             estado = '<p class="bg-danger-subtle text-center m-0 p-0">Anulado</p>';
+            editar = `<div class="d-flex">
+                        <i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-1 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 1)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-1 icono-boton"></i>
+                      </div>`;
         }
+        
 
         nuevaFila.insertCell(6).innerHTML = estado;
 
@@ -99,6 +112,10 @@ function cargarIngresos() {
 
         nuevaFila.insertCell(9).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
         nuevaFila.insertCell(10).innerHTML = editar;
+    });
+    let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach((tooltip) => {
+        new bootstrap.Tooltip(tooltip);
     });
     renderTable();
 }
@@ -196,4 +213,19 @@ function updateItemsPerPage() {
     itemsPerPage = parseInt(document.getElementById("itemsPerPage").value);
     currentPage = 1;
     renderTable();
+}
+
+//Función que permitirá actualizar el estado,e s decir de Completado a Anulado o viceversa
+function cambiarEstado(id, estado) {
+    const url = `Ingreso/activarDesactivarIngreso.php?Id=${id}&estado=${estado}`;
+
+    fetch(url)
+        .then(response => response.text())  
+        .then(data => {
+            console.log(data);  
+            inicializarScriptIngresos();
+        })
+        .catch(error => {
+            console.error('Error al cambiar el estado:', error);
+        });
 }
