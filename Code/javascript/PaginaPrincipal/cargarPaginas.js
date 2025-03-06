@@ -39,6 +39,10 @@ function cargarPagina(pagina, n) {
                     case 4:
                         
                         break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
                 }
 
                 if (activarId) {

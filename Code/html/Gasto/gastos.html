@@ -1,3 +1,9 @@
+if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
+    // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
+    header('Location: ../../html/Administrador/acceso_denegado.html');
+    exit();
+}
+
 <dialog id="modalAgregargasto" class="container mt-4 border-0 rounded">
     <form id="registrarEgreso">
         <fieldset class="border p-2 shadow agregar bg-light">

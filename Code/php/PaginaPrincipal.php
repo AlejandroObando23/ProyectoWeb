@@ -66,7 +66,7 @@ if (!isset($_SESSION['usuario'])) {
     
                 <!-- Menú desplegable -->
                 <ul class="dropdown-menu dropdown-menu-end confUsuario" aria-labelledby="PerfilDropdown">
-                    <li><a class="dropdown-item" href="#" ><i class="bi bi-person-fill"></i>Mi Perfil</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="cargarPagina('../html/Inicio/perfil.html',6)"><i class="bi bi-person-fill"></i>Mi Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item text-danger" href="logout.php">Cerrar Sesión</a></li>
                 </ul>
