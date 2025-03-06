@@ -1,6 +1,6 @@
 <?php
     include("../conexion.php");
-    $consulta = 'SELECT i.Id, i.Fecha, i.IdTipo, c.Nombre AS "tipo", c.Id , i.Monto, i.Metodo, i.Estado, u.Nombre, u.Apellido, c.CodigoQR, i.FechaRegistro, i.Descripcion FROM egresos i INNER JOIN usuarios u ON i.idUsuario = u.Id INNER JOIN categorias c ON i.IdTipo = c.Id  WHERE c.tipo = "egreso";';
+    $consulta = 'SELECT e.Id, e.Fecha, c.Nombre AS "tipo", e.Monto, e.Metodo, e.Estado, u.Nombre, u.Apellido, c.CodigoQR, e.FechaRegistro, e.Descripcion FROM egresos e INNER JOIN usuarios u ON e.idUsuario = u.Id INNER JOIN categorias c ON e.IdTipo = c.Id  WHERE c.tipo = "egreso";';
     $resultado = mysqli_query($conn,$consulta);
 
     if($resultado){
