@@ -21,11 +21,10 @@ function inicializarScriptDashboard() {
 function animarNumero(id, numeroFinal) {
     let numero = 0;
     const intervalo = setInterval(() => {
-        const element = document.getElementById(id);  // Buscar el elemento
+        const element = document.getElementById(id); 
 
-        // Verificar si el elemento aún existe
         if (!element) {
-            clearInterval(intervalo); // Si el elemento no existe, se detiene el intervalo
+            clearInterval(intervalo); 
             return;
         }
 
@@ -39,36 +38,62 @@ function animarNumero(id, numeroFinal) {
     }, 20);  
 }
 
-function dibujarGrafica(){
-    ctx = document.getElementById("grafica");
-    meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    ingresos = [20, 40, 40, 30, 25, 19, 0, 0, 0, 0, 0, 0];
-
-    const myChart = new Chart(ctx, {
-        type: 'bar',  // Aquí debe ser una cadena de texto 'bar'
-        data: {
-            labels: meses,
-            datasets: [{
-                label: 'Ingreso',
-                data: ingresos,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1.5
-            }]
+function dibujarGrafica() {
+    fetch('Ingreso/ingresosMensuales.php') 
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error("Error:", data.error);
+            return;
         }
-    });
+
+        const meses = data.map(item => {
+            const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+                                  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+            return nombresMeses[item.mes - 1];
+        });
+
+        const ingresos = data.map(item => item.total_ingresos);
+
+        const gastos = ingresos.map(() => Math.floor(Math.random() * 50)); 
+
+        console.log("Meses con ingresos:", meses);
+        console.log("Ingresos:", ingresos);
+        console.log("Gastos:", gastos);
+
+        const ctx = document.getElementById("grafica").getContext("2d");
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: meses, 
+                datasets: [
+                    {
+                        label: 'Ingresos',
+                        data: ingresos,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Gastos',
+                        data: gastos,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })
+    .catch(error => console.error("Error en la petición:", error));
 }
+

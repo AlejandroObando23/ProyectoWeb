@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Financiero</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Reporte Financiero</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <canvas id="graficoIngresos"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="graficoGastos"></canvas>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <canvas id="graficoPastel"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="graficoBarras"></canvas>
+            </div>
+        </div>
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ingresos Totales</td>
+                    <td id="ingresos"></td>
+                </tr>
+                <tr>
+                    <td>Gastos Totales</td>
+                    <td id="gastos"></td>
+                </tr>
+                <tr>
+                    <td>Balance Neto</td>
+                    <td id="balance"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ingresos = 5000;
+            const gastos = 3200;
+            const balance = ingresos - gastos;
+            
+            const ingresosPorTipo = {
+                "Salario": 3000,
+                "Freelance": 1500,
+                "Inversiones": 500
+            };
+
+            const gastosPorTipo = {
+                "Alquiler": 1200,
+                "Comida": 800,
+                "Transporte": 600,
+                "Otros": 600
+            };
+
+            document.getElementById("ingresos").textContent = `$${ingresos}`;
+            document.getElementById("gastos").textContent = `$${gastos}`;
+            document.getElementById("balance").textContent = `$${balance}`;
+
+            new Chart(document.getElementById("graficoIngresos"), {
+                type: "pie",
+                data: {
+                    labels: Object.keys(ingresosPorTipo),
+                    datasets: [{
+                        data: Object.values(ingresosPorTipo),
+                        backgroundColor: ["#28a745", "#17a2b8", "#ffc107"]
+                    }]
+                }
+            });
+
+            new Chart(document.getElementById("graficoGastos"), {
+                type: "pie",
+                data: {
+                    labels: Object.keys(gastosPorTipo),
+                    datasets: [{
+                        data: Object.values(gastosPorTipo),
+                        backgroundColor: ["#dc3545", "#fd7e14", "#6f42c1", "#20c997"]
+                    }]
+                }
+            });
+
+            const ctxPastel = document.getElementById("graficoPastel").getContext("2d");
+            new Chart(ctxPastel, {
+                type: "pie",
+                data: {
+                    labels: ["Ingresos", "Gastos"],
+                    datasets: [{
+                        data: [ingresos, gastos],
+                        backgroundColor: ["#28a745", "#dc3545"]
+                    }]
+                }
+            });
+
+            const ctxBarras = document.getElementById("graficoBarras").getContext("2d");
+            new Chart(ctxBarras, {
+                type: "bar",
+                data: {
+                    labels: ["Ingresos", "Gastos", "Balance"],
+                    datasets: [{
+                        label: "Monto en dólares",
+                        data: [ingresos, gastos, balance],
+                        backgroundColor: ["#28a745", "#dc3545", "#007bff"]
+                    }]
+                }
+            });
+        });
+    </script>
+</body>
+</html>
