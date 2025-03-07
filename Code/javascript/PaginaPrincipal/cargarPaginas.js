@@ -35,6 +35,8 @@ function cargarPagina(pagina, n) {
                         break;
                     case 3: 
                         activarId = "reportes";
+                        document.title = "Reportes | MIECONOMIA";
+                        inicializarScriptReportes();
                         break;
                     case 4:
                         inicializarValidacion();

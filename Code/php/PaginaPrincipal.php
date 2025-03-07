@@ -94,7 +94,7 @@ if (!isset($_SESSION['usuario'])) {
                     <li class="nav-item opcion fw-bold" <?php if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'egreso') echo 'style="display: none;"'; ?>><a id="gastos" class="nav-link" href="#" onclick="cargarPagina('../html/Gasto/gastos.html',2)"><i class="bi bi-credit-card"></i>
                             Gastos</a></li>
 
-                    <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href=""><i class="bi bi-info-square"></i>
+                    <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href="#" onclick="cargarPagina('../html/Reporte/reporte.html',3)"><i class="bi bi-info-square"></i>
                             Reportes</a></li>
                     <li class="nav-item dropdown opcion fw-bold menuNav">
                         <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
@@ -132,6 +132,7 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/ingresos.js"></script>
     <script src="../javascript/Servicios/gastos.js"></script>
     <script src="../javascript/Servicios/perfil.js"></script>
+    <script src="../javascript/Servicios/reportes.js"></script>
     <script src="../javascript/register_login/ingreso_usuario.js"></script>
     <script src="../javascript/register_login/ingreso.js"></script>
 

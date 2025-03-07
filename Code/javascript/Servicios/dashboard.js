@@ -35,7 +35,7 @@ function animarNumero(id, numeroFinal) {
         } else {
             numero += numeroFinal / 100;  
         }
-    }, 20);  
+    }, 7);  
 }
 
 function dibujarGrafica() {

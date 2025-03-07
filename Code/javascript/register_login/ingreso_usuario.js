@@ -130,6 +130,7 @@ function guardarUsuario(event) {
         if (data.success) {
             console.log("Ingreso guardado:", data);
             form.reset();
+            cargarPagina('../php/Admin/AdminUserLista.php',5);
         } else {
             console.error("Error al guardar el ingreso:", data.error);
         }

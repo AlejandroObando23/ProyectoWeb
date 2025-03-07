@@ -18,38 +18,45 @@ $result = $conn->query($sql);
 ?>
 
 <div class="container mt-4">
-    <h1 class="text-center">Lista de Usuarios</h1>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>Cédula</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($result && $result->num_rows > 0): ?>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($row["Cedula"]) ?></td>
-                            <td><?= htmlspecialchars($row["Nombre"]) ?></td>
-                            <td><?= htmlspecialchars($row["Apellido"]) ?></td>
-                            <td><?= htmlspecialchars($row["Correo"]) ?></td>
-                            <td>
-                                <a href="eliminar_usuario.php?cedula=<?= urlencode($row["Cedula"]) ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
-                                    <i class="bi bi-trash"></i> Eliminar
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <tr><td colspan="5" class="text-center">No hay usuarios registrados</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
+    <fieldset class="border p-2 shadow bg-light rounded">
+        <div class="d-flex">
+            <div class="col">
+                <h3 class="titulo">Lista De Usuarios</h3>
+            </div>
+        </div>
+        <hr>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($result && $result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($row["Cedula"]) ?></td>
+                                <td><?= htmlspecialchars($row["Nombre"]) ?></td>
+                                <td><?= htmlspecialchars($row["Apellido"]) ?></td>
+                                <td><?= htmlspecialchars($row["Correo"]) ?></td>
+                                <td>
+                                    <a href="eliminar_usuario.php?cedula=<?= urlencode($row["Cedula"]) ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este usuario?');">
+                                        <i class="bi bi-trash"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr><td colspan="5" class="text-center">No hay usuarios registrados</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+    </fieldset>
 </div>
-
