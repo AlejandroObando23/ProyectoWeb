@@ -39,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $registro = $result->fetch_assoc(); // Obtener los datos del usuario
 
             // Depurar los datos de la base de datos
-            var_dump($registro); // Verifica los datos recuperados
 
             // Verificar la contraseña de manera segura
             if (password_verify($password, $registro['Password'])) { 
@@ -49,8 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['apellido'] = $registro['Apellido'];
                 $_SESSION['rol'] = $registro['Rol'];
 
-                // Depurar las variables de sesión
-                var_dump($_SESSION); // Verifica el contenido de la sesión
+                var_dump($registro); // Verifica los datos recuperados
 
                 // Verificar si el usuario tiene un rol asignado
                 if (empty($registro['Rol'])) {
