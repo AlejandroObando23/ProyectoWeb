@@ -55,7 +55,67 @@
             <button type="button" class="btn botonR" onclick="cerrarAgregarIngreso()">Cancelar</button>
         </fieldset>
     </form>
+</dialog>
 
+
+<dialog id="modalActualizar" class="actualizarIngreso container mt-4 border-0 rounded shadow">
+    <form id="actualizarIngreso">
+        <fieldset class="border p-2 actualizar bg-light border-0">
+            <h3 class="titulo">Actualizar un ingreso</h3>
+            <input type="text" id="idIngreso" name="idIngreso" style="display: none;">
+            <hr>
+            <div class="row px-4">
+                <div class="col-12 col-md-3 d-grid px-md-2">
+                    <div class="row">
+                        <label class="mb-0">Tipo de ingreso*</label>
+                        <select name="tipoIngresoA" id="selectTipoA" class="form-control form-select mb-4 shadow">
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <label>Método de pago*</label>
+                        <select id="metodoIngresoA" name="metodoIngresoA" class="form-control form-select mb-4 shadow">
+                            <option value="">Selecciona un método</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Transferencia">Transferencia</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Paypal">Paypal</option>
+                            <option value="DeUna">DeUna</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-6 col-lg-5 d-grid px-md-2">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label>Monto $*</label>
+                            <input id="montoIngresoA" name="montoIngresoA" type="number" step="0.01" min="0.05"
+                                class="form-control mb-3 shadow">
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label>Fecha de Ingreso*</label>
+                            <input id="fechaIngresoA" name="fechaIngresoA" type="date" class="form-control mb-3 shadow">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Descripción*</label>
+                            <input id="descripcionIngresoA" name="descripcionIngresoA" type="text" class="form-control mb-3 shadow">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-4 text-center">
+                    <label class="text-center">Código QR</label>
+                    <div class="mx-auto bg-black d-flex justify-content-center align-items-center codigo">
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <button type="submit" onclick="actualizarDatos(event)" class="btn botonA">Actualizar</button>
+            <button type="button" class="btn botonR" onclick="cerrarActualizarIngreso()">Cancelar</button>
+        </fieldset>
+    </form>
 </dialog>
 
 <div class="container mt-4">

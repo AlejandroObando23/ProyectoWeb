@@ -28,11 +28,15 @@ body {
     background-color: rgb(135, 211, 169);
 }
 
+.botonA:hover {
+    background-color: rgb(210, 211, 135);
+}
+
 .botonR:hover {
     background-color: rgb(211, 135, 135);
 }
 
-#modalAgregar {
+#modalAgregar, #modalActualizar {
     position: fixed;
     top: 0; 
     left: 50%;
@@ -45,7 +49,7 @@ body {
     z-index: 1000; 
 }
 
-#modalAgregar::backdrop {
+#modalAgregar::backdrop, #modalActualizar::backdrop {
     background-color: rgba(0, 0, 0, 0.55);
     animation: oscurecer 0.5s ease-out forwards;
 }

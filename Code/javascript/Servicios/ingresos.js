@@ -1,5 +1,6 @@
 let botonAgregar;
 let modalAgregar;
+let modalActualizar;
 let listaIngresos = [];
 let listaTiposIngreso = [];
 let tablaIngresos;
@@ -9,6 +10,7 @@ let tablaIngresos;
 function inicializarScriptIngresos(){
     botonAgregar = document.getElementById("agregar");
     modalAgregar = document.getElementById("modalAgregar");
+    modalActualizar = document.getElementById("modalActualizar");
     tablaIngresos = document.getElementById("tablaIngresos").getElementsByTagName('tbody')[0];
     console.log(document.title);
     document.title = "Ingresos | MIECONOMIA";
@@ -49,6 +51,7 @@ function cargarTiposFormulario() {
     
     let select = document.getElementById("selectTipo");
     let select1 = document.getElementById("tipoIngresoConsulta");
+    let select2 = document.getElementById("selectTipoA");
     let opciones = '<option value="">Seleccione un tipo</option>';
 
     listaTiposIngreso.forEach(tipo => {
@@ -59,9 +62,8 @@ function cargarTiposFormulario() {
 
     select.innerHTML = opciones;
     select1.innerHTML = opciones;
+    select2.innerHTML = opciones;
 }
-
-
 
 
 function cargarIngresos() {
@@ -91,14 +93,14 @@ function cargarIngresos() {
         if(ingreso.Estado == "Completado"){
             estado = '<p class="bg-success-subtle text-center m-0 p-0">Completado</p>';
             editar = `<div class="d-flex">
-                        <i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-2 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 2)"></i>
-                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton"></i>
+                        <i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-2 icono-boton" title="Anular" onclick="cambiarEstado(${ingreso.Id}, 2)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarIngreso(${ingreso.Id})"></i>
                       </div>`;
         }else if(ingreso.Estado == "Anulado"){
             estado = '<p class="bg-danger-subtle text-center m-0 p-0">Anulado</p>';
             editar = `<div class="d-flex">
-                        <i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-2 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 1)"></i>
-                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton"></i>
+                        <i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-2 icono-boton" title="Completar" onclick="cambiarEstado(${ingreso.Id}, 1)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarIngreso(${ingreso.Id})"></i>
                       </div>`;
         }
         
@@ -125,11 +127,53 @@ function abrirAgregarIngreso() {
     modalAgregar.showModal();
 }
 
+function abrirActualizarIngreso(id) {
+    let formData = new FormData();
+    formData.append("Id", id);
+
+    fetch("Ingreso/buscarIngreso.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        if (data.error) {
+            console.error("Error en la consulta:", data.error);
+            return;
+        }
+
+        if (data.length > 0) {
+            const ingreso = data[0];
+
+            console.log(ingreso);
+
+            document.getElementById("idIngreso").value = id;
+            document.getElementById("selectTipoA").value = ingreso.tipo; 
+            document.getElementById("metodoIngresoA").value = ingreso.Metodo; 
+            document.getElementById("montoIngresoA").value = ingreso.Monto; 
+            document.getElementById("fechaIngresoA").value = ingreso.Fecha; 
+            document.getElementById("descripcionIngresoA").value = ingreso.Descripcion; 
+            document.querySelector(".codigo").innerHTML = `<img src="${ingreso.CodigoQR}" alt="Código QR" class="img-fluid">`; 
+
+            modalActualizar.showModal();
+        }
+    })
+    .catch(error => console.error("Error en la solicitud:", error));
+}
+
+
 function cerrarAgregarIngreso(){
     let form = document.getElementById("registrarIngreso");
     form.reset();
     modalAgregar.close();
 }
+
+function cerrarActualizarIngreso(){
+    let form = document.getElementById("actualizarIngreso");
+    form.reset();
+    modalActualizar.close();
+}
+
 
 //Permite llamar al archivo php que realiza el ingreso de los datos en MYSQL
 function guardarDatos(event) {
@@ -155,6 +199,33 @@ function guardarDatos(event) {
     })
     .catch(error => console.error("Error en la solicitud:", error));
 }
+
+//Permite llamar al archivo php que realiza la actualización de los datos en MYSQL
+function actualizarDatos(event) {
+    event.preventDefault(); 
+
+    let form = document.getElementById("actualizarIngreso"); 
+
+    const formData = new FormData(form); 
+    console.log("Datos enviados para actualizar:", Array.from(formData.entries()));
+
+    fetch("Ingreso/actualizarIngreso.php", {
+        method: "POST", 
+        body: formData 
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        if (data.success) {
+            console.log("Ingreso actualizado:", data); 
+            modalActualizar.close(); 
+            inicializarScriptIngresos(); 
+        } else {
+            console.error("Error al actualizar el ingreso:", data.error); 
+        }
+    })
+    .catch(error => console.error("Error en la solicitud:", error)); 
+}
+
 
 function mostrarQR(imagen) {
     document.getElementById("codigoQr").style.display = "flex";
