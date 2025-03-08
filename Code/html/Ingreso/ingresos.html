@@ -72,19 +72,36 @@
         <div class="row">
             <div class="col-sm-12 col-md-2">
                 <label>Buscar por tipo</label>
-                <select class="form-control mb-3 form-select">
+                <select id="tipoIngresoConsulta" class="form-control mb-3 form-select" onchange="filtrarDatos()">
                     <option>Seleccione una opcion</option>
                 </select>
             </div>
-            <div class="col-sm-12 col-md-2">
-                <label>Fecha específica</label>
-                <input type="date" class="form-control mb-3">
+            <div class="col-sm-12 col-md-2 mx-0 bg-secondary-subtle rounded-start">
+                <label>Desde: </label>
+                <div class="d-flex">
+                    <input type="date" class="form-control me-2" id="fechaInicio" onchange="filtrarDatos()">
+                </div>
             </div>
-            <div class="col"></div>
-            <div class="col"></div>
+            <div class="col-sm-12 col-md-2 bg-secondary-subtle rounded-end">
+                <label>Hasta: </label>
+                <div class="d-flex">
+                    <input type="date" class="form-control ms-2" id="fechaFin" onchange="filtrarDatos()">
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-2 ms-auto">
+                <label>Estados:</label>
+                <select id="EstadoConsulta" class="form-control mb-3 form-select" onchange="filtrarDatos()">
+                    <option value="">Seleccione una opcion</option>
+                    <option value="1">Mostrar Completados</option>
+                    <option value="2">Mostrar Anulados</option>
+                    <option value="3">Mostrar Todo</option>
+                </select>
+            </div>
         </div>
+
         <hr>
-        
+
         <div class="table-responsive">
             <table id="tablaIngresos" class="table text-center table-striped rounded">
                 <thead>
@@ -120,7 +137,7 @@
                     </select>
                 </div>
             </div>
-            
+
         </div>
     </fieldset>
     <div id="codigoQr" class="imagenQr" onclick="cerrarQR()">

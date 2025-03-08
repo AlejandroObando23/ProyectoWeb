@@ -48,6 +48,7 @@ async function cargarTipos(){
 function cargarTiposFormulario() {
     
     let select = document.getElementById("selectTipo");
+    let select1 = document.getElementById("tipoIngresoConsulta");
     let opciones = '<option value="">Seleccione un tipo</option>';
 
     listaTiposIngreso.forEach(tipo => {
@@ -57,6 +58,7 @@ function cargarTiposFormulario() {
     console.log("Tipos de ingreso:", opciones);
 
     select.innerHTML = opciones;
+    select1.innerHTML = opciones;
 }
 
 
@@ -228,4 +230,35 @@ function cambiarEstado(id, estado) {
         .catch(error => {
             console.error('Error al cambiar el estado:', error);
         });
+}
+
+
+function filtrarDatos() {
+    let tipo = document.getElementById("tipoIngresoConsulta").value; 
+    let fechaInicio = document.getElementById("fechaInicio").value;
+    let fechaFin = document.getElementById("fechaFin").value;
+    let estado = document.getElementById("EstadoConsulta").value;
+
+    // Crear un objeto FormData para enviar los datos
+    let formData = new FormData();
+    formData.append("tipo", tipo);
+    formData.append("fechaInicio", fechaInicio);
+    formData.append("fechaFin", fechaFin);
+    formData.append("estado", estado);
+
+    fetch("Ingreso/filtrarIngreso.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) // Convertir la respuesta en JSON
+    .then(data => {
+        if (data.error) {
+            console.error("Error en la consulta:", data.error);
+            return;
+        }
+
+        listaIngresos = data; // Actualizar la variable con los datos recibidos
+        cargarIngresos(); // Llamar a la función para mostrar los resultados
+    })
+    .catch(error => console.error("Error en la solicitud:", error));
 }
