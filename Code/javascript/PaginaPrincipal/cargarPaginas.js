@@ -1,5 +1,5 @@
 function cargarPagina(pagina, n) {
-    const ids = ["inicio", "ingresos", "gastos", "reportes"];
+    const ids = ["inicio", "ingresos", "gastos", "reportes", "categorias"];
 
     ids.forEach(id => {
         const elemento = document.getElementById(id);
@@ -51,6 +51,10 @@ function cargarPagina(pagina, n) {
                     case 7:
                         document.title = "Perfiles | MIECONOMIA";
                         break;
+                    case 8:
+                        activarId = "categorias";
+                        document.title = "Categorias| MIECONOMIA";
+
                 }
 
                 if (activarId) {

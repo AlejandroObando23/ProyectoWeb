@@ -110,6 +110,8 @@ if (!isset($_SESSION['usuario'])) {
                                     permisos</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href="#" onclick="cargarPagina('../html/Categorias/categorias.html',8)"><i class="bi bi-info-square"></i>
+                            Categorias</a></li>
                 </ul>
             </div>
         </div>
@@ -135,6 +137,7 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/reportes.js"></script>
     <script src="../javascript/Servicios/perfiles.js"></script>
     <script src="../javascript/register_login/ingreso_usuario.js"></script>
+    <script src="../javascript/Categoria/categoria.js"></script>
 
 </body>
 
