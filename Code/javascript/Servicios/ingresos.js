@@ -91,29 +91,27 @@ function cargarIngresos() {
         if(ingreso.Estado == "Completado"){
             estado = '<p class="bg-success-subtle text-center m-0 p-0">Completado</p>';
             editar = `<div class="d-flex">
-                        <i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-1 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 2)"></i>
-                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-1 icono-boton"></i>
+                        <i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-2 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 2)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton"></i>
                       </div>`;
         }else if(ingreso.Estado == "Anulado"){
             estado = '<p class="bg-danger-subtle text-center m-0 p-0">Anulado</p>';
             editar = `<div class="d-flex">
-                        <i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-1 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 1)"></i>
-                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-1 icono-boton"></i>
+                        <i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-2 icono-boton" onclick="cambiarEstado(${ingreso.Id}, 1)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton"></i>
                       </div>`;
         }
         
 
-        nuevaFila.insertCell(6).innerHTML = estado;
-
-        nuevaFila.insertCell(7).innerHTML = ""+ ingreso.Nombre + " " + ingreso.Apellido;
-        nuevaFila.insertCell(8).innerHTML = ingreso.FechaRegistro;
+        nuevaFila.insertCell(6).innerHTML = ""+ ingreso.Nombre + " " + ingreso.Apellido;
 
         let url = ""+ingreso.CodigoQR;
 
         console.log(url);
 
-        nuevaFila.insertCell(9).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
-        nuevaFila.insertCell(10).innerHTML = editar;
+        nuevaFila.insertCell(7).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
+        nuevaFila.insertCell(8).innerHTML = estado;
+        nuevaFila.insertCell(9).innerHTML = editar;
     });
     let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     tooltipTriggerList.forEach((tooltip) => {
@@ -239,7 +237,6 @@ function filtrarDatos() {
     let fechaFin = document.getElementById("fechaFin").value;
     let estado = document.getElementById("EstadoConsulta").value;
 
-    // Crear un objeto FormData para enviar los datos
     let formData = new FormData();
     formData.append("tipo", tipo);
     formData.append("fechaInicio", fechaInicio);
@@ -250,15 +247,15 @@ function filtrarDatos() {
         method: "POST",
         body: formData
     })
-    .then(response => response.json()) // Convertir la respuesta en JSON
+    .then(response => response.json()) 
     .then(data => {
         if (data.error) {
             console.error("Error en la consulta:", data.error);
             return;
         }
 
-        listaIngresos = data; // Actualizar la variable con los datos recibidos
-        cargarIngresos(); // Llamar a la función para mostrar los resultados
+        listaIngresos = data; 
+        cargarIngresos(); 
     })
     .catch(error => console.error("Error en la solicitud:", error));
 }
