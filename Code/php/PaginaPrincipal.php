@@ -134,7 +134,6 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/perfil.js"></script>
     <script src="../javascript/Servicios/reportes.js"></script>
     <script src="../javascript/register_login/ingreso_usuario.js"></script>
-    <script src="../javascript/register_login/ingreso.js"></script>
 
 </body>
 

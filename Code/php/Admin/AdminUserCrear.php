@@ -40,7 +40,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
                         placeholder="correo@dominio.com">
                     <p class="formulario__input-error text-danger">El correo debe ser válido (ejemplo@sitio.com).</p>
                 </div>
-
+                <hr>
                 <div class="campo-contenedor col-md-3 mb-4" id="grupo__password">
                     <label for="password" class="form-label">Contraseña:</label>
                     <div class="input-group">
@@ -73,7 +73,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
                         <option value="egreso">Egreso</option>
                     </select>
                 </div>
-
+                <hr>
                 <button type="submit" id="btnEnviar" class="btn btn-primary" onclick="guardarUsuario(event)">Registrar Usuario</button>
                 <div id="mensajeError" class="text-danger d-none mt-2"></div>
                 <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>

@@ -10,9 +10,20 @@ function inicializarScriptDashboard() {
         if (data.error) {
             console.error("Error en la respuesta del servidor:", data.error);
         } else {
-            animarNumero('ingresoTotal', data.IngresoTotal);
-            animarNumero('ingresoMensual', data.IngresoEsteMes);
-            dibujarGrafica();
+            const ingresoTotal = parseFloat(data.IngresoTotal);
+            const ingresoEsteMes = parseFloat(data.IngresoEsteMes);
+
+            console.log("Ingreso total:", ingresoTotal);
+            console.log("Ingreso este mes:", ingresoEsteMes);
+
+            if (!isNaN(ingresoTotal) && !isNaN(ingresoEsteMes)) {
+                // Llamar la animación solo si los números son válidos
+                animarNumero('ingresoTotal', ingresoTotal);
+                animarNumero('ingresoMensual', ingresoEsteMes);
+                dibujarGrafica();
+            } else {
+                console.error("Los datos de ingresos no son números válidos.");
+            }
         }
     })
     .catch(error => console.error("Error en la solicitud fetch:", error));
@@ -21,22 +32,28 @@ function inicializarScriptDashboard() {
 function animarNumero(id, numeroFinal) {
     let numero = 0;
     const intervalo = setInterval(() => {
-        const element = document.getElementById(id); 
+        const element = document.getElementById(id);
 
         if (!element) {
-            clearInterval(intervalo); 
+            clearInterval(intervalo);
             return;
         }
 
-        element.innerText = numero.toFixed(2);  
+        // Mostrar los valores con dos decimales
+        element.innerText = numero.toFixed(2);
 
         if (numero >= numeroFinal) {
             clearInterval(intervalo);
+            // Asegurarse de que el número final se establezca correctamente
+            element.innerText = numeroFinal.toFixed(2);
         } else {
-            numero += numeroFinal / 100;  
+            // Aumentar el valor de incremento para cargar más rápido
+            numero += (numeroFinal - numero) / 5;  // Incremento más grande
         }
-    }, 7);  
+    }, 10);  // Intervalo más rápido, 10ms
 }
+
+
 
 function dibujarGrafica() {
     fetch('Ingreso/ingresosMensuales.php') 

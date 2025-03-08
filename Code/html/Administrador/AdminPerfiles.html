@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Perfiles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+    <h2 class="text-center">Gestión de Perfiles</h2>
+    
+    <form id="perfilForm" class="border p-3 rounded shadow">
+        <div class="mb-3">
+            <label for="nombreRol" class="form-label">Nombre del Rol:</label>
+            <input type="text" id="nombreRol" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción:</label>
+            <textarea id="descripcion" class="form-control"></textarea>
+        </div>
+        
+        <h5>Permisos</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agregarCategoria">
+                    <label class="form-check-label" for="agregarCategoria">Agregar categoría</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agregarIngresos">
+                    <label class="form-check-label" for="agregarIngresos">Agregar ingresos</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="anularIngresos">
+                    <label class="form-check-label" for="anularIngresos">Anular ingresos</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="crearUsuarios">
+                    <label class="form-check-label" for="crearUsuarios">Crear usuarios</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="desactivarRoles">
+                    <label class="form-check-label" for="desactivarRoles">Desactivar roles</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="editarCategoria">
+                    <label class="form-check-label" for="editarCategoria">Editar categoría</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="editarIngresos">
+                    <label class="form-check-label" for="editarIngresos">Editar ingresos</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="agregarGastos">
+                    <label class="form-check-label" for="agregarGastos">Agregar gastos</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="anularGastos">
+                    <label class="form-check-label" for="anularGastos">Anular gastos</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="crearRoles">
+                    <label class="form-check-label" for="crearRoles">Crear roles</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="desactivarCategoria">
+                    <label class="form-check-label" for="desactivarCategoria">Desactivar categoría</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="desactivarUsuarios">
+                    <label class="form-check-label" for="desactivarUsuarios">Desactivar usuarios</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="editarGastos">
+                    <label class="form-check-label" for="editarGastos">Editar gastos</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="generarReportes">
+                    <label class="form-check-label" for="generarReportes">Generar reportes</label>
+                </div>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-3">Actualizar</button>
+    </form>
+    
+    <h3 class="mt-5">Lista de Perfiles</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Nombre del Rol</th>
+                <th>Descripción</th>
+                <th>Permisos</th>
+            </tr>
+        </thead>
+        <tbody id="perfilTableBody">
+            <!-- Aquí se insertarán los perfiles -->
+        </tbody>
+    </table>
+    
+    <script>
+        document.getElementById("perfilForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let nombreRol = document.getElementById("nombreRol").value;
+            let descripcion = document.getElementById("descripcion").value;
+            let permisos = [];
+            
+            document.querySelectorAll(".form-check-input").forEach(input => {
+                if (input.checked) {
+                    permisos.push(input.nextElementSibling.innerText);
+                }
+            });
+            
+            let tableBody = document.getElementById("perfilTableBody");
+            let row = tableBody.insertRow();
+            row.insertCell(0).innerText = nombreRol;
+            row.insertCell(1).innerText = descripcion;
+            row.insertCell(2).innerText = permisos.join(", ");
+            
+            document.getElementById("perfilForm").reset();
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
