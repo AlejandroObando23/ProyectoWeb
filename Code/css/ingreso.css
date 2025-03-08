@@ -36,7 +36,21 @@ body {
     background-color: rgb(211, 135, 135);
 }
 
-#modalAgregar, #modalActualizar {
+
+#modalAgregarPerfiles{
+    position: fixed;
+    top: 0; 
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    width: 90%;
+    animation: bajar 0.5s ease-out forwards;
+    padding: 20px;
+    box-sizing: border-box; 
+    z-index: 9999; 
+}
+
+#modalAgregar, #modalActualizar{
     position: fixed;
     top: 0; 
     left: 50%;
@@ -48,6 +62,11 @@ body {
     box-sizing: border-box; 
     z-index: 1000; 
 }
+
+#modalAgregarPerfiles::backdrop {
+    animation: oscurecer 0.5s ease-out forwards;
+}
+
 
 #modalAgregar::backdrop, #modalActualizar::backdrop {
     background-color: rgba(0, 0, 0, 0.55);

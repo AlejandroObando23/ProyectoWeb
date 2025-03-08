@@ -106,7 +106,7 @@ if (!isset($_SESSION['usuario'])) {
                                     usuarios</a></li>
                             <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserCrear.php',4)"><i class="bi bi-person-fill-add"></i> Agregar
                                     usuario</a></li>
-                            <li><a class="dropdown-item" href="../Administrador/AdminUserRoles.html"><i class="bi bi-person-check-fill"></i> Administrar
+                            <li><a class="dropdown-item" href="#" onclick="cargarPagina('../html/Administrador/AdminPerfiles.html',7)"><i class="bi bi-person-check-fill"></i> Administrar
                                     permisos</a></li>
                         </ul>
                     </li>
@@ -133,6 +133,7 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/gastos.js"></script>
     <script src="../javascript/Servicios/perfil.js"></script>
     <script src="../javascript/Servicios/reportes.js"></script>
+    <script src="../javascript/Servicios/perfiles.js"></script>
     <script src="../javascript/register_login/ingreso_usuario.js"></script>
 
 </body>

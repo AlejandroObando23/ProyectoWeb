@@ -48,6 +48,9 @@ function cargarPagina(pagina, n) {
                         inicializarScriptPerfil();
                         document.title = "Mi Perfil | MIECONOMIA";
                         break;
+                    case 7:
+                        document.title = "Perfiles | MIECONOMIA";
+                        break;
                 }
 
                 if (activarId) {
