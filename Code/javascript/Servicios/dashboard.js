@@ -12,16 +12,20 @@ function inicializarScriptDashboard() {
         } else {
             const ingresoTotal = parseFloat(data.IngresoTotal);
             const ingresoEsteMes = parseFloat(data.IngresoEsteMes);
+            const egresoTotal = parseFloat(data.EgresoTotal);
+            const egresoEsteMes = parseFloat(data.EgresoEsteMes);
 
-            console.log("Ingreso total:", ingresoTotal);
-            console.log("Ingreso este mes:", ingresoEsteMes);
+            console.log("Ingreso total:", ingresoTotal, "Ingreso este mes:", ingresoEsteMes);
+            console.log("Egreso total:", egresoTotal, "Egreso este mes:", egresoEsteMes);
 
-            if (!isNaN(ingresoTotal) && !isNaN(ingresoEsteMes)) {
+            if (!isNaN(ingresoTotal) && !isNaN(ingresoEsteMes) && !isNaN(egresoTotal) && !isNaN(egresoEsteMes)) {
                 animarNumero('ingresoTotal', ingresoTotal);
                 animarNumero('ingresoMensual', ingresoEsteMes);
+                animarNumero('gastoTotal', egresoTotal);
+                animarNumero('gastoMensual', egresoEsteMes);
                 dibujarGrafica();
             } else {
-                console.error("Los datos de ingresos no son números válidos.");
+                console.error("Los datos de ingresos/egresos no son números válidos.");
             }
         }
     })
@@ -32,12 +36,10 @@ function animarNumero(id, numeroFinal) {
     let numero = 0;
     const intervalo = setInterval(() => {
         const element = document.getElementById(id);
-
         if (!element) {
             clearInterval(intervalo);
             return;
         }
-
         element.innerText = numero.toFixed(2);
 
         if (numero >= numeroFinal) {
@@ -51,6 +53,7 @@ function animarNumero(id, numeroFinal) {
 
 
 
+
 function dibujarGrafica() {
     fetch('Ingreso/ingresosMensuales.php') 
     .then(response => response.json())
@@ -60,6 +63,7 @@ function dibujarGrafica() {
             return;
         }
 
+        // Mapeamos los meses y los datos de ingresos y egresos
         const meses = data.map(item => {
             const nombresMeses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
                                   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
@@ -67,19 +71,18 @@ function dibujarGrafica() {
         });
 
         const ingresos = data.map(item => item.total_ingresos);
+        const egresos = data.map(item => item.total_egresos);
 
-        const gastos = ingresos.map(() => Math.floor(Math.random() * 50)); 
-
-        console.log("Meses con ingresos:", meses);
+        console.log("Meses:", meses);
         console.log("Ingresos:", ingresos);
-        console.log("Gastos:", gastos);
+        console.log("Egresos:", egresos);
 
         const ctx = document.getElementById("grafica").getContext("2d");
 
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: meses, 
+                labels: meses, // Los meses
                 datasets: [
                     {
                         label: 'Ingresos',
@@ -89,8 +92,8 @@ function dibujarGrafica() {
                         borderWidth: 1
                     },
                     {
-                        label: 'Gastos',
-                        data: gastos,
+                        label: 'Egresos',
+                        data: egresos,
                         backgroundColor: 'rgba(255, 99, 132, 0.5)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
@@ -109,4 +112,3 @@ function dibujarGrafica() {
     })
     .catch(error => console.error("Error en la petición:", error));
 }
-

@@ -7,7 +7,7 @@ function inicializarScriptUsuarios(){
 
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("cambiar-estado")) {
-            cambiarEstado(event.target);
+            cambiarEstadoUsuario(event.target);
         }
     });
 }
@@ -53,7 +53,7 @@ function cargarUsuarios(mostrarInactivos = false) {
         .catch(error => console.error("Error cargando usuarios:", error));
 }
 
-function cambiarEstado(boton) {
+function cambiarEstadoUsuario(boton) {
     let cedula = boton.getAttribute("data-cedula");
     let nuevoEstado = boton.getAttribute("data-estado");
 
