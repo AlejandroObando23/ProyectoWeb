@@ -77,10 +77,10 @@ function consultarReporte() {
         .catch(error => console.error("Error:", error));
 }
 
-function abrirGrafico(){
+function abrirGrafico() {
     let opcion = Number(document.getElementById("graficoSelect").value);
 
-    switch (opcion){
+    switch (opcion) {
         case 0:
             document.getElementById("ingresoGastoTipo").style.display = "none";
             document.getElementById("ingresoVSgasto").style.display = "none";
@@ -96,6 +96,15 @@ function abrirGrafico(){
     }
 }
 
+let graficos = {};
+
+function destruirTodosLosGraficos() {
+    Object.values(graficos).forEach(grafico => {
+        if (grafico) grafico.destroy();
+    });
+    graficos = {};
+}
+
 function cargarGrafico() {
     let anio = document.getElementById("aniosSelect").value;
     let mes = document.getElementById("mesesSelect").value;
@@ -103,45 +112,46 @@ function cargarGrafico() {
     anio = anio === "Seleccione una opcion" ? 0 : anio;
     mes = mes === "" ? 0 : mes;
 
-    fetch(`Reporte/datosGraficos.php?anio=${anio}&mes=${mes}`) 
+    fetch(`Reporte/datosGraficos.php?anio=${anio}&mes=${mes}`)
         .then(response => response.json())
         .then(data => {
-            const ingresos = data.ingreso_total; 
-            const gastos = data.gasto_total;  
+            destruirTodosLosGraficos();
 
-            const ingresosPorTipo = data.ingresos_por_tipo;  
-            const gastosPorTipo = data.gastos_por_tipo;  
+            const ctxIngresos = document.getElementById("graficoIngresos").getContext("2d");
+            const ctxGastos = document.getElementById("graficoGastos").getContext("2d");
+            const ctxPastel = document.getElementById("graficoPastel").getContext("2d");
+            const ctxLineas = document.getElementById("graficoLineas").getContext("2d");
 
-            new Chart(document.getElementById("graficoIngresos"), {
+            graficos.graficoIngresos = new Chart(ctxIngresos, {
                 type: "doughnut",
                 data: {
-                    labels: Object.keys(ingresosPorTipo),
+                    labels: Object.keys(data.ingresos_por_tipo),
                     datasets: [{
-                        data: Object.values(ingresosPorTipo),
-                        backgroundColor: ["#28a745", "#17a2b8", "#ffc107"]  
+                        data: Object.values(data.ingresos_por_tipo),
+                        backgroundColor: ["#28a745", "#17a2b8", "#ffc107"]
                     }]
                 }
             });
 
-            new Chart(document.getElementById("graficoGastos"), {
+            graficos.graficoGastos = new Chart(ctxGastos, {
                 type: "doughnut",
                 data: {
-                    labels: Object.keys(gastosPorTipo),
+                    labels: Object.keys(data.gastos_por_tipo),
                     datasets: [{
-                        data: Object.values(gastosPorTipo),
-                        backgroundColor: ["#dc3545", "#fd7e14", "#6f42c1", "#20c997"]  
+                        data: Object.values(data.gastos_por_tipo),
+                        backgroundColor: ["#dc3545", "#fd7e14", "#6f42c1", "#20c997"]
                     }]
                 }
             });
 
-            new Chart(document.getElementById("graficoPastel"), {
+            graficos.graficoPastel = new Chart(ctxPastel, {
                 type: "pie",
                 data: {
                     labels: ["Ingresos", "Gastos"],
                     datasets: [{
-                        data: [ingresos, gastos],
-                        backgroundColor: ["rgba(75, 192, 192, 0.5)", "rgba(255, 99, 132, 0.5)"],  
-                        borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"]  
+                        data: [data.ingreso_total, data.gasto_total],
+                        backgroundColor: ["rgba(75, 192, 192, 0.5)", "rgba(255, 99, 132, 0.5)"],
+                        borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"]
                     }]
                 }
             });
@@ -154,29 +164,19 @@ function cargarGrafico() {
                 ...data.ingresos_por_fecha.map(item => item.fecha),
                 ...data.gastos_por_fecha.map(item => item.fecha)
             ];
-
             const uniqueDates = [...new Set(allDates)].sort();
-
-            let lastIngreso = 0;
-            let lastEgreso = 0;
 
             uniqueDates.forEach(fecha => {
                 const ingreso = data.ingresos_por_fecha.find(item => item.fecha === fecha);
-                if (ingreso) {
-                    lastIngreso = parseFloat(ingreso.monto);
-                }
-
                 const egreso = data.gastos_por_fecha.find(item => item.fecha === fecha);
-                if (egreso) {
-                    lastEgreso = parseFloat(egreso.monto);
-                }
 
                 fechas.push(fecha);
-                ingresosMonto.push(lastIngreso);
-                egresosMonto.push(lastEgreso);
+                ingresosMonto.push(ingreso ? parseFloat(ingreso.monto) : null);  // Usa null en vez de 0
+                egresosMonto.push(egreso ? parseFloat(egreso.monto) : null);  // Usa null en vez de 0
             });
 
-            new Chart(document.getElementById("graficoLineas"), {
+            // Crear el gráfico con `spanGaps: true` para conectar solo los puntos con valores
+            graficos.graficoLineas = new Chart(ctxLineas, {
                 type: "line",
                 data: {
                     labels: fechas,
@@ -186,44 +186,30 @@ function cargarGrafico() {
                             data: ingresosMonto,
                             borderColor: "rgba(75, 192, 192, 1)",
                             backgroundColor: "rgba(75, 192, 192, 0.2)",
-                            fill: true
+                            fill: true,
+                            spanGaps: true  // Permite saltar puntos vacíos sin hacer línea plana
                         },
                         {
                             label: "Egresos",
                             data: egresosMonto,
                             borderColor: "rgba(255, 99, 132, 1)",
                             backgroundColor: "rgba(255, 99, 132, 0.2)",
-                            fill: true
+                            fill: true,
+                            spanGaps: true
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Fecha'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Monto'
-                            }
-                        }
+                        x: { title: { display: true, text: 'Fecha' } },
+                        y: { title: { display: true, text: 'Monto' } }
                     }
                 }
             });
+            
+
         })
         .catch(error => console.error("Error al cargar los datos:", error));
 }
 
-function destruirTodosLosGraficos() {
-    const canvases = document.querySelectorAll("canvas");
-    canvases.forEach(canvas => {
-        if (canvas.chart) {
-            canvas.chart.destroy(); 
-        }
-    });
-}
