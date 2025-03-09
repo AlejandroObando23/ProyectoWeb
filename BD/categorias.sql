@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-03-2025 a las 20:01:11
+-- Tiempo de generación: 09-03-2025 a las 22:27:26
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -40,10 +40,10 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`Id`, `Nombre`, `CodigoQR`, `tipo`) VALUES
-(1, 'Salario', '../codigosQR/QRsalario.jpeg', 'ingreso'),
-(2, 'Serivicio_basico', '../codigosQR/QRServicioBasico.jpeg', 'egreso'),
-(3, 'Extra', '../codigosQR/QRIngreso.jpeg', 'ingreso'),
-(4, 'Alimento', '../codigosQR/QRAlimento.jpeg', 'egreso');
+(1, 'Salario', '../codigosQR/Ingreso/QRsalario.jpeg', 'ingreso'),
+(2, 'Serivicio_basico', '../codigosQR/Egreso/QRServicioBasico.jpeg', 'egreso'),
+(3, 'Extra', '../codigosQR/Ingreso/QRIngreso.jpeg', 'ingreso'),
+(4, 'Alimento', '../codigosQR/Egreso/QRAlimento.jpeg', 'egreso');
 
 --
 -- Índices para tablas volcadas
