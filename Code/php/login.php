@@ -1,28 +1,23 @@
 <?php
-require_once "conexion.php"; // Incluir la conexión
+require_once "conexion.php"; 
 
-session_start(); // Iniciar sesión
+session_start(); 
 
-// Verificar si el usuario ya está logueado
 if (isset($_SESSION['usuario'])) {
-    // Redirigir al inicio según el rol del usuario
     header("Location: PaginaPrincipal.php");
     exit();
 }
 
-$mensaje = ''; // Variable para el mensaje de error
+$mensaje = ''; 
 
-// Verificar si el formulario ha sido enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener los datos enviados desde el formulario
+
     $usuario = $_POST['Cedula'];
     $password = $_POST['Password'];
 
-    // Verificar que los datos no estén vacíos
     if (empty($usuario) || empty($password)) {
         $mensaje = 'Debe ingresar usuario y contraseña.';
     } else {
-        // Consultar si el usuario existe en la base de datos y obtener los permisos del rol
         $sql = "
             SELECT u.*, r.Nombre AS rol_nombre, r.Descripcion AS rol_descripcion, 
                    r.PaginaIngresos, r.AgregarIngreso, r.AnularActivarIngreso, r.EditarIngreso,
@@ -43,11 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Comprobar si el usuario fue encontrado
         if ($result->num_rows > 0) {
-            $registro = $result->fetch_assoc(); // Obtener los datos del usuario
+            $registro = $result->fetch_assoc(); 
 
-            // Verificar la contraseña de manera segura
             if (password_verify($password, $registro['Password'])) { 
                 $_SESSION['id'] = $registro['Id'];
                 $_SESSION['usuario'] = $registro['Cedula'];
@@ -55,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['apellido'] = $registro['Apellido'];
                 $_SESSION['rol'] = $registro['rol_nombre'];
 
-                // Guardar los permisos del rol en un arreglo
                 $permisos = [
                     'rol_nombre' => $registro['rol_nombre'],
                     'rol_descripcion' => $registro['rol_descripcion'],
@@ -80,24 +72,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $_SESSION['permisos'] = $permisos;
 
-                // Verificar si el usuario tiene un rol asignado
                 if (empty($registro['Rol'])) {
                     $mensaje = 'No tiene un rol asignado. Pida al administrador que le asigne uno.';
                 } else {
-                    // Redirigir según el rol
                     header("Location: PaginaPrincipal.php");
                     exit();
                 }
             } else {
-                // Si la contraseña no es correcta
                 $mensaje = 'Usuario o contraseña incorrectos.';
             }
         } else {
-            // Si el usuario no se encuentra
             $mensaje = 'Usuario o contraseña incorrectos.';
         }
 
-        // Cerrar la conexión
         $stmt->close();
         $conn->close();
     }

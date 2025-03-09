@@ -43,6 +43,7 @@ function cargarPagina(pagina, n) {
                         document.title = "Agregar Usuario | MIECONOMIA";
                         break;
                     case 5:
+                        inicializarScriptUsuarios();
                         break;
                     case 6:
                         inicializarScriptPerfil();
