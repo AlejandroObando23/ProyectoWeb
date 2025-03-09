@@ -1,4 +1,4 @@
-function inicializarScriptUsuarios(){
+function inicializarScriptUsuarios() {
     cargarUsuarios();
 
     document.getElementById("toggleInactivos").addEventListener("change", function () {
@@ -6,16 +6,20 @@ function inicializarScriptUsuarios(){
     });
 
     document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("cambiar-estado")) {
-            cambiarEstadoUsuario(event.target);
+        if (event.target.classList.contains("editar-usuario")) {
+            mostrarFormularioEditar(event.target);
         }
     });
+
+    document.getElementById("formEditarUsuario").addEventListener("submit", function (event) {
+        event.preventDefault();
+        guardarCambiosUsuario();
+    });
 }
-    
 
 function cargarUsuarios(mostrarInactivos = false) {
     let url = `Admin/ObtenerUsuarios.php?ver_inactivos=${mostrarInactivos ? "1" : "0"}`;
-    
+
     fetch(url)
         .then(response => response.json())
         .then(usuarios => {
@@ -31,54 +35,70 @@ function cargarUsuarios(mostrarInactivos = false) {
                         <td>${usuario.Nombre}</td>
                         <td>${usuario.Apellido}</td>
                         <td>${usuario.Correo}</td>
+                        <td>${usuario.Rol}</td>
                         <td>
                             <span class="badge ${usuario.Estado === 'Activo' ? 'bg-success' : 'bg-secondary'}" id="estado-${usuario.Cedula}">
                                 ${usuario.Estado}
                             </span>
                         </td>
                         <td>
-                            <button class="btn btn-warning btn-sm cambiar-estado" 
-                                    data-cedula="${usuario.Cedula}" 
-                                    data-estado="${usuario.Estado === 'Activo' ? 'Inactivo' : 'Activo'}">
-                                ${usuario.Estado === 'Activo' ? 'Desactivar' : 'Activar'}
+                            <button class="btn btn-warning btn-sm editar-usuario" data-cedula="${usuario.Cedula}" data-nombre="${usuario.Nombre}" data-apellido="${usuario.Apellido}" data-correo="${usuario.Correo}" data-rol="${usuario.Rol}" data-estado="${usuario.Estado}">
+                                Editar
                             </button>
                         </td>
                     `;
                     tbody.appendChild(fila);
                 });
             } else {
-                tbody.innerHTML = '<tr><td colspan="6" class="text-center">No hay usuarios registrados</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center">No hay usuarios registrados</td></tr>';
             }
         })
         .catch(error => console.error("Error cargando usuarios:", error));
 }
 
-function cambiarEstadoUsuario(boton) {
+function mostrarFormularioEditar(boton) {
     let cedula = boton.getAttribute("data-cedula");
-    let nuevoEstado = boton.getAttribute("data-estado");
+    let nombre = boton.getAttribute("data-nombre");
+    let apellido = boton.getAttribute("data-apellido");
+    let correo = boton.getAttribute("data-correo");
+    let rol = boton.getAttribute("data-rol");
+    let estado = boton.getAttribute("data-estado");
 
-    fetch("Admin/usuarios_inactivos.php", {
+    // Llenar el formulario con los datos actuales del usuario
+    document.getElementById("cedulaEditar").value = cedula;
+    document.getElementById("rolEditar").value = rol;
+    document.getElementById("estadoEditar").value = estado;
+
+    // Mostrar el modal
+    new bootstrap.Modal(document.getElementById('editarUsuarioModal')).show();
+}
+
+function guardarCambiosUsuario() {
+    let cedula = document.getElementById("cedulaEditar").value;
+    let rol = document.getElementById("rolEditar").value;
+    let estado = document.getElementById("estadoEditar").value;
+
+    fetch("../php/Admin/AdminUserLista.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `cedula=${cedula}&estado=${nuevoEstado}`
+        body: `cedula=${cedula}&rol=${rol}&estado=${estado}`
     })
     .then(response => response.text())
     .then(data => {
         if (data === "success") {
-            let estadoSpan = document.getElementById("estado-" + cedula);
-            if (nuevoEstado === "Activo") {
-                estadoSpan.classList.replace("bg-secondary", "bg-success");
-                estadoSpan.innerText = "Activo";
-                boton.innerText = "Desactivar";
-                boton.setAttribute("data-estado", "Inactivo");
-            } else {
-                estadoSpan.classList.replace("bg-success", "bg-secondary");
-                estadoSpan.innerText = "Inactivo";
-                boton.innerText = "Activar";
-                boton.setAttribute("data-estado", "Activo");
-            }
+            // Actualizar la vista en la tabla
+            let fila = document.getElementById(`usuario-${cedula}`);
+            fila.querySelector(".badge").classList.replace(
+                fila.querySelector(".badge").classList.contains("bg-success") ? "bg-success" : "bg-secondary",
+                estado === "Activo" ? "bg-success" : "bg-secondary"
+            );
+            fila.querySelector(".badge").innerText = estado;
+            fila.querySelector(".btn").innerText = "Editar";
+
+            // Cerrar el modal
+            bootstrap.Modal.getInstance(document.getElementById('editarUsuarioModal')).hide();
         } else {
-            alert("Error al cambiar el estado");
+            alert("Error al guardar los cambios");
         }
     })
     .catch(error => console.error("Error en la solicitud AJAX:", error));
