@@ -1,7 +1,7 @@
 <dialog id="modalAgregarCategoria" class="agregarIngreso container mt-4 border-0 rounded shadow">
-    <form id="formCategoria" class="p-4 bg-light rounded shadow"   enctype="multipart/form-data">
+    <form id="formCategoria" class="p-4 bg-light rounded shadow" enctype="multipart/form-data">
         <div class="row d-flex">
-            
+
             <div class="campo-contenedor col-md-3 mb-3" id="grupo__ncategoria">
                 <label for="ncategoria" class="form-label">Nombre Categoria:</label>
                 <input type="text" name="ncategoria" id="ncategoria" class="form-control shadow" required>
@@ -20,18 +20,20 @@
 
             <div class="campo-contenedor col-md-3 mb-3" id="grupo__imagen">
                 <label for="imagenCategoria" class="form-label">Cargar Imagen Categoria:</label>
-                <input type="file" id="imagenCategoria" name="imagenCategoria" accept="image/*" class="form-control" required>
+                <input type="file" id="imagenCategoria" name="imagenCategoria" accept="image/*" class="form-control"
+                    required>
                 <div class="invalid-feedback">Por favor cargue una imagen válida.</div>
             </div>
 
-            <button type="button" class="btn" onclick="guardarDatosCategoria(event)" >Guardar</button>
+            <button type="button" class="btn" onclick="guardarDatosCategoria(event)">Guardar</button>
             <button type="button" class="btn botonR" onclick="cerrarAgregarCategoria()">Cancelar</button>
-            
+
             <div id="mensajeError" class="text-danger d-none mt-2"></div>
-            <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+            <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado
+                exitosamente!</p>
         </div>
     </form>
-    
+
 </dialog>
 
 
@@ -39,7 +41,7 @@
 
 
 <dialog id="modalActualizarCategoria" class="actualizarIngreso container mt-4 border-0 rounded shadow">
-    <form id="actualizarCategoria" class="p-4 bg-light rounded shadow"   enctype="multipart/form-data">
+    <form id="actualizarCategoria" class="p-4 bg-light rounded shadow" enctype="multipart/form-data">
         <div class="row d-flex">
             <input type="text" name="ncategoriaid" id="ncategoriaid" class="form-control shadow" hidden>
             <div class="campo-contenedor col-md-3 mb-3" id="grupo__ncategoria">
@@ -59,8 +61,9 @@
             </div>
             <div class="campo-contenedor col-md-1 mb-2">
                 <label for="opcionImagenCategoria">Imagen Nueva?</label>
-                <input type="checkbox" id="opcionImagenCategoria" name="opcionImagenCategoria" value="verdadero" onclick="mostrarCategoriaImagen()">
-                
+                <input type="checkbox" id="opcionImagenCategoria" name="opcionImagenCategoria" value="verdadero"
+                    onclick="mostrarCategoriaImagen()">
+
             </div>
 
             <div class="campo-contenedor col-md-3 mb-3" style="display: none;" id="CampoImagenCategoria">
@@ -69,11 +72,12 @@
                 <div class="invalid-feedback">Por favor cargue una imagen válida.</div>
             </div>
 
-            <button type="button" class="btn" onclick="actualizarDatosCategoria(event)" >Guardar</button>
+            <button type="button" class="btn" onclick="actualizarDatosCategoria(event)">Guardar</button>
             <button type="button" class="btn botonR" onclick="cerrarActualizarCategoria()">Cancelar</button>
-            
+
             <div id="mensajeError" class="text-danger d-none mt-2"></div>
-            <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+            <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado
+                exitosamente!</p>
         </div>
     </form>
 </dialog>
@@ -85,47 +89,54 @@
 
 
 
-<h1 class="text-center mt-4">Crear Nueva Categoria de Ingreso o de Egreso</h1>
 
-<div class="container mt-1">
-    <div class="container mt-4">
-    <div class="col text-end"><button id="agregar" class="btn bg-info-subtle" onclick="abrirAgregarCategoria()"><i
-        class="bi bi-plus-circle"></i> Agregar Categoria</button></div>
-    <div class="table-responsive">
-        <table id="tablaCategoria" class="table text-center table-striped rounded">
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
 
-                <th scope="col">Tipo</th>
-                <th scope="col">codigoQr</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody id="tablebodyCategoria">
-              
-            </tbody >
-          </table>
-        <hr>
+<div class="container mt-4">
+    <fieldset class="border p-2 shadow bg-light rounded">
         <div class="d-flex">
-            <nav>
-                <ul class="pagination shadow" id="paginationCategoria"></ul>
-            </nav>
-            <div class="mb-3 col-1 mx-3">
-                <select id="itemsPerPageCategoria" class="form-select shadow" onchange="updateItemsPerPageCategoria()">
-                    <option value="5" selected>5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                </select>
+            <div class="col">
+                <h3 class="titulo">Categorias de Ingresos y Gastos</h3>
+            </div>
+            <div class="col text-end"><button id="agregar" class="btn bg-info-subtle"
+                    onclick="abrirAgregarCategoria()"><i class="bi bi-plus-circle"></i> Agregar Categoria</button>
             </div>
         </div>
-    </div>
-    </div>
+        <hr>
+        <div class="table-responsive">
+            
+            <table id="tablaCategoria" class="table text-center table-striped rounded">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+
+                        <th scope="col">Tipo</th>
+                        <th scope="col">codigoQr</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody id="tablebodyCategoria">
+
+                </tbody>
+            </table>
+            <hr>
+            <div class="d-flex">
+                <nav>
+                    <ul class="pagination shadow" id="paginationCategoria"></ul>
+                </nav>
+                <div class="mb-3 col-1 mx-3">
+                    <select id="itemsPerPageCategoria" class="form-select shadow"
+                        onchange="updateItemsPerPageCategoria()">
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </fieldset>
     <div id="codigoQr" class="imagenQr" onclick="cerrarQR()">
         <span class="cerrarImagen" onclick="cerrarQR()">✖</span>
         <img id="cargarQr" src="" alt="Imagen">
     </div>
 </div>
-
-
