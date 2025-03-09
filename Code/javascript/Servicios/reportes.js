@@ -171,11 +171,10 @@ function cargarGrafico() {
                 const egreso = data.gastos_por_fecha.find(item => item.fecha === fecha);
 
                 fechas.push(fecha);
-                ingresosMonto.push(ingreso ? parseFloat(ingreso.monto) : null);  // Usa null en vez de 0
-                egresosMonto.push(egreso ? parseFloat(egreso.monto) : null);  // Usa null en vez de 0
+                ingresosMonto.push(ingreso ? parseFloat(ingreso.monto) : null);  
+                egresosMonto.push(egreso ? parseFloat(egreso.monto) : null); 
             });
 
-            // Crear el gráfico con `spanGaps: true` para conectar solo los puntos con valores
             graficos.graficoLineas = new Chart(ctxLineas, {
                 type: "line",
                 data: {
@@ -187,7 +186,7 @@ function cargarGrafico() {
                             borderColor: "rgba(75, 192, 192, 1)",
                             backgroundColor: "rgba(75, 192, 192, 0.2)",
                             fill: true,
-                            spanGaps: true  // Permite saltar puntos vacíos sin hacer línea plana
+                            spanGaps: true  
                         },
                         {
                             label: "Egresos",
