@@ -1,10 +1,10 @@
-function inicializarScriptCategoria(){
-    tipoCategoria  = document.getElementById("tipoCategoria");
-    imagenCategoria = document.getElementById("imagenCategoria");
-    
-    
+let listaCategoria=[];
+let listaTiposCategoria = [];
+let tablaCategoria;
 
-}
+
+
+
 
 
 function guardarDatosCategoria(event) {
@@ -31,3 +31,121 @@ function guardarDatosCategoria(event) {
         alert("Hubo un error al enviar el formulario.");
     });
 };
+
+function categoriasScript(){
+    tipoCategoria  = document.getElementById("tipoCategoria");
+    imagenCategoria = document.getElementById("imagenCategoria");
+   
+    tablaCategoria  = document.getElementById("tablaCategoria").getElementsByTagName('tbody')[0];
+    console.log(document.title);
+    document.title = "Categoria | MIECONOMIA";
+    fetch("Categoria/listaCategoria.php")
+    .then(response => response.json())
+    .then(data => {
+        console.log("Datos recibidos:", data);
+        if (data.error) {
+            console.error("Error en la respuesta del servidor:", data.error);
+        } else {
+            listaCategoria= data;
+            cargarCategorias();
+            cargarTiposCategoria();
+        }
+    })
+    .catch(error => console.error("Error en la solicitud fetch:", error));
+
+
+
+}
+
+
+
+function cargarCategorias() {
+    tablaCategoria.innerHTML = ""; 
+
+    listaCategoria.forEach((categoria) => {
+
+        let nuevaFila = tablaCategoria.insertRow();
+        nuevaFila.classList.add("align-middle");
+ 
+        let editar ="";
+
+     
+        
+
+        nuevaFila.insertCell(0).innerHTML = categoria.Nombre;
+
+        let url = ""+categoria.CodigoQR;
+
+        console.log(url);
+        nuevaFila.insertCell(1).innerHTML = categoria.tipo;
+        nuevaFila.insertCell(2).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
+        
+        nuevaFila.insertCell(3).innerHTML = editar;
+    });
+    let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach((tooltip) => {
+        new bootstrap.Tooltip(tooltip);
+    });
+    
+    renderTableCategoria();
+}
+let itemsPerPageCategoria = 5;
+let currentPageCategoria = 1;
+function renderTableCategoria() {
+    
+    const tableBody = document.getElementById("tablebodyCategoria");
+    if (!tableBody) {
+        alert("Error: el elemento tablebodyCategoria no se encuentra.");
+        return;
+    }
+    
+    const rows = tableBody.getElementsByTagName("tr");
+    let start = (currentPageCategoria - 1) * itemsPerPageCategoria;
+    let end = start + itemsPerPageCategoria;
+    
+    for (let i = 0; i < rows.length; i++) {
+        rows[i].style.display = (i >= start && i < end) ? "" : "none";
+    }
+    
+    renderPaginationCategoria();
+}
+function mostrarQR(imagen) {
+    document.getElementById("codigoQr").style.display = "flex";
+    document.getElementById("cargarQr").src=imagen;
+}
+
+function cerrarQR() {
+    document.getElementById("codigoQr").style.display = "none";
+}
+function renderPaginationCategoria() {
+    const pagination = document.getElementById("paginationCategoria");
+    pagination.innerHTML = "";
+    let totalPages = Math.ceil(listaCategoria.length / itemsPerPageCategoria);
+    
+    pagination.innerHTML += `<li class='page-item ${currentPageCategoria === 1 ? "disabled" : ""}'>
+                                <a class='page-link' href='#' onclick='changePageCategoria(${currentPageCategoria - 1})'>Anterior</a>
+                            </li>`;
+    
+    for (let i = 1; i <= totalPages; i++) {
+        pagination.innerHTML += `<li class='page-item ${currentPageCategoria === i ? "active" : ""}'>
+                                    <a class='page-link' href='#' onclick='changePageCategoria(${i})'>${i}</a>
+                                </li>`;
+    }
+    
+    pagination.innerHTML += `<li class='page-item ${currentPageCategoria === totalPages ? "disabled" : ""}'>
+                                <a class='page-link' href='#' onclick='changePageCategoria(${currentPageCategoria + 1})'>Siguiente</a>
+                            </li>`;
+}
+
+function changePageCategoria(page) {
+    const totalPages = Math.ceil(listaCategoria.length / itemsPerPageCategoria);
+    if (page < 1 || page > totalPages) return;
+    currentPageCategoria = page;
+    renderTableCategoria();
+}
+
+function updateItemsPerPageCategoria() {
+    itemsPerPageCategoria = parseInt(document.getElementById("itemsPerPageCategoria").value);
+    currentPageCategoria = 1;
+    renderTableCategoria();
+}
