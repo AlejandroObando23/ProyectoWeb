@@ -17,12 +17,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $id_usuario = ($tipoIngresoGasto == "ingreso") ? "ingreso" : "egreso";
         $ruta_temporal = $_FILES['imagenCategoria']['tmp_name'];
-        $directorio_destino = '../../codigosQR/';
+        if($tipoIngresoGasto=="ingreso"){
+            $directorio_destino = '../../codigosQR/Ingreso/';
+
+        }else{
+            $directorio_destino = '../../codigosQR/Egreso/';
+
+        }
+        
         $nombre_unico = $id_usuario . '_' . uniqid() . '.' . $extension_archivo;
         $ruta_final = $directorio_destino . $nombre_unico;
 
         if (move_uploaded_file($ruta_temporal, $ruta_final)) {
-            $directorio_destino = '../codigosQR/';
+            if($tipoIngresoGasto=="ingreso"){
+                $directorio_destino = '../codigosQR/Ingreso/';
+    
+            }else{
+                $directorio_destino = '../codigosQR/Egreso/';
+    
+            }
+            
             $ruta_final_finales = $directorio_destino . $nombre_unico;
             $stmt = $conn->prepare("INSERT INTO categorias (Nombre, CodigoQR, tipo) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $ncategoria, $ruta_final_finales, $tipoIngresoGasto);

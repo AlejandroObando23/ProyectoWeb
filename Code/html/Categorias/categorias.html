@@ -1,8 +1,7 @@
-<h1 class="text-center mt-4">Crear Nueva Categoria de Ingreso o de Egreso</h1>
-
-<div class="container mt-1">
+<dialog id="modalAgregarCategoria" class="agregarIngreso container mt-4 border-0 rounded shadow">
     <form id="formCategoria" class="p-4 bg-light rounded shadow"   enctype="multipart/form-data">
         <div class="row d-flex">
+            
             <div class="campo-contenedor col-md-3 mb-3" id="grupo__ncategoria">
                 <label for="ncategoria" class="form-label">Nombre Categoria:</label>
                 <input type="text" name="ncategoria" id="ncategoria" class="form-control shadow" required>
@@ -26,20 +25,80 @@
             </div>
 
             <button type="button" class="btn" onclick="guardarDatosCategoria(event)" >Guardar</button>
+            <button type="button" class="btn botonR" onclick="cerrarAgregarCategoria()">Cancelar</button>
             
             <div id="mensajeError" class="text-danger d-none mt-2"></div>
             <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
         </div>
     </form>
+    
+</dialog>
 
+
+
+
+
+<dialog id="modalActualizarCategoria" class="actualizarIngreso container mt-4 border-0 rounded shadow">
+    <form id="actualizarCategoria" class="p-4 bg-light rounded shadow"   enctype="multipart/form-data">
+        <div class="row d-flex">
+            <input type="text" name="ncategoriaid" id="ncategoriaid" class="form-control shadow" hidden>
+            <div class="campo-contenedor col-md-3 mb-3" id="grupo__ncategoria">
+                <label for="ncategoriaA" class="form-label">Nombre Categoria:</label>
+                <input type="text" name="ncategoriaA" id="ncategoriaA" class="form-control shadow" required>
+                <div class="invalid-feedback">Por favor ingrese el nombre de la categoría.</div>
+            </div>
+
+            <div class="campo-contenedor col-md-3 mb-3" id="grupo__tipo">
+                <label for="tipoCategoriaA" class="form-label">Tipo Categoria:</label>
+                <select name="tipoCategoriaA" id="tipoCategoriaA" class="form-select shadow" required>
+                    <option value="" disabled selected>Tipo</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="egreso">Egreso</option>
+                </select>
+                <div class="invalid-feedback">Por favor seleccione un tipo de categoría.</div>
+            </div>
+            <div class="campo-contenedor col-md-1 mb-2">
+                <label for="opcionImagenCategoria">Imagen Nueva?</label>
+                <input type="checkbox" id="opcionImagenCategoria" name="opcionImagenCategoria" value="verdadero" onclick="mostrarCategoriaImagen()">
+                
+            </div>
+
+            <div class="campo-contenedor col-md-3 mb-3" style="display: none;" id="CampoImagenCategoria">
+                <label for="imagenCategoria" class="form-label">Cargar Imagen Categoria:</label>
+                <input type="file" id="imagenCategoriaA" name="imagenCategoriaA" accept="image/*" class="form-control">
+                <div class="invalid-feedback">Por favor cargue una imagen válida.</div>
+            </div>
+
+            <button type="button" class="btn" onclick="actualizarDatosCategoria(event)" >Guardar</button>
+            <button type="button" class="btn botonR" onclick="cerrarActualizarCategoria()">Cancelar</button>
+            
+            <div id="mensajeError" class="text-danger d-none mt-2"></div>
+            <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+        </div>
+    </form>
+</dialog>
+
+
+
+
+
+
+
+
+<h1 class="text-center mt-4">Crear Nueva Categoria de Ingreso o de Egreso</h1>
+
+<div class="container mt-1">
+    <div class="container mt-4">
+    <div class="col text-end"><button id="agregar" class="btn bg-info-subtle" onclick="abrirAgregarCategoria()"><i
+        class="bi bi-plus-circle"></i> Agregar Categoria</button></div>
     <div class="table-responsive">
         <table id="tablaCategoria" class="table text-center table-striped rounded">
             <thead>
               <tr>
                 <th scope="col">Nombre</th>
 
-                <th scope="col">Código QR</th>
                 <th scope="col">Tipo</th>
+                <th scope="col">codigoQr</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -61,7 +120,7 @@
                 </select>
             </div>
         </div>
-        
+    </div>
     </div>
     <div id="codigoQr" class="imagenQr" onclick="cerrarQR()">
         <span class="cerrarImagen" onclick="cerrarQR()">✖</span>
