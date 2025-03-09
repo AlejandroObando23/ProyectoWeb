@@ -1,4 +1,6 @@
 function inicializarScriptReportes(){
+    cargarAnios();
+    consultarReporte();
     const ingresos = 5000;
     const gastos = 3200;
     const balance = ingresos - gastos;
@@ -69,4 +71,72 @@ function inicializarScriptReportes(){
             }]
         }
     });
+
+}
+
+function cargarAnios() {
+    let selectAnios = document.getElementById("aniosSelect");
+    selectAnios.innerHTML = "";
+
+    fetch("Reporte/obtenerAnios.php")
+        .then(response => response.json())
+        .then(anios => {
+
+            console.log("años recibidos: " +anios);           
+            selectAnios.innerHTML = '<option value="">Seleccione una opción</option>';
+
+            anios.forEach(anio => {
+                let option = document.createElement("option");
+                option.value = anio;
+                option.textContent = anio;
+                selectAnios.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Error cargando los años:", error));
+}
+
+function consultarReporte(){
+    let anio = document.getElementById("aniosSelect").value;
+    let mes = document.getElementById("mesesSelect").value;
+
+    console.log(1);
+
+    anio = anio === "Seleccione una opcion" ? 0 : anio;
+    mes = mes === "" ? 0 : mes;
+
+    fetch(`Reporte/obtenerReporte.php?anio=${anio}&mes=${mes}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            console.log("reporte: ");
+            console.log(data);
+
+            let variacion =  Number(data.variacion_porcentaje);
+            let comparacion = "";
+
+            if(variacion >= 0){
+                comparacion = "<h5 class='text-success'>" + variacion + " % <i class='bi bi-caret-up-fill'></i></h5>";
+            }else{
+                comparacion = "<h5 class='text-danger'>" + variacion + " % <i class='bi bi-caret-down-fill'></i></h5>";
+            }
+
+
+
+            document.getElementById("ingreso_mensual").textContent = `$ ${data.ingreso_total}`;
+            document.getElementById("gasto_mensual").textContent = `$ ${data.gasto_total}`;
+            document.getElementById("balance_mensual").textContent = `$ ${data.balance_neto}`;
+            document.getElementById("categoriaMayorIngreso").textContent = data.categoria_mayor_ingreso;
+            document.getElementById("categoriaMayorGasto").textContent = data.categoria_mayor_gasto;
+            document.getElementById("comparacion").innerHTML = comparacion;
+            document.getElementById("cantidadIngresos").textContent = data.cantidad_ingresos;
+            document.getElementById("cantidadGastos").textContent = data.cantidad_gastos;
+            document.getElementById("cantidadTransacciones").textContent = Number(data.cantidad_gastos) + Number(data.cantidad_ingresos);
+            document.getElementById("ingreso_anual").textContent = `$ ${data.ingreso_anual}`;
+            document.getElementById("gasto_anual").textContent = `$ ${data.gasto_anual}`;
+            document.getElementById("balance_anual").textContent = "$ " + (Number(data.ingreso_anual)-Number(data.gasto_anual));
+        })
+        .catch(error => console.error("Error:", error));
 }
