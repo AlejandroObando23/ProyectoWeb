@@ -138,6 +138,7 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../javascript/Servicios/perfiles.js"></script>
     <script src="../javascript/register_login/ingreso_usuario.js"></script>
     <script src="../javascript/Categoria/categoria.js"></script>
+    <script src="../javascript/Servicios/usuarios_inactivos.js"></script>
 
 </body>
 
