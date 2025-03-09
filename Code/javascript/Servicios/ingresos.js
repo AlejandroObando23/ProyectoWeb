@@ -8,6 +8,11 @@ let tablaIngresos;
 
 //Cargar todos los datos de los ingresos en una lista
 function inicializarScriptIngresos(){
+    if (!permisos.AgregarIngreso) {
+        document.getElementById("agregar").style.display= "none";
+        document.getElementById("agregar").disabled= true;
+    }
+
     botonAgregar = document.getElementById("agregar");
     modalAgregar = document.getElementById("modalAgregar");
     modalActualizar = document.getElementById("modalActualizar");
@@ -92,16 +97,32 @@ function cargarIngresos() {
 
         if(ingreso.Estado == "Completado"){
             estado = '<p class="bg-success-subtle text-center m-0 p-0">Completado</p>';
-            editar = `<div class="d-flex">
-                        <i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-2 icono-boton" title="Anular" onclick="cambiarEstado(${ingreso.Id}, 2)"></i>
-                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarIngreso(${ingreso.Id})"></i>
-                      </div>`;
+
+            editar = '<div class="d-flex">';
+            
+            if(permisos.AnularActivarIngreso){
+                editar += `<i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-2 icono-boton" title="Anular" onclick="cambiarEstado(${ingreso.Id}, 2)"></i>`;
+            }
+
+            if(permisos.EditarIngreso){
+                editar += `<i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarIngreso(${ingreso.Id})"></i>`;
+            }
+
+            editar += '</div>';
+
         }else if(ingreso.Estado == "Anulado"){
             estado = '<p class="bg-danger-subtle text-center m-0 p-0">Anulado</p>';
-            editar = `<div class="d-flex">
-                        <i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-2 icono-boton" title="Completar" onclick="cambiarEstado(${ingreso.Id}, 1)"></i>
-                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarIngreso(${ingreso.Id})"></i>
-                      </div>`;
+            editar = '<div class="d-flex">';
+
+            if(permisos.AnularActivarIngreso){
+                editar += `<i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-2 icono-boton" title="Completar" onclick="cambiarEstado(${ingreso.Id}, 1)"></i>`;
+            }
+
+            if(permisos.EditarIngreso){
+                editar += `<i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarIngreso(${ingreso.Id})"></i>`;
+            }
+
+            editar += '</div>';
         }
         
 

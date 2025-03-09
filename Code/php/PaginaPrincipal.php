@@ -35,6 +35,12 @@ $permisos = isset($_SESSION['permisos']) ? $_SESSION['permisos'] : [];
     <link href="../css/adminusercrear.css" rel="stylesheet">
     <link href="../css/dashboard.css" rel="stylesheet">
 
+    <script>
+    // Pasa los permisos obtenidos desde PHP a JavaScript
+        const permisos = <?php echo json_encode($_SESSION['permisos']); ?>;
+    </script>
+
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
