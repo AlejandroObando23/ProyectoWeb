@@ -74,7 +74,9 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
                     </select>
                 </div>
                 <hr>
-                <button type="submit" id="btnEnviar" class="btn btn-primary" onclick="guardarUsuario(event)">Registrar Usuario</button>
+                <div class="row text-end justify-content-end">
+                    <button type="submit" id="btnEnviar" class="btn btn-primary col-md-2 col-sm-12" onclick="guardarUsuario(event)">Registrar Usuario</button>
+                </div>
                 <div id="mensajeError" class="text-danger d-none mt-2"></div>
                 <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
             </div>

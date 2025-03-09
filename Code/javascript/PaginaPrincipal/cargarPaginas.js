@@ -50,6 +50,7 @@ function cargarPagina(pagina, n) {
                         break;
                     case 7:
                         document.title = "Perfiles | MIECONOMIA";
+                        inicializarScriptPerfiles();
                         break;
                     case 8:
                         activarId = "categorias";
