@@ -17,7 +17,6 @@ function inicializarScriptDashboard() {
             console.log("Ingreso este mes:", ingresoEsteMes);
 
             if (!isNaN(ingresoTotal) && !isNaN(ingresoEsteMes)) {
-                // Llamar la animación solo si los números son válidos
                 animarNumero('ingresoTotal', ingresoTotal);
                 animarNumero('ingresoMensual', ingresoEsteMes);
                 dibujarGrafica();
@@ -39,18 +38,15 @@ function animarNumero(id, numeroFinal) {
             return;
         }
 
-        // Mostrar los valores con dos decimales
         element.innerText = numero.toFixed(2);
 
         if (numero >= numeroFinal) {
             clearInterval(intervalo);
-            // Asegurarse de que el número final se establezca correctamente
             element.innerText = numeroFinal.toFixed(2);
         } else {
-            // Aumentar el valor de incremento para cargar más rápido
-            numero += (numeroFinal - numero) / 5;  // Incremento más grande
+            numero += (numeroFinal - numero) / 5;  
         }
-    }, 10);  // Intervalo más rápido, 10ms
+    }, 10);  
 }
 
 
