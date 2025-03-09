@@ -11,6 +11,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $rol = $_POST["rol"]; // Se añade la captura del rol
 
+    // Verificar si la cédula ya está registrada
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE Cedula = ?");
+    $stmt->bind_param("s", $cedula);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $response["error"] = "La cédula ya está registrada.";
+        $stmt->close();
+        echo json_encode($response);
+        exit();
+    }
+
+    // Verificar si el correo ya está registrado
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE Correo = ?");
+    $stmt->bind_param("s", $correo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $response["error"] = "El correo ya está registrado.";
+        $stmt->close();
+        echo json_encode($response);
+        exit();
+    }
+
     // Encriptar la contraseña
     $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
@@ -21,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         $response["success"] = true;
     } else {
-        // En lugar de die(), almacenamos el error y continuamos
         $response["error"] = "Error en la consulta: " . $stmt->error;
     }
 

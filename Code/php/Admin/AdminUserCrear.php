@@ -97,7 +97,7 @@ $conn->close();
                 <div class="row text-end justify-content-end">
                     <button type="submit" id="btnEnviar" class="btn btn-primary col-md-2 col-sm-12" onclick="guardarUsuario(event)">Registrar Usuario</button>
                 </div>
-                <div id="mensajeError" class="text-danger d-none mt-2"></div>
+                <div id="mensajeError" class="text-danger d-none mt-2 fw-bold"></div>
                 <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
             </div>
         </form>

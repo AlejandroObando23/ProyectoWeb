@@ -127,13 +127,17 @@ function guardarUsuario(event) {
     })
     .then(response => response.json()) 
     .then(data => {
+        const mensajeError = document.getElementById("mensajeError");
         if (data.success) {
             console.log("Ingreso guardado:", data);
             form.reset();
-            cargarPagina('../php/Admin/AdminUserLista.php',5);
+            cargarPagina('../php/Admin/AdminUserLista.php', 5);
         } else {
-            console.error("Error al guardar el ingreso:", data.error);
+            mensajeError.classList.remove("d-none");
+            mensajeError.innerHTML = data.error;  // Mostramos el error en la interfaz
         }
     })
-    .catch(error => console.error("Error en la solicitud:", error));
+    .catch(error => {
+        console.error("Error en la solicitud:", error);
+    });
 }
