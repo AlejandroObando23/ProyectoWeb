@@ -212,3 +212,46 @@ function cargarGrafico() {
         .catch(error => console.error("Error al cargar los datos:", error));
 }
 
+
+
+function guardarComoPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const logo = '../imagenes/logo.png';
+    doc.addImage(logo, 'PNG', 10, 10, 30, 30);
+
+    doc.setFontSize(18);
+    doc.text("Reporte de Finanzas", 50, 20);
+
+    doc.setFontSize(12);
+    doc.text("A continuación, los detalles del reporte:", 50, 30);
+
+    const startY = 50;
+    const columnWidth = 60;
+    const rowHeight = 10;
+
+    doc.text("Ingreso Mensual", 20, startY);
+    doc.text("Gasto Mensual", 80, startY);
+    doc.text("Balance Neto Mensual", 140, startY);
+    
+    doc.text(document.getElementById("ingreso_mensual").innerText, 20, startY + rowHeight);
+    doc.text(document.getElementById("gasto_mensual").innerText, 80, startY + rowHeight);
+    doc.text(document.getElementById("balance_mensual").innerText, 140, startY + rowHeight);
+
+    doc.text("Ingreso más alto del mes", 20, startY + 2 * rowHeight);
+    doc.text("Gasto más alto del mes", 80, startY + 2 * rowHeight);
+    doc.text("Cantidad de ingresos", 140, startY + 2 * rowHeight);
+
+    doc.text(document.getElementById("categoriaMayorIngreso").innerText, 20, startY + 3 * rowHeight);
+    doc.text(document.getElementById("categoriaMayorGasto").innerText, 80, startY + 3 * rowHeight);
+    doc.text(document.getElementById("cantidadIngresos").innerText, 140, startY + 3 * rowHeight);
+
+    doc.text("Cantidad de gastos", 20, startY + 4 * rowHeight);
+    doc.text("Cantidad de transacciones", 80, startY + 4 * rowHeight);
+    
+    doc.text(document.getElementById("cantidadGastos").innerText, 20, startY + 5 * rowHeight);
+    doc.text(document.getElementById("cantidadTransacciones").innerText, 80, startY + 5 * rowHeight);
+
+    doc.save('reporte_finanzas.pdf');
+}
