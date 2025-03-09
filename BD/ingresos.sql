@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 02-03-2025 a las 01:56:19
+-- Tiempo de generación: 09-03-2025 a las 20:01:16
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -34,10 +34,10 @@ CREATE TABLE `ingresos` (
   `FechaRegistro` datetime NOT NULL,
   `IdTipo` int(11) NOT NULL,
   `Monto` float(8,2) NOT NULL,
-  `Metodo` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `Metodo` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `Estado` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL DEFAULT 'Completado',
   `idUsuario` int(11) NOT NULL,
-  `Descripcion` varchar(250) COLLATE utf8_spanish_ci NOT NULL
+  `Descripcion` varchar(250) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --

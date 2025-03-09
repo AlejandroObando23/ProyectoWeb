@@ -4,7 +4,7 @@ session_start();
 include('../conexion.php');
 
 // Verifica si el usuario está autenticado y tiene el rol de admin
-if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
+if (!isset($_SESSION['usuario']) ) {
     header('Location: ../../html/Administrador/acceso_denegado.html');
     exit();
 }

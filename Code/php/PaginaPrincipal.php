@@ -2,12 +2,15 @@
 // Inicia la sesión
 session_start();
 
+
 // Verifica si el usuario está autenticado y tiene el rol de admin
 if (!isset($_SESSION['usuario'])) {
     // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
     header('Location: login.php');
     exit();
 }
+
+$permisos = isset($_SESSION['permisos']) ? $_SESSION['permisos'] : [];
 
 ?>
 
@@ -76,46 +79,68 @@ if (!isset($_SESSION['usuario'])) {
 
     <!-- Barra de navegación Los botones seran restringidos según el rol del usuario -->
     <div class="navbar navbar-expand-lg navbar-light sticky-top shadow menu">
-        <div class="container-fluid">
+    <div class="container-fluid">
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="menuNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item opcion fw-bold"><a id="inicio" class="nav-link active" href="#"   onclick="cargarPagina('../html/Administrador/AdminInicio.html',0)"><i class="bi bi-speedometer2"></i>
-                        Inicio</a></li>
-                    
-                    <li class="nav-item opcion fw-bold" <?php if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'ingreso') echo 'style="display: none;"'; ?>><a id="ingresos" class="nav-link" href="#" onclick="cargarPagina('../html/Ingreso/ingresos.html',1)"><i
-                                class="bi bi-cash-coin"></i>
-                            Ingresos</a></li>
+        <div class="collapse navbar-collapse" id="menuNav">
+            <ul class="navbar-nav mx-auto">
+                <!-- Opción de inicio siempre visible -->
+                <li class="nav-item opcion fw-bold">
+                    <a id="inicio" class="nav-link active" href="#" onclick="cargarPagina('../html/Administrador/AdminInicio.html',0)">
+                        <i class="bi bi-speedometer2"></i> Inicio
+                    </a>
+                </li>
 
-                    <li class="nav-item opcion fw-bold" <?php if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'egreso') echo 'style="display: none;"'; ?>><a id="gastos" class="nav-link" href="#" onclick="cargarPagina('../html/Gasto/gastos.html',2)"><i class="bi bi-credit-card"></i>
-                            Gastos</a></li>
+                <!-- Opción de ingresos visible solo para el rol admin -->
+                <li class="nav-item opcion fw-bold" <?php if (!isset($_SESSION['permisos']['PaginaIngresos']) || $_SESSION['permisos']['PaginaIngresos'] != 1) echo 'style="display: none;"'; ?>>
+                    <a id="ingresos" class="nav-link" href="#" onclick="cargarPagina('../html/Ingreso/ingresos.html',1)">
+                        <i class="bi bi-cash-coin"></i> Ingresos
+                    </a>
+                </li>
 
-                    <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href="#" onclick="cargarPagina('../html/Reporte/reporte.html',3)"><i class="bi bi-info-square"></i>
-                            Reportes</a></li>
-                    <li class="nav-item dropdown opcion fw-bold menuNav">
-                        <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-people-fill"></i> Usuarios
-                        </a>
-                        <ul class="dropdown-menu menu subNav-menu" aria-labelledby="usuariosDropdown">
-                            <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserLista.php',5)"><i class="bi bi-person-lines-fill"></i> Lista de
-                                    usuarios</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserCrear.php',4)"><i class="bi bi-person-fill-add"></i> Agregar
-                                    usuario</a></li>
-                            <li><a class="dropdown-item" href="#" onclick="cargarPagina('../html/Administrador/AdminPerfiles.html',7)"><i class="bi bi-person-check-fill"></i> Administrar
-                                    permisos</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item opcion fw-bold"><a id="reportes" class="nav-link" href="#" onclick="cargarPagina('../html/Categorias/categorias.html',8)"><i class="bi bi-info-square"></i>
-                            Categorias</a></li>
-                </ul>
-            </div>
+                <!-- Opción de gastos visible solo para admin o egreso -->
+                <li class="nav-item opcion fw-bold" <?php if (!isset($_SESSION['permisos']['PaginaGastos']) || $_SESSION['permisos']['PaginaGastos'] != 1) echo 'style="display: none;"'; ?>>
+                    <a id="gastos" class="nav-link" href="#" onclick="cargarPagina('../html/Gasto/gastos.html',2)">
+                        <i class="bi bi-credit-card"></i> Gastos
+                    </a>
+                </li>
+
+                <!-- Opción de reportes visible según permisos -->
+                <li class="nav-item opcion fw-bold" <?php if (!isset($_SESSION['permisos']['PaginaReportes']) || $_SESSION['permisos']['PaginaReportes'] != 1) echo 'style="display: none;"'; ?>>
+                    <a id="reportes" class="nav-link" href="#" onclick="cargarPagina('../html/Reporte/reporte.html',3)">
+                        <i class="bi bi-info-square"></i> Reportes
+                    </a>
+                </li>
+
+                <!-- Dropdown de usuarios visible solo para admin -->
+                <li class="nav-item dropdown opcion fw-bold menuNav" <?php if (!isset($_SESSION['permisos']['PaginaUsuario']) || $_SESSION['permisos']['PaginaUsuario'] != 1) echo 'style="display: none;"'; ?>>
+                    <a class="nav-link dropdown-toggle" href="#" id="usuariosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-people-fill"></i> Usuarios
+                    </a>
+                    <ul class="dropdown-menu menu subNav-menu" aria-labelledby="usuariosDropdown">
+                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserLista.php',5)">
+                                <i class="bi bi-person-lines-fill"></i> Lista de usuarios</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserCrear.php',4)">
+                                <i class="bi bi-person-fill-add"></i> Agregar usuario</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../html/Administrador/AdminPerfiles.html',7)">
+                                <i class="bi bi-person-check-fill"></i> Administrar permisos</a></li>
+                    </ul>
+                </li>
+
+                <!-- Opción de categorias visible según permisos -->
+                <li class="nav-item opcion fw-bold" <?php if (!isset($_SESSION['permisos']['PaginaCategorias']) || $_SESSION['permisos']['PaginaCategorias'] != 1) echo 'style="display: none;"'; ?>>
+                    <a id="categorias" class="nav-link" href="#" onclick="cargarPagina('../html/Categorias/categorias.html',8)">
+                        <i class="bi bi-tags"></i> Categorías
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
+
 
     <!-- Contenido dinámico -->
     <div id="contenido" class="container mt-4">

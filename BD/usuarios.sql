@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 09-03-2025 a las 18:50:30
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: localhost
+-- Tiempo de generación: 09-03-2025 a las 20:01:21
+-- Versión del servidor: 8.0.17
+-- Versión de PHP: 7.3.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,12 +31,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `usuarios` (
   `Id` int(11) NOT NULL,
   `Cedula` bigint(10) NOT NULL,
-  `Nombre` varchar(64) NOT NULL,
-  `Apellido` varchar(64) NOT NULL,
-  `Correo` varchar(128) NOT NULL,
-  `Password` varchar(64) NOT NULL,
-  `Rol` varchar(64) NOT NULL,
-  `Estado` enum('Activo','Inactivo') NOT NULL DEFAULT 'Activo'
+  `Nombre` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
+  `Apellido` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
+  `Correo` varchar(128) COLLATE utf8mb4_general_ci NOT NULL,
+  `Password` varchar(64) COLLATE utf8mb4_general_ci NOT NULL,
+  `Rol` int(11) NOT NULL,
+  `Estado` enum('Activo','Inactivo') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -43,12 +44,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Id`, `Cedula`, `Nombre`, `Apellido`, `Correo`, `Password`, `Rol`, `Estado`) VALUES
-(8, 1726621830, 'Bryan', 'Quispe', 'asfsafasf@afasfasf.com', '$2y$10$/umyUyF/tUkKeqD03.87/uvdx7Wlc/psgBQaBcp/dbcH9eN.DmzwS', 'admin', 'Activo'),
-(38, 2222222222, 'Juan Roberto', 'Perez Salazar', 'rquisper406@gmail.com', '$2y$10$NFBeHMQsGrWnU7RInA7/2OMxjtmp5CzdfVEc/wMS75DBGUzY78HP.', 'ingreso', 'Activo'),
-(39, 4534564564, 'dsadsad', 'asdsad', 'fjuj_djsrn32@juaxe.com', '$2y$10$vYNZDpqzgpwhFWO.0MZ6k.vFThPtrgVnv7yf/pMIiH4FKK4C92IaO', 'egreso', 'Activo'),
-(40, 1111111111, 'dsadad', 'sadassadsa', 'Mateo406@sdadd.com', '$2y$10$1He7mT5EpD/QmipvyMf5S.CJdEiLEg97E.1AVZg5y/YzzbOJpCNdG', 'egreso', 'Activo'),
-(41, 1755281399, 'Mateo', 'Medranda', 'matemedranda15@gmail.com', '$2y$10$hIEEyX2.d1E6JQqBg0agbODan1uSkXmCCUEKUPlm3II9cfgPgNOhq', 'admin', 'Activo'),
-(42, 1234567890, 'Admin', 'Administrador', 'admin@admin.com', '$2y$10$00Z/FBydxbR1Mev4AftmGu9i2rH61MrODMegFy9QgVHvmcFH5bxm.', 'admin', 'Inactivo');
+(8, 1726621830, 'Bryan', 'Quispe', 'asfsafasf@afasfasf.com', '$2y$10$/umyUyF/tUkKeqD03.87/uvdx7Wlc/psgBQaBcp/dbcH9eN.DmzwS', 1, 'Activo'),
+(38, 2222222222, 'Juan Roberto', 'Perez Salazar', 'rquisper406@gmail.com', '$2y$10$NFBeHMQsGrWnU7RInA7/2OMxjtmp5CzdfVEc/wMS75DBGUzY78HP.', 1, 'Activo'),
+(39, 4534564564, 'dsadsad', 'asdsad', 'fjuj_djsrn32@juaxe.com', '$2y$10$vYNZDpqzgpwhFWO.0MZ6k.vFThPtrgVnv7yf/pMIiH4FKK4C92IaO', 0, 'Activo'),
+(40, 1111111111, 'dsadad', 'sadassadsa', 'Mateo406@sdadd.com', '$2y$10$1He7mT5EpD/QmipvyMf5S.CJdEiLEg97E.1AVZg5y/YzzbOJpCNdG', 0, 'Activo'),
+(42, 1234567890, 'Admin', 'Administrador', 'admin@admin.com', '$2y$10$00Z/FBydxbR1Mev4AftmGu9i2rH61MrODMegFy9QgVHvmcFH5bxm.', 0, 'Inactivo'),
+(44, 1755281399, 'Mateo', 'Medranda', 'matemedranda15@gmail.com', '$2y$10$mgWy9yNnUi2VP6RPDYKyR.qVIyRmgm9SAJ9kK6dCiVbfgFC8XzKjy', 1, 'Activo');
 
 --
 -- Índices para tablas volcadas
@@ -70,7 +71,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

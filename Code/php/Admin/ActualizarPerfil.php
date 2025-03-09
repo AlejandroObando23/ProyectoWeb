@@ -24,13 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $paginaCategorias = $_POST['paginaCategorias'];
     $agregarCategoria = $_POST['agregarCategoria'];
     $editarCategoria = $_POST['editarCategoria'];
-    $desactivarCategoria = $_POST['desactivarCategoria'];
 
     $paginaUsuarios = $_POST['paginaUsuarios'];
     $crearUsuarios = $_POST['crearUsuarios'];
     $desactivarUsuarios = $_POST['desactivarUsuarios'];
     $crearRoles = $_POST['crearRoles'];
-    $desactivarRoles = $_POST['desactivarRoles'];
+
+    $paginaAuditoria = $_POST['paginaAuditoria'];
 
     // Construir la consulta SQL
     $sql = "UPDATE perfiles 
@@ -49,12 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 PaginaCategorias = $paginaCategorias, 
                 AgregarCategoria = $agregarCategoria, 
                 EditarCategoria = $editarCategoria, 
-                AnularActivarCategoria = $desactivarCategoria, 
                 PaginaUsuario = $paginaUsuarios, 
                 CrearUsuario = $crearUsuarios, 
                 ActivarDesactivarUsuario = $desactivarUsuarios, 
-                CrearRol = $crearRoles, 
-                ActivarDesactivarRol = $desactivarRoles
+                CrearRol = $crearRoles,
+                PaginaAuditoria = $paginaAuditoria
             WHERE Id = $idPerfil";
 
     // Ejecutar la consulta

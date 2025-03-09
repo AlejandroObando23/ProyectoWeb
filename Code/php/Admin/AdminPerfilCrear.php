@@ -8,30 +8,47 @@ if (!$data) {
     exit;
 }
 
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Escape de los datos para evitar inyecciones SQL
+$nombreRol = $conn->real_escape_string($data["nombreRol"]);
+$descripcionRol = $conn->real_escape_string($data["descripcionRol"]);
+$paginaIngresos = (int)$data["paginaIngresos"];
+$agregarIngresos = (int)$data["agregarIngresos"];
+$anularIngresos = (int)$data["anularIngresos"];
+$editarIngresos = (int)$data["editarIngresos"];
+$generarReportes = (int)$data["generarReportes"];
+$paginaGastos = (int)$data["paginaGastos"];
+$agregarGastos = (int)$data["agregarGastos"];
+$anularGastos = (int)$data["anularGastos"];
+$editarGastos = (int)$data["editarGastos"];
+$paginaCategorias = (int)$data["paginaCategorias"];
+$agregarCategoria = (int)$data["agregarCategoria"];
+$editarCategoria = (int)$data["editarCategoria"];
+$paginaUsuarios = (int)$data["paginaUsuarios"];
+$crearUsuarios = (int)$data["crearUsuarios"];
+$desactivarUsuarios = (int)$data["desactivarUsuarios"];
+$crearRoles = (int)$data["crearRoles"];
+$paginaAuditoria = (int)$data["paginaAuditoria"];
+
+// Preparación de la consulta SQL
 $sql = "INSERT INTO perfiles 
     (Nombre, Descripcion, PaginaIngresos, AgregarIngreso, AnularActivarIngreso, EditarIngreso, 
     PaginaReportes, PaginaGastos, AgregarGasto, AnularActivarGasto, EditarGasto, 
-    PaginaCategorias, AgregarCategoria, EditarCategoria, AnularActivarCategoria, 
-    PaginaUsuario, CrearUsuario, ActivarDesactivarUsuario, CrearRol, ActivarDesactivarRol) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    PaginaCategorias, AgregarCategoria, EditarCategoria, 
+    PaginaUsuario, CrearUsuario, ActivarDesactivarUsuario, CrearRol, PaginaAuditoria) 
+    VALUES ('$nombreRol', '$descripcionRol', $paginaIngresos, $agregarIngresos, $anularIngresos, $editarIngresos, 
+    $generarReportes, $paginaGastos, $agregarGastos, $anularGastos, $editarGastos,
+    $paginaCategorias, $agregarCategoria, $editarCategoria, 
+    $paginaUsuarios, $crearUsuarios, $desactivarUsuarios, $crearRoles, $paginaAuditoria)";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param(
-    "ssiiiiiiiiiiiiiiiiii",
-    $data["nombreRol"], $data["descripcionRol"], $data["paginaIngresos"], $data["agregarIngresos"],
-    $data["anularIngresos"], $data["editarIngresos"], $data["generarReportes"], 
-    $data["paginaGastos"], $data["agregarGastos"], $data["anularGastos"], $data["editarGastos"],
-    $data["paginaCategorias"], $data["agregarCategoria"], $data["editarCategoria"], 
-    $data["desactivarCategoria"], $data["paginaUsuarios"], $data["crearUsuarios"], 
-    $data["desactivarUsuarios"], $data["crearRoles"], $data["desactivarRoles"]
-);
-
-if ($stmt->execute()) {
+if ($conn->query($sql) === TRUE) {
     echo json_encode(["success" => true]);
 } else {
-    echo json_encode(["success" => false, "message" => "Error al guardar el perfil"]);
+    echo json_encode(["success" => false, "message" => "Error al guardar el perfil: " . $conn->error]);
 }
 
-$stmt->close();
 $conn->close();
 ?>

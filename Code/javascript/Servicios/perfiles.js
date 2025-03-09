@@ -30,8 +30,8 @@ function cerrarActualizarPerfil() {
 function controlarCheckbox(){
     manejarCheckboxPagina("paginaIngresos", ["agregarIngresos", "anularIngresos", "editarIngresos"]);
     manejarCheckboxPagina("paginaGastos", ["agregarGastos", "anularGastos", "editarGastos"]);
-    manejarCheckboxPagina("paginaCategorias", ["agregarCategoria", "editarCategoria", "desactivarCategoria"]);
-    manejarCheckboxPagina("paginaUsuarios", ["crearUsuarios", "desactivarUsuarios", "crearRoles", "desactivarRoles"]);
+    manejarCheckboxPagina("paginaCategorias", ["agregarCategoria", "editarCategoria"]);
+    manejarCheckboxPagina("paginaUsuarios", ["crearUsuarios", "desactivarUsuarios", "crearRoles"]);
 }
 
 
@@ -100,12 +100,11 @@ function verPermisos(idPerfil) {
                 PaginaCategorias: "Página de Categorías",
                 AgregarCategoria: "Agregar Categoría",
                 EditarCategoria: "Editar Categoría",
-                AnularActivarCategoria: "Activar/Desactivar Categoría",
                 PaginaUsuario: "Página de Usuarios",
                 CrearUsuario: "Crear Usuario",
                 ActivarDesactivarUsuario: "Activar/Desactivar Usuario",
                 CrearRol: "Crear Rol",
-                ActivarDesactivarRol: "Activar/Desactivar Rol"
+                PaginaAuditoria: "Pagina de Auditoria"
             };
 
             let permisosContainer = document.getElementById("listaPermisos");
@@ -147,13 +146,13 @@ function guardarPerfilNuevo(event) {
         paginaCategorias: document.getElementById("paginaCategorias").checked ? 1 : 0,
         agregarCategoria: document.getElementById("agregarCategoria").checked ? 1 : 0,
         editarCategoria: document.getElementById("editarCategoria").checked ? 1 : 0,
-        desactivarCategoria: document.getElementById("desactivarCategoria").checked ? 1 : 0,
         paginaUsuarios: document.getElementById("paginaUsuarios").checked ? 1 : 0,
         crearUsuarios: document.getElementById("crearUsuarios").checked ? 1 : 0,
         desactivarUsuarios: document.getElementById("desactivarUsuarios").checked ? 1 : 0,
         crearRoles: document.getElementById("crearRoles").checked ? 1 : 0,
-        desactivarRoles: document.getElementById("desactivarRoles").checked ? 1 : 0
+        paginaAuditoria: document.getElementById("paginaAuditoria").checked ? 1 : 0
     };
+
 
     fetch("Admin/AdminPerfilCrear.php", {
         method: "POST",
@@ -206,13 +205,12 @@ function editarPerfil(idPerfil) {
             document.getElementById("paginaCategoriasActualizar").checked = perfil.PaginaCategorias == 1;
             document.getElementById("agregarCategoriaActualizar").checked = perfil.AgregarCategoria == 1;
             document.getElementById("editarCategoriaActualizar").checked = perfil.EditarCategoria == 1;
-            document.getElementById("desactivarCategoriaActualizar").checked = perfil.AnularActivarCategoria == 1;
 
             document.getElementById("paginaUsuariosActualizar").checked = perfil.PaginaUsuario == 1;
             document.getElementById("crearUsuariosActualizar").checked = perfil.CrearUsuario == 1;
             document.getElementById("desactivarUsuariosActualizar").checked = perfil.ActivarDesactivarUsuario == 1;
             document.getElementById("crearRolesActualizar").checked = perfil.CrearRol == 1;
-            document.getElementById("desactivarRolesActualizar").checked = perfil.ActivarDesactivarRol == 1;
+            document.getElementById("paginaAuditoriaActualizar").checked = perfil.PaginaAuditoria == 1;
 
             abrirActualizarPerfil();
             
@@ -240,12 +238,11 @@ function actualizarPerfil(event) {
         paginaCategorias: document.getElementById("paginaCategoriasActualizar").checked ? 1 : 0,
         agregarCategoria: document.getElementById("agregarCategoriaActualizar").checked ? 1 : 0,
         editarCategoria: document.getElementById("editarCategoriaActualizar").checked ? 1 : 0,
-        desactivarCategoria: document.getElementById("desactivarCategoriaActualizar").checked ? 1 : 0,
         paginaUsuarios: document.getElementById("paginaUsuariosActualizar").checked ? 1 : 0,
         crearUsuarios: document.getElementById("crearUsuariosActualizar").checked ? 1 : 0,
         desactivarUsuarios: document.getElementById("desactivarUsuariosActualizar").checked ? 1 : 0,
         crearRoles: document.getElementById("crearRolesActualizar").checked ? 1 : 0,
-        desactivarRoles: document.getElementById("desactivarRolesActualizar").checked ? 1 : 0
+        paginaAuditoria: document.getElementById("paginaAuditoriaActualizar").checked ? 1 : 0
     };
     
     
@@ -271,7 +268,7 @@ console.log("permisos:", permisos);
     })
     .then(response => response.text())
     .then(data => {
-        alert(data); 
+        cargarPerfiles();
         document.getElementById("modalActualizarPerfil").close(); 
     })
     .catch(error => console.error('Error al actualizar perfil:', error));

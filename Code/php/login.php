@@ -22,8 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($usuario) || empty($password)) {
         $mensaje = 'Debe ingresar usuario y contraseña.';
     } else {
-        // Consultar si el usuario existe en la base de datos
-        $sql = "SELECT * FROM usuarios WHERE Cedula = ?";
+        // Consultar si el usuario existe en la base de datos y obtener los permisos del rol
+        $sql = "
+            SELECT u.*, r.Nombre AS rol_nombre, r.Descripcion AS rol_descripcion, 
+                   r.PaginaIngresos, r.AgregarIngreso, r.AnularActivarIngreso, r.EditarIngreso,
+                   r.PaginaReportes, r.PaginaGastos, r.AgregarGasto, r.AnularActivarGasto, r.EditarGasto,
+                   r.PaginaCategorias, r.AgregarCategoria, r.EditarCategoria,
+                   r.PaginaUsuario, r.CrearUsuario, r.ActivarDesactivarUsuario, r.CrearRol
+            FROM usuarios u
+            LEFT JOIN perfiles r ON u.Rol = r.Id
+            WHERE u.Cedula = ?";
+        
         $stmt = $conn->prepare($sql);
 
         if (!$stmt) {
@@ -38,17 +47,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result->num_rows > 0) {
             $registro = $result->fetch_assoc(); // Obtener los datos del usuario
 
-            // Depurar los datos de la base de datos
-
             // Verificar la contraseña de manera segura
             if (password_verify($password, $registro['Password'])) { 
                 $_SESSION['id'] = $registro['Id'];
                 $_SESSION['usuario'] = $registro['Cedula'];
                 $_SESSION['nombre'] = $registro['Nombre'];
                 $_SESSION['apellido'] = $registro['Apellido'];
-                $_SESSION['rol'] = $registro['Rol'];
+                $_SESSION['rol'] = $registro['rol_nombre'];
 
-                var_dump($registro); // Verifica los datos recuperados
+                // Guardar los permisos del rol en un arreglo
+                $permisos = [
+                    'rol_nombre' => $registro['rol_nombre'],
+                    'rol_descripcion' => $registro['rol_descripcion'],
+                    'PaginaIngresos' => $registro['PaginaIngresos'],
+                    'AgregarIngreso' => $registro['AgregarIngreso'],
+                    'AnularActivarIngreso' => $registro['AnularActivarIngreso'],
+                    'EditarIngreso' => $registro['EditarIngreso'],
+                    'PaginaReportes' => $registro['PaginaReportes'],
+                    'PaginaGastos' => $registro['PaginaGastos'],
+                    'AgregarGasto' => $registro['AgregarGasto'],
+                    'AnularActivarGasto' => $registro['AnularActivarGasto'],
+                    'EditarGasto' => $registro['EditarGasto'],
+                    'PaginaCategorias' => $registro['PaginaCategorias'],
+                    'AgregarCategoria' => $registro['AgregarCategoria'],
+                    'EditarCategoria' => $registro['EditarCategoria'],
+                    'PaginaUsuario' => $registro['PaginaUsuario'],
+                    'CrearUsuario' => $registro['CrearUsuario'],
+                    'ActivarDesactivarUsuario' => $registro['ActivarDesactivarUsuario'],
+                    'CrearRol' => $registro['CrearRol'],
+                    'PaginaAuditoria' => $registro['PaginaAuditoria']
+                ];
+
+                $_SESSION['permisos'] = $permisos;
 
                 // Verificar si el usuario tiene un rol asignado
                 if (empty($registro['Rol'])) {
@@ -73,6 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!doctype html>
 <html lang="es">
 <head>

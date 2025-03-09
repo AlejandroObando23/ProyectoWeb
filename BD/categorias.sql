@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 06-03-2025 a las 17:30:53
+-- Tiempo de generación: 09-03-2025 a las 20:01:11
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -32,7 +32,7 @@ CREATE TABLE `categorias` (
   `Id` int(11) NOT NULL,
   `Nombre` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `CodigoQR` varchar(250) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `tipo` varchar(64) COLLATE utf8_spanish_ci NOT NULL
+  `tipo` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --

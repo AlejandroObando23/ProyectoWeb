@@ -31,13 +31,12 @@ if (isset($_GET['id'])) {
             $perfil['PaginaCategorias'] = (bool) $perfil['PaginaCategorias'];
             $perfil['AgregarCategoria'] = (bool) $perfil['AgregarCategoria'];
             $perfil['EditarCategoria'] = (bool) $perfil['EditarCategoria'];
-            $perfil['AnularActivarCategoria'] = (bool) $perfil['AnularActivarCategoria'];
 
             $perfil['PaginaUsuario'] = (bool) $perfil['PaginaUsuario'];
             $perfil['CrearUsuario'] = (bool) $perfil['CrearUsuario'];
             $perfil['ActivarDesactivarUsuario'] = (bool) $perfil['ActivarDesactivarUsuario'];
             $perfil['CrearRol'] = (bool) $perfil['CrearRol'];
-            $perfil['ActivarDesactivarRol'] = (bool) $perfil['ActivarDesactivarRol'];
+            $perfil['PaginaAuditoria'] = (bool) $perfil['PaginaAuditoria'];
 
             echo json_encode([$perfil]); 
         } else {

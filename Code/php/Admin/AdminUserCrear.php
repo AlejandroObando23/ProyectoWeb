@@ -2,11 +2,33 @@
 
 session_start();
 
-if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
+if (!isset($_SESSION['usuario'])) {
     // Si no es admin, redirige a otra página (por ejemplo, inicio de sesión o acceso denegado)
     header('Location: ../../html/Administrador/acceso_denegado.html');
     exit();
 }
+
+include("../conexion.php");
+
+// Realizamos la consulta para obtener los roles o perfiles
+$sql = "SELECT Id, Nombre FROM perfiles"; // Ajusta el nombre de la tabla y los campos según tu base de datos
+$result = $conn->query($sql);
+
+// Verificamos si la consulta se realizó correctamente
+if ($result->num_rows > 0) {
+    // Si hay resultados, generamos el HTML para el select
+    $options = '';
+    while ($row = $result->fetch_assoc()) {
+        // Cada opción se genera con el Id y el Nombre del perfil
+        $options .= "<option value='" . $row['Id'] . "'>" . $row['Nombre'] . "</option>";
+    }
+} else {
+    // Si no se encuentran roles, se muestra una opción por defecto
+    $options = "<option value='' disabled>No se encontraron roles</option>";
+}
+
+// Cerramos la conexión
+$conn->close();
 
 ?>
     <h1 class="text-center mt-4">Crear Nuevo Usuario</h1>
@@ -65,14 +87,12 @@ if (!isset($_SESSION['usuario']) || $_SESSION['rol'] != 'admin') {
 
                 <!-- El campo rol no tiene validación -->
                 <div class="campo-contenedor col-md-3 mb-3">
-                    <label for="rol" class="form-label">Rol:</label>
-                    <select name="rol" id="rol" class="form-select shadow" required>
-                        <option value="" disabled selected>Selecciona un rol</option>
-                        <option value="admin">Administrador</option>
-                        <option value="ingreso">Ingreso</option>
-                        <option value="egreso">Egreso</option>
-                    </select>
-                </div>
+                <label for="rol" class="form-label">Rol:</label>
+                <select name="rol" id="rol" class="form-select shadow" required>
+                    <option value="" disabled selected>Selecciona un rol</option>
+                    <?php echo $options; ?> <!-- Aquí insertamos las opciones -->
+                </select>
+            </div>
                 <hr>
                 <div class="row text-end justify-content-end">
                     <button type="submit" id="btnEnviar" class="btn btn-primary col-md-2 col-sm-12" onclick="guardarUsuario(event)">Registrar Usuario</button>
