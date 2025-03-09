@@ -85,12 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="../css/normalize.css" rel="stylesheet" type="text/css">
     <link href="../css/estiloLogin.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100">
     <div class="container w-75 bg-primary rounded shadow align-items-center">
         <div class="row align-items-stretch">
             <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded-start"></div>
-            <div class="col bg-white p-5 rounded-end">
+            <div class="col bg-white p-sm-2 pb-4 pt-4 p-md-5 rounded-end">
                 <div class="text-center">
                     <img src="../imagenes/logo.png" alt="Logo" width="100">
                 </div>
