@@ -53,7 +53,7 @@ function cargarPagina(pagina, n) {
                         break;
                     case 8:
                         activarId = "categorias";
-                        document.title = "Categorias| MIECONOMIA";
+                        categoriasScript();
 
                 }
 
