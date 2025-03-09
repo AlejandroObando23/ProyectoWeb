@@ -9,7 +9,6 @@ if ($anio == 0 || $mes == 0){
     $mes = date("m"); 
 }
 
-// Consulta para obtener los ingresos totales
 $sqlIngreso = "SELECT SUM(Monto) AS ingreso_total 
                FROM ingresos 
                WHERE YEAR(Fecha) = $anio AND MONTH(Fecha) = $mes
@@ -17,7 +16,6 @@ $sqlIngreso = "SELECT SUM(Monto) AS ingreso_total
 $resultIngreso = $conn->query($sqlIngreso);
 $ingresoTotal = $resultIngreso->fetch_assoc()['ingreso_total'] ?? 0;
 
-// Consulta para obtener los gastos totales
 $sqlGasto = "SELECT SUM(Monto) AS gasto_total 
              FROM egresos 
              WHERE YEAR(Fecha) = $anio AND MONTH(Fecha) = $mes
@@ -25,7 +23,7 @@ $sqlGasto = "SELECT SUM(Monto) AS gasto_total
 $resultGasto = $conn->query($sqlGasto);
 $gastoTotal = $resultGasto->fetch_assoc()['gasto_total'] ?? 0;
 
-// Obtener los ingresos por tipo
+
 $sqlIngresoPorTipo = "SELECT c.Nombre AS categoria, SUM(i.Monto) AS total 
     FROM ingresos i 
     JOIN categorias c ON i.IdTipo = c.Id
@@ -37,7 +35,6 @@ while ($row = $resultIngresoPorTipo->fetch_assoc()) {
     $ingresosPorTipo[$row['categoria']] = $row['total'];
 }
 
-// Obtener los gastos por tipo
 $sqlGastoPorTipo = "SELECT c.Nombre AS categoria, SUM(e.Monto) AS total 
     FROM egresos e 
     JOIN categorias c ON e.IdTipo = c.Id
@@ -49,7 +46,6 @@ while ($row = $resultGastoPorTipo->fetch_assoc()) {
     $gastosPorTipo[$row['categoria']] = $row['total'];
 }
 
-// Obtener ingresos y gastos por fecha para el gráfico de líneas
 $sqlIngresoPorFecha = "SELECT Fecha, SUM(Monto) AS MontoTotal
                        FROM ingresos
                        WHERE Estado = 'Completado' AND YEAR(Fecha) = $anio AND MONTH(Fecha) = $mes
