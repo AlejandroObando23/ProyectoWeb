@@ -1,7 +1,7 @@
 
 
 
-
+let modalActualizarGasto;
 let listaEgresos = [];
 let listaTiposEgresos = [];
 let tablaEgresos;
@@ -13,6 +13,11 @@ function abrirAgregarGasto() {
 function cerrarAgregarGasto(){
     modalAgregargasto.close();
     
+}
+function cerrarActualizarGasto(){
+    let form = document.getElementById("actualizarGasto");
+    form.reset();
+    modalActualizarGasto.close();
 }
 function guardarDatosEgreso(event){
     // Evitar que se recargue la página
@@ -46,7 +51,7 @@ function guardarDatosEgreso(event){
 //Cargar todos los datos de los tipos de ingresos en una lista
 function gastoscript(){
     let modalAgregargasto = document.getElementById("modalAgregargasto");
-    
+    modalActualizarGasto = document.getElementById("modalActualizarGasto");
     tablaEgresos = document.getElementById("tablaEgresos").getElementsByTagName('tbody')[0];
    
     console.log(document.title);
@@ -94,6 +99,8 @@ async function cargarTiposEgresos(){
 function cargarTiposFormularioEgreso() {
     
     let select = document.getElementById("selectTipoEgreso");
+    let select1 = document.getElementById("tipoEgresosConsulta");
+    let select2 = document.getElementById("selectTipoGastoA");
     let opciones = '<option value="">Seleccione un tipo</option>';
 
     listaTiposEgresos.forEach(tipo => {
@@ -103,6 +110,8 @@ function cargarTiposFormularioEgreso() {
     console.log("Tipos de ingreso:", opciones);
 
     select.innerHTML = opciones;
+    select1.innerHTML = opciones;
+    select2.innerHTML = opciones;
 }
 
 function cargarEgresos() {
@@ -113,35 +122,50 @@ function cargarEgresos() {
         let nuevaFila = tablaEgresos.insertRow();
         nuevaFila.classList.add("align-middle");
         let estado = "";
-        let editar = `<div class="d-grid">
-                     <i style="color:red;font-size: 25px;" class="bi bi-x-circle"></i>
-                    <i style="color:green;font-size: 25px;" class="bi bi-check-circle"></i>
-                    </div>`;
+
+        let editar ="";
 
         nuevaFila.insertCell(0).innerText = ingreso.Id;
         nuevaFila.insertCell(1).innerText = ingreso.Fecha;
-        nuevaFila.insertCell(2).innerText = ingreso.Descripcion;
+        nuevaFila.insertCell(2).innerHTML = `
+        <span class="d-inline-block text-truncate" style="max-width: 150px;" 
+            data-bs-toggle="tooltip" data-bs-placement="top" title="${ingreso.Descripcion}">
+            ${ingreso.Descripcion}
+        </span>`;
+    
         nuevaFila.insertCell(3).innerText = "$ " + ingreso.Monto;
         nuevaFila.insertCell(4).innerText = ingreso.tipo;
         nuevaFila.insertCell(5).innerText = ingreso.Metodo;
 
+
         if(ingreso.Estado == "Completado"){
             estado = '<p class="bg-success-subtle text-center m-0 p-0">Completado</p>';
+            editar = `<div class="d-flex">
+                        <i style="color:red;font-size: 25px;" class="bi bi-x-circle mx-2 icono-boton" title="Anular" onclick="cambiarEstadoGasto(${ingreso.Id}, 2)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarGasto(${ingreso.Id})"></i>
+                      </div>`;
         }else if(ingreso.Estado == "Anulado"){
             estado = '<p class="bg-danger-subtle text-center m-0 p-0">Anulado</p>';
+            editar = `<div class="d-flex">
+                        <i style="color:green;font-size: 25px;" class="bi bi-check-circle mx-2 icono-boton" title="Completar" onclick="cambiarEstadoGasto(${ingreso.Id}, 1)"></i>
+                        <i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarGasto(${ingreso.Id})"></i>
+                      </div>`;
         }
+        
 
-        nuevaFila.insertCell(6).innerHTML = estado;
-
-        nuevaFila.insertCell(7).innerHTML = ""+ ingreso.Nombre + " " + ingreso.Apellido;
-        nuevaFila.insertCell(8).innerHTML = ingreso.FechaRegistro;
+        nuevaFila.insertCell(6).innerHTML = ""+ ingreso.Nombre + " " + ingreso.Apellido;
 
         let url = ""+ingreso.CodigoQR;
 
         console.log(url);
 
-        nuevaFila.insertCell(9).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
-        nuevaFila.insertCell(10).innerHTML = editar;
+        nuevaFila.insertCell(7).innerHTML = `<div class="shadow mx-auto bg-black d-flex justify-content-center align-items-center qr botonQr" onclick="mostrarQR('`+url+`')"></div>`;
+        nuevaFila.insertCell(8).innerHTML = estado;
+        nuevaFila.insertCell(9).innerHTML = editar;
+    });
+        let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach((tooltip) => {
+        new bootstrap.Tooltip(tooltip);
     });
     
     renderizarTable();
@@ -160,16 +184,16 @@ function cerrarQR() {
 }
 
 
-let itemsPorPagina = 5;
-let actualPagina = 1;
+let itemsPorPaginaGasto = 5;
+let actualPaginaGasto = 1;
 
 function renderizarTable() {
     const tableBody = document.getElementById("table-body");
    
     const rows = tableBody.getElementsByTagName("tr");
     
-    let start = (actualPagina - 1) * itemsPorPagina;
-    let end = start + itemsPorPagina;
+    let start = (actualPaginaGasto- 1) * itemsPorPaginaGasto;
+    let end = start + itemsPorPaginaGasto;
     
     for (let i = 0; i < rows.length; i++) {
         rows[i].style.display = (i >= start && i < end) ? "" : "none";
@@ -180,36 +204,138 @@ function renderizarTable() {
 }
 
 function renderizarPagination() {
-    const pagination = document.getElementById("pagination");
+    const pagination = document.getElementById("paginationGasto");
     pagination.innerHTML = "";
-    let totalPages = Math.ceil(listaIngresos.length / itemsPorPagina);
+    let totalPages = Math.ceil(listaEgresos.length / itemsPorPaginaGasto);
     
-    pagination.innerHTML += `<li class='page-item ${actualPagina === 1 ? "disabled" : ""}'>
-                                <a class='page-link' href='#' onclick='changePage(${actualPagina - 1})'>Anterior</a>
+    pagination.innerHTML += `<li class='page-item ${actualPaginaGasto === 1 ? "disabled" : ""}'>
+                                <a class='page-link' href='#' onclick='changePageGasto(${actualPaginaGasto - 1})'>Anterior</a>
                             </li>`;
     
     for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `<li class='page-item ${actualPagina === i ? "active" : ""}'>
-                                    <a class='page-link' href='#' onclick='changePage(${i})'>${i}</a>
+        pagination.innerHTML += `<li class='page-item ${actualPaginaGasto === i ? "active" : ""}'>
+                                    <a class='page-link' href='#' onclick='changePageGasto(${i})'>${i}</a>
                                 </li>`;
     }
     
-    pagination.innerHTML += `<li class='page-item ${actualPagina === totalPages ? "disabled" : ""}'>
-                                <a class='page-link' href='#' onclick='changePage(${actualPagina + 1})'>Siguiente</a>
+    pagination.innerHTML += `<li class='page-item ${actualPaginaGasto === totalPages ? "disabled" : ""}'>
+                                <a class='page-link' href='#' onclick='changePageGasto(${actualPaginaGasto + 1})'>Siguiente</a>
 
                                 </li>`;
                                 
                             }
 
-function changePage(page) {
-    const totalPages = Math.ceil(listaIngresos.length / itemsPorPagina);
+function changePageGasto(page) {
+    const totalPages = Math.ceil(listaEgresos.length / itemsPorPaginaGasto);
     if (page < 1 || page > totalPages) return;
-    actualPagina = page;
+    actualPaginaGasto = page;
     renderizarTable();
 }
 
-function updateItemsPerPage() {
-    itemsPorPagina = parseInt(document.getElementById("itemsPerPage").value);
-    actualPagina = 1;
+function updateItemsPerPageGasto() {
+    itemsPorPaginaGasto = parseInt(document.getElementById("itemsPerPageGasto").value);
+    actualPaginaGasto = 1;
     renderizarTable();
+}
+
+function actualizarDatosGasto(event) {
+    event.preventDefault(); 
+
+    let form = document.getElementById("actualizarGasto"); 
+
+    const formData = new FormData(form); 
+    console.log("Datos enviados para actualizar:", Array.from(formData.entries()));
+
+    fetch("Gasto/actualizarGasto.php", {
+        method: "POST", 
+        body: formData 
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        if (data.success) {
+            console.log("Gasto actualizado:", data); 
+            gastoscript();
+            modalActualizarGasto.close(); 
+             
+        } else {
+            console.error("Error al actualizar el ingreso:", data.error); 
+        }
+    })
+    .catch(error => console.error("Error en la solicitud:", error)); 
+}
+
+
+
+function abrirActualizarGasto(id) {
+    let formData = new FormData();
+    formData.append("Id", id);
+    
+    fetch("Gasto/buscarEgreso.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        if (data.error) {
+            console.error("Error en la consulta:", data.error);
+            return;
+        }
+
+        if (data.length > 0) {
+            const ingreso = data[0];
+           
+            console.log(ingreso);
+            
+            document.getElementById("idGasto").value = id;
+            document.getElementById("selectTipoGastoA").value = ingreso.tipo; 
+            document.getElementById("metodoGastoA").value = ingreso.Metodo; 
+            document.getElementById("montoGastoA").value = ingreso.Monto; 
+            document.getElementById("fechaGastoA").value = ingreso.Fecha; 
+            document.getElementById("descripcionGastoA").value = ingreso.Descripcion; 
+            document.querySelector(".codigo").innerHTML = `<img src="${ingreso.CodigoQR}" alt="Código QR" class="img-fluid">`; 
+            modalActualizarGasto.showModal();
+        }
+    })
+    .catch(error => console.error("Error en la solicitud:", error));
+}
+function cambiarEstadoGasto(id, estado) {
+    const url = `Gasto/activarDesactivarGasto.php?Id=${id}&estado=${estado}`;
+
+    fetch(url)
+        .then(response => response.text())  
+        .then(data => {
+            console.log(data);  
+            gastoscript();
+        })
+        .catch(error => {
+            console.error('Error al cambiar el estado:', error);
+        });
+}
+function filtrarDatosGasto() {
+    let tipo = document.getElementById("tipoEgresosConsulta").value; 
+    let fechaInicio = document.getElementById("fechaInicioGasto").value;
+    let fechaFin = document.getElementById("fechaFinGasto").value;
+    let estado = document.getElementById("EstadoConsultaGasto").value;
+
+    let formData = new FormData();
+    formData.append("tipo", tipo);
+    formData.append("fechaInicio", fechaInicio);
+    formData.append("fechaFin", fechaFin);
+    formData.append("estado", estado);
+
+    fetch("Gasto/filtrarEgreso.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        if (data.error) {
+            console.error("Error en la consulta:", data.error);
+            return;
+        }
+
+        listaEgresos = data; 
+        cargarEgresos();
+    })
+    .catch(error => console.error("Error en la solicitud:", error));
 }
