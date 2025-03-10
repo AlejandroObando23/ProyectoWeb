@@ -144,10 +144,9 @@ $permisos = isset($_SESSION['permisos']) ? $_SESSION['permisos'] : [];
                 </li>
 
 
-
-                <li class="nav-item opcion fw-bold" <?php if (!isset($_SESSION['permisos']['PaginaCategorias']) || $_SESSION['permisos']['PaginaCategorias'] != 1) echo 'style="display: none;"'; ?>>
+                <li class="nav-item opcion fw-bold" <?php if (!isset($_SESSION['permisos']['PaginaAuditoria']) || $_SESSION['permisos']['PaginaAuditoria'] != 1) echo 'style="display: none;"'; ?>>
                     <a id="categorias" class="nav-link" href="#" onclick="cargarPagina('Auditoria/Auditoria.php',9)">
-                        <i class="bi bi-tags"></i> Auditoria
+                    <i class="bi bi-book"></i> Auditoria
                     </a>
                 </li>
             </ul>
