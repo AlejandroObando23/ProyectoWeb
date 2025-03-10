@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                    r.PaginaIngresos, r.AgregarIngreso, r.AnularActivarIngreso, r.EditarIngreso,
                    r.PaginaReportes, r.PaginaGastos, r.AgregarGasto, r.AnularActivarGasto, r.EditarGasto,
                    r.PaginaCategorias, r.AgregarCategoria, r.EditarCategoria,
-                   r.PaginaUsuario, r.CrearUsuario, r.ActivarDesactivarUsuario, r.CrearRol
+                   r.PaginaUsuario, r.CrearUsuario, r.ActivarDesactivarUsuario, r.CrearRol, r.PaginaAuditoria
             FROM usuarios u
             LEFT JOIN perfiles r ON u.Rol = r.Id
             WHERE u.Cedula = ?";
