@@ -1,7 +1,7 @@
 <dialog id="modalAgregarPerfiles" class="container mt-4 border-0 rounded shadow">
     
     <form id="perfilForm">
-        <h3 class="titulo">Nuevo Perfil</h3>
+        <h3 class="titulo">Nuevo Rol</h3>
         <hr>
         <div class="row">
             <div class="mb-3 col-sm-12 col-md-3">
@@ -127,7 +127,7 @@
 <dialog id="modalActualizarPerfil" class="container mt-4 border-0 rounded shadow">
     <form id="perfilFormActualizar">
         <input type="text" id="idPerfil" class="form-control" style="display: none;" readonly>
-        <h3 class="titulo">Actualizar Perfil</h3>
+        <h3 class="titulo">Actualizar Rol</h3>
         <hr>
         <div class="row">
             <div class="mb-3 col-sm-12 col-md-3">
@@ -255,7 +255,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalVerPermisosLabel">Permisos del Perfil</h5>
+                <h5 class="modal-title" id="modalVerPermisosLabel">Permisos del Rol</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -274,17 +274,17 @@
 <fieldset class="border p-2 shadow agregar bg-light rounded">
     <div class="d-flex">
         <div class="col">
-            <h3 class="titulo">Gestión de Perfiles</h3>
+            <h3 class="titulo">Gestión de Roles</h3>
         </div>
         <div class="col text-end"><button id="agregar" class="btn bg-info-subtle" onclick="abrirAgregarPerfil()"><i
-                    class="bi bi-plus-circle"></i> Agregar Perfil</button></div>
+                    class="bi bi-plus-circle"></i> Agregar Rol</button></div>
     </div>
     <hr>
     <div class="table-responsive">
         <table id="tablaPerfiles" class="table text-center table-striped rounded">
             <thead>
                 <tr>
-                    <th scope="col">Nombre de Perfil</th>
+                    <th scope="col">Nombre del Rol</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Permisos</th>
                     <th scope="col"></th>

@@ -127,12 +127,12 @@ $permisos = isset($_SESSION['permisos']) ? $_SESSION['permisos'] : [];
                         <i class="bi bi-people-fill"></i> Usuarios
                     </a>
                     <ul class="dropdown-menu menu subNav-menu" aria-labelledby="usuariosDropdown">
-                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserLista.php',5)">
+                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserLista.php',5)" <?php if (!isset($_SESSION['permisos']['ActivarDesactivarUsuario']) || $_SESSION['permisos']['ActivarDesactivarUsuario'] != 1) echo 'style="display: none;"'; ?> >
                                 <i class="bi bi-person-lines-fill"></i> Lista de usuarios</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserCrear.php',4)">
+                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../php/Admin/AdminUserCrear.php',4)" <?php if (!isset($_SESSION['permisos']['CrearUsuario']) || $_SESSION['permisos']['CrearUsuario'] != 1) echo 'style="display: none;"'; ?>>
                                 <i class="bi bi-person-fill-add"></i> Agregar usuario</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../html/Administrador/AdminPerfiles.html',7)">
-                                <i class="bi bi-person-check-fill"></i> Administrar permisos</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="cargarPagina('../html/Administrador/AdminPerfiles.html',7)" <?php if (!isset($_SESSION['permisos']['CrearRol']) || $_SESSION['permisos']['CrearRol'] != 1) echo 'style="display: none;"'; ?>>
+                                <i class="bi bi-person-check-fill"></i> Gestionar Roles</a></li>
                     </ul>
                 </li>
 
