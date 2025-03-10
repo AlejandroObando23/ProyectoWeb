@@ -37,6 +37,11 @@ function guardarDatosCategoria(event) {
 };
 
 function categoriasScript(){
+    if (!permisos.AgregarCategoria) {
+        document.getElementById("agregar").style.display= "none";
+        document.getElementById("agregar").disabled= true;
+    }
+
     tipoCategoria  = document.getElementById("tipoCategoria");
     imagenCategoria = document.getElementById("imagenCategoria");
     modalAgregarCategoria = document.getElementById("modalAgregarCategoria");
@@ -53,7 +58,6 @@ function categoriasScript(){
         } else {
             listaCategoria= data;
             cargarCategorias();
-            cargarTiposCategoria();
         }
     })
     .catch(error => console.error("Error en la solicitud fetch:", error));
@@ -80,11 +84,13 @@ function cargarCategorias() {
         let nuevaFila = tablaCategoria.insertRow();
         nuevaFila.classList.add("align-middle");
  
-        let editar =`"<i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarCategoria(${categoria.Id})"></i>"`;
+        let editar ="";
+
+        if(permisos.EditarCategoria){
+            editar += `"<i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarCategoria(${categoria.Id})"></i>"`;
+        }
 
      
-        
-
         nuevaFila.insertCell(0).innerHTML = categoria.Nombre;
 
         let url = ""+categoria.CodigoQR;
