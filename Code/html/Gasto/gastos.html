@@ -8,7 +8,7 @@
                 <div class="col-12 col-md-3 d-grid px-md-2">
                     <div class="row">
                         <label class="mb-0">Tipo de Gasto*</label>
-                        <select name="tipoEgreso" id="selectTipoEgreso" class="form-control form-select mb-4 shadow">
+                        <select name="tipoEgreso" id="selectTipoEgreso" class="form-control form-select mb-4 shadow" onchange="actualizarFondoQRGasto('modalAgregargasto','selectTipoEgreso')">
                         </select>
                     </div>
 
@@ -70,7 +70,7 @@
                 <div class="col-12 col-md-3 d-grid px-md-2">
                     <div class="row">
                         <label class="mb-0">Tipo de Gasto*</label>
-                        <select name="tipoGastoA" id="selectTipoGastoA" class="form-control form-select mb-4 shadow">
+                        <select name="tipoGastoA" id="selectTipoGastoA" class="form-control form-select mb-4 shadow" onchange="actualizarFondoQRGasto('modalActualizarGasto','selectTipoGastoA')">
                         </select>
                     </div>
 

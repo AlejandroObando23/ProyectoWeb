@@ -356,3 +356,27 @@ function filtrarDatosGasto() {
         })
         .catch(error => console.error("Error en la solicitud:", error));
 }
+
+function actualizarFondoQRGasto(modalId, selectId) {
+    let idCategoria = document.querySelector(`#${modalId} #${selectId}`).value;
+    
+    if (!idCategoria) {
+        return; 
+    }
+
+    const divQR = document.querySelector(`#${modalId} .codigo`);
+
+    fetch(`Categoria/cargarQR.php?idCategoria=${idCategoria}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.CodigoQR) {
+                divQR.innerHTML = `<img src="${data.CodigoQR}" alt="Código QR" class="img-fluid">`;
+            } else {
+                divQR.innerHTML = '<p>No se encontró código QR para esta categoría.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener el código QR:', error);
+            divQR.innerHTML = '<p>Error al cargar el código QR.</p>';
+        });
+}

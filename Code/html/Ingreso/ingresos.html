@@ -7,7 +7,7 @@
                 <div class="col-12 col-md-3 d-grid px-md-2">
                     <div class="row">
                         <label class="mb-0">Tipo de ingreso*</label>
-                        <select name="tipoIngreso" id="selectTipo" class="form-control form-select mb-4 shadow">
+                        <select name="tipoIngreso" id="selectTipo" class="form-control form-select mb-4 shadow" onchange="actualizarFondoQRIngreso('modalAgregar','selectTipo')">
                         </select>
                     </div>
 
@@ -68,7 +68,7 @@
                 <div class="col-12 col-md-3 d-grid px-md-2">
                     <div class="row">
                         <label class="mb-0">Tipo de ingreso*</label>
-                        <select name="tipoIngresoA" id="selectTipoA" class="form-control form-select mb-4 shadow">
+                        <select name="tipoIngresoA" id="selectTipoA" class="form-control form-select mb-4 shadow" onchange="actualizarFondoQRIngreso('modalActualizar', 'selectTipoA')">
                         </select>
                     </div>
 
