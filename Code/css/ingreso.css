@@ -37,7 +37,7 @@ body {
 }
 
 
-#modalAgregarPerfiles, #modalActualizarPerfil{
+#modalAgregarPerfiles, #modalActualizarPerfil,#modalAgregarCategoria, #modalActualizarCategoria{
     position: fixed;
     top: 0; 
     left: 50%;
@@ -49,6 +49,7 @@ body {
     box-sizing: border-box; 
     z-index: 9999; 
 }
+
 
 #modalAgregar, #modalActualizar{
     position: fixed;
@@ -63,7 +64,7 @@ body {
     z-index: 1000; 
 }
 
-#modalAgregarPerfiles::backdrop, #modalActualizarPerfil::backdrop {
+#modalAgregarPerfiles::backdrop, #modalActualizarPerfil::backdrop, #modalAgregarCategoria::backdrop, #modalActualizarCategoria::backdrop {
     animation: oscurecer 0.5s ease-out forwards;
 }
 

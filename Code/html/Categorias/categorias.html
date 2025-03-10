@@ -1,10 +1,12 @@
 <dialog id="modalAgregarCategoria" class="agregarIngreso container mt-4 border-0 rounded shadow">
     <form id="formCategoria" class="p-4 bg-light rounded shadow" enctype="multipart/form-data">
+        <h3 class="titulo">Nueva Categoria</h3>
+        <hr>
         <div class="row d-flex">
 
             <div class="campo-contenedor col-md-3 mb-3" id="grupo__ncategoria">
                 <label for="ncategoria" class="form-label">Nombre Categoria:</label>
-                <input type="text" name="ncategoria" id="ncategoria" class="form-control shadow" required>
+                <input type="text" name="ncategoria" id="ncategoria" class="form-control shadow" placeholder="Ingresa un nombre" required>
                 <div class="invalid-feedback">Por favor ingrese el nombre de la categoría.</div>
             </div>
 
@@ -24,9 +26,12 @@
                     required>
                 <div class="invalid-feedback">Por favor cargue una imagen válida.</div>
             </div>
-
-            <button type="button" class="btn" onclick="guardarDatosCategoria(event)">Guardar</button>
-            <button type="button" class="btn botonR" onclick="cerrarAgregarCategoria()">Cancelar</button>
+            <hr>
+            <div class="row">
+                <button type="button" class="btn botonE col-md-1" onclick="guardarDatosCategoria(event)">Guardar</button>
+                <button type="button" class="btn botonR col-md-1" onclick="cerrarAgregarCategoria()">Cancelar</button>
+            </div>
+            
 
             <div id="mensajeError" class="text-danger d-none mt-2"></div>
             <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado
@@ -42,6 +47,8 @@
 
 <dialog id="modalActualizarCategoria" class="actualizarIngreso container mt-4 border-0 rounded shadow">
     <form id="actualizarCategoria" class="p-4 bg-light rounded shadow" enctype="multipart/form-data">
+        <h3 class="titulo">Actualizar Categoria</h3>
+        <hr>
         <div class="row d-flex">
             <input type="text" name="ncategoriaid" id="ncategoriaid" class="form-control shadow" hidden>
             <div class="campo-contenedor col-md-3 mb-3" id="grupo__ncategoria">
@@ -71,10 +78,12 @@
                 <input type="file" id="imagenCategoriaA" name="imagenCategoriaA" accept="image/*" class="form-control">
                 <div class="invalid-feedback">Por favor cargue una imagen válida.</div>
             </div>
-
-            <button type="button" class="btn" onclick="actualizarDatosCategoria(event)">Guardar</button>
-            <button type="button" class="btn botonR" onclick="cerrarActualizarCategoria()">Cancelar</button>
-
+            <hr>
+            <div class="row">
+                <button type="button" class="btn botonA col-md-1" onclick="actualizarDatosCategoria(event)">Guardar</button>
+                <button type="button" class="btn botonR col-md-1" onclick="cerrarActualizarCategoria()">Cancelar</button>
+            </div>
+            
             <div id="mensajeError" class="text-danger d-none mt-2"></div>
             <p class="formulario__mensaje-exito text-success" id="formulario__mensaje-exito">Formulario enviado
                 exitosamente!</p>
