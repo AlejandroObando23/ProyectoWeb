@@ -42,7 +42,7 @@ function cargarUsuarios(mostrarInactivos = false) {
                             </span>
                         </td>
                         <td>
-                            <button class="btn btn-warning btn-sm editar-usuario" data-cedula="${usuario.Cedula}" data-nombre="${usuario.Nombre}" data-apellido="${usuario.Apellido}" data-correo="${usuario.Correo}" data-rol="${usuario.Rol}" data-estado="${usuario.Estado}">
+                            <button class="btn btn-warning btn-sm" onclick="mostrarFormularioEditar(${usuario.Id})">
                                 Editar
                             </button>
                         </td>
@@ -56,50 +56,82 @@ function cargarUsuarios(mostrarInactivos = false) {
         .catch(error => console.error("Error cargando usuarios:", error));
 }
 
-function mostrarFormularioEditar(boton) {
-    let cedula = boton.getAttribute("data-cedula");
-    let nombre = boton.getAttribute("data-nombre");
-    let apellido = boton.getAttribute("data-apellido");
-    let correo = boton.getAttribute("data-correo");
-    let rol = boton.getAttribute("data-rol");
-    let estado = boton.getAttribute("data-estado");
 
-    // Llenar el formulario con los datos actuales del usuario
-    document.getElementById("cedulaEditar").value = cedula;
-    document.getElementById("rolEditar").value = rol;
-    document.getElementById("estadoEditar").value = estado;
+function mostrarFormularioEditar(id) {
+    fetch(`Admin/consultarUsuario.php?id=${id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error); 
+            } else {
+                // Rellenar el formulario con los datos obtenidos
+                document.getElementById("cedulaEditar").value = data.Cedula;
+                document.getElementById("rolEditar").value = data.Rol;
+                document.getElementById("estadoEditar").value = data.Estado;
 
-    // Mostrar el modal
-    new bootstrap.Modal(document.getElementById('editarUsuarioModal')).show();
+                // Obtener el modal y asegurar que tiene aria-hidden en falso
+                const modal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
+
+                // Intentar enfocar un elemento seguro en la página, como el formulario
+                const formElement = document.getElementById("formEditarUsuario");
+                if (formElement) {
+                    formElement.focus();
+                } else {
+                    console.error('El formulario no se encontró para enfocar');
+                }
+
+                // Mostrar el modal
+                document.getElementById('editarUsuarioModal').setAttribute('aria-hidden', 'false');
+                modal.show();
+            }
+        })
+        .catch(error => {
+            console.error("Error al obtener los datos:", error);
+        });
 }
+
+
 
 function guardarCambiosUsuario() {
     let cedula = document.getElementById("cedulaEditar").value;
     let rol = document.getElementById("rolEditar").value;
     let estado = document.getElementById("estadoEditar").value;
 
-    fetch("../php/Admin/AdminUserLista.php", {
+    fetch("Admin/actualizarUsuario.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `cedula=${cedula}&rol=${rol}&estado=${estado}`
     })
     .then(response => response.text())
     .then(data => {
-        if (data === "success") {
-            // Actualizar la vista en la tabla
+        if (data.trim() === "success") {
             let fila = document.getElementById(`usuario-${cedula}`);
-            fila.querySelector(".badge").classList.replace(
-                fila.querySelector(".badge").classList.contains("bg-success") ? "bg-success" : "bg-secondary",
-                estado === "Activo" ? "bg-success" : "bg-secondary"
-            );
-            fila.querySelector(".badge").innerText = estado;
-            fila.querySelector(".btn").innerText = "Editar";
 
-            // Cerrar el modal
-            bootstrap.Modal.getInstance(document.getElementById('editarUsuarioModal')).hide();
+            if (fila) {
+                let badge = fila.querySelector(".badge");
+                if (badge) {
+                    badge.classList.remove("bg-success", "bg-secondary");
+                    badge.classList.add(estado === "Activo" ? "bg-success" : "bg-secondary");
+                    badge.innerText = estado;
+                }
+            } else {
+                console.warn("La fila no existe, recargando la lista de usuarios...");
+                cargarUsuarios();
+            }
+
+            // Cerrar el modal correctamente
+            let modalElement = document.getElementById('editarUsuarioModal');
+            let modalInstance = bootstrap.Modal.getInstance(modalElement);
+            inicializarScriptUsuarios();
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+
         } else {
-            alert("Error al guardar los cambios");
+            alert("Error al guardar los cambios: " + data);
         }
     })
     .catch(error => console.error("Error en la solicitud AJAX:", error));
 }
+
+

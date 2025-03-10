@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $mostrar_inactivos = isset($_GET['ver_inactivos']) && $_GET['ver_inactivos'] == '1';
-$sql = "SELECT Cedula, Nombre, Apellido, Correo, Estado FROM usuarios";
+$sql = "SELECT u.Id, u.Cedula, u.Nombre,u.Apellido, u.Correo, u.Estado, p.Nombre AS Rol FROM usuarios u LEFT JOIN perfiles p ON u.Rol = p.Id";
 
 if (!$mostrar_inactivos) {
     $sql .= " WHERE Estado = 'Activo'";

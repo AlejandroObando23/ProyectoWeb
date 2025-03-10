@@ -8,27 +8,27 @@ if (!isset($_SESSION['usuario']) ) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener datos del formulario
-    $cedula = $_POST['cedula'];
-    $rol = $_POST['rol'];
-    $estado = $_POST['estado'];
+include("../conexion.php");
 
-    // Conexión a la base de datos
-    require_once('conexion.php');
+// Realizamos la consulta para obtener los roles o perfiles
+$sql = "SELECT Id, Nombre FROM perfiles"; // Ajusta el nombre de la tabla y los campos según tu base de datos
+$result = $conn->query($sql);
 
-    // Actualizar los datos del usuario
-    $sql = "UPDATE usuarios SET rol = ?, estado = ? WHERE cedula = ?";
-    $stmt = $conexion->prepare($sql);
-    $stmt->bind_param('sss', $rol, $estado, $cedula);
-    $resultado = $stmt->execute();
-
-    if ($resultado) {
-        echo "success";
-    } else {
-        echo "error";
+// Verificamos si la consulta se realizó correctamente
+if ($result->num_rows > 0) {
+    // Si hay resultados, generamos el HTML para el select
+    $options = '';
+    while ($row = $result->fetch_assoc()) {
+        // Cada opción se genera con el Id y el Nombre del perfil
+        $options .= "<option value='" . $row['Id'] . "'>" . $row['Nombre'] . "</option>";
     }
+} else {
+    // Si no se encuentran roles, se muestra una opción por defecto
+    $options = "<option value='' disabled>No se encontraron roles</option>";
 }
+
+// Cerramos la conexión
+$conn->close();
 
 ?>
 
@@ -63,8 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </fieldset>
 </div>
 
-<!-- Formulario para editar usuario -->
-<div id="editarUsuarioModal" class="modal" tabindex="-1">
+<!-- Modal para editar usuario -->
+<div id="editarUsuarioModal" class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -80,9 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="mb-3">
                         <label for="rolEditar" class="form-label">Rol</label>
                         <select class="form-select" id="rolEditar">
-                            <option value="1">Admin</option>
-                            <option value="3">Ingreso</option>
-                            <option value="4">Egreso</option>
+                        <option value="" disabled selected>Selecciona un rol</option>
+                        <?php echo $options; ?>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -98,4 +97,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+
 
