@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 10-03-2025 a las 03:30:21
+-- Tiempo de generación: 10-03-2025 a las 03:35:01
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -108,12 +108,12 @@ CREATE TABLE `egresos` (
   `Fecha` date NOT NULL,
   `IdTipo` int(11) NOT NULL,
   `Monto` float NOT NULL,
-  `Metodo` varchar(64) NOT NULL,
+  `Metodo` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `Estado` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'Completado',
   `idUsuario` int(11) NOT NULL,
-  `Descripcion` varchar(128) NOT NULL,
+  `Descripcion` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `FechaRegistro` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `egresos`
