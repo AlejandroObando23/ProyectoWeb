@@ -70,7 +70,8 @@ function consultarReporte() {
             document.getElementById("cantidadTransacciones").textContent = Number(data.cantidad_gastos) + Number(data.cantidad_ingresos);
             document.getElementById("ingreso_anual").textContent = `$ ${data.ingreso_anual}`;
             document.getElementById("gasto_anual").textContent = `$ ${data.gasto_anual}`;
-            document.getElementById("balance_anual").textContent = "$ " + (Number(data.ingreso_anual) - Number(data.gasto_anual));
+            let resultado = Number(data.ingreso_anual) - Number(data.gasto_anual);
+            document.getElementById("balance_anual").textContent = "$ " + resultado.toFixed(2);
             destruirTodosLosGraficos();
             cargarGrafico();
         })
