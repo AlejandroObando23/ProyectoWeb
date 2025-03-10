@@ -10,19 +10,19 @@
             <input type="text" id="IdUser" style="display: none;">
             <div class="mb-3 col-sm-12 col-md-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombreP" value="Juan" disabled>
+                <input type="text" class="form-control" id="nombreP" value="Juan">
             </div>
             <div class="mb-3 col-sm-12 col-md-3">
                 <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="apellidoP" value="Pérez" disabled>
+                <input type="text" class="form-control" id="apellidoP" value="Pérez" >
             </div>
             <div class="mb-3 col-sm-12 col-md-3">
                 <label for="correo" class="form-label">Correo</label>
-                <input type="email" class="form-control" id="correoP" value="juan.perez@example.com" disabled>
+                <input type="email" class="form-control" id="correoP" value="juan.perez@example.com" >
             </div>
             <div class="mb-3 col-sm-12 col-md-3">
                 <label for="cedula" class="form-label">Cédula</label>
-                <input type="text" class="form-control" id="cedulaP" value="1234567890" disabled>
+                <input type="text" class="form-control" id="cedulaP" value="1234567890" >
             </div>
         </div>
     
@@ -45,6 +45,6 @@
         </div>
         
 
-        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        <button type="submit" class="btn btn-primary" onclick="actualizarUsuario()">Guardar Cambios</button>
     </fieldset>
 </div>

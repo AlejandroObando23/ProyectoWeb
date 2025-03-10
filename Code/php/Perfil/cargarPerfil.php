@@ -6,7 +6,7 @@ if (isset($_SESSION['id'])) {
 
     include("../conexion.php");
 
-    $stmt = $conn->prepare("SELECT Cedula, Nombre, Apellido, Correo FROM usuarios WHERE Id = ?");
+    $stmt = $conn->prepare("SELECT Id, Cedula, Nombre, Apellido, Correo FROM usuarios WHERE Id = ?");
     $stmt->bind_param("i", $userId); 
 
     if ($stmt->execute()) {
