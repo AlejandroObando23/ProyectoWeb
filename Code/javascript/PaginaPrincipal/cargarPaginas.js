@@ -1,5 +1,5 @@
 function cargarPagina(pagina, n) {
-    const ids = ["inicio", "ingresos", "gastos", "reportes", "categorias"];
+    const ids = ["inicio", "ingresos", "gastos", "reportes", "categorias", "auditoria"];
 
     ids.forEach(id => {
         const elemento = document.getElementById(id);
@@ -56,6 +56,11 @@ function cargarPagina(pagina, n) {
                     case 8:
                         activarId = "categorias";
                         categoriasScript();
+                        break;
+                    case 9:
+                        activarId = "auditoria";
+                        break;
+
 
                 }
 
