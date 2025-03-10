@@ -90,7 +90,6 @@ function cargarCategorias() {
             editar += `"<i style="color:blue;font-size: 25px;" class="bi bi-pencil-square mx-2 icono-boton" onclick="abrirActualizarCategoria(${categoria.Id})"></i>"`;
         }
 
-     
         nuevaFila.insertCell(0).innerHTML = categoria.Nombre;
 
         let url = ""+categoria.CodigoQR;
