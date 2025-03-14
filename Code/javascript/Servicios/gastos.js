@@ -11,6 +11,8 @@ function abrirAgregarGasto() {
     modalAgregargasto.showModal();
 }
 function cerrarAgregarGasto() {
+    let form = document.getElementById("registrarEgreso");
+    form.reset();
     modalAgregargasto.close();
 
 }
